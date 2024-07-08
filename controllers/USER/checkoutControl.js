@@ -107,7 +107,7 @@ const getCheckout = async (req, res) => {
                 validity: { $gt: new Date() }
             }
         )
-        const totalDiscount =mrpTotal -offerPriceTotal;
+        const totalDiscount =mrpTotal - offerPriceTotal;
         req.session.totalDiscount = totalDiscount;
         res.render("checkout", {
             success: true, message: 'Proceed to checkout',
@@ -226,10 +226,10 @@ const saveCheckoutEditedAddress = async (req, res) => {
 
     try {
         const addressId = req.query.id
-
+console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
 
         const { name, phone, house, locality, landmark, state, city, pincode, addressType } = req.body;
-        const add = await addressSchema.find({})
+     
 
 
         const updateCheckoutAddress = await addressSchema.updateOne({ "addresses._id": addressId },
@@ -249,6 +249,7 @@ const saveCheckoutEditedAddress = async (req, res) => {
         )
 
         if (updateCheckoutAddress) {
+            console.log(updateCheckoutAddress,'thsi is in edit address checkout')
             res.json({ success: true, message: 'Address updated successfully' })
         } else {
             res.json({ success: false, message: "Sorry updation failed" })

@@ -270,6 +270,7 @@ const getEditAddress = async (req, res) => {
 const editAddress = async (req, res) => {
     try {
         const addressId = req.query.addressId;
+        console.log(addressId,'this si editadd id',req.body)
 
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body;
 
@@ -288,7 +289,7 @@ const editAddress = async (req, res) => {
 
             }
         })
-
+console.log(updateAddress,'this is update address')
         if (updateAddress.modifiedCount > 0) {
             res.status(200).json({ success: true, message: 'Address updated successfully' });
         } else {

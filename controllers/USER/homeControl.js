@@ -116,7 +116,7 @@ const getHome = async (req, res) => {
 
 
     res.render("home", { productData, user, cartCount });
-  } catch (error) {
+  } catch (error) {  
     throw new Error(error)
   }
 };
@@ -254,7 +254,7 @@ const getAllProduct = async (req, res) => {
       sortOption = { name: -1 };
     }
     else if (sortBy === "New arrived") {
-      sortOption = { updatedAt: -1 };
+      sortOption = { createdAt: -1 };
 
     }
     else if (sortBy === "High to low") {

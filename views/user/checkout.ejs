@@ -346,7 +346,7 @@
                         <input type="text" name="cartId" id="cartId" hidden value="<%=cartProduct[i]._id%>">
 
                         <% } %>
-                        <p class="text-dark font-weight-bold" id="discountId">Total Discount <span class="text-success"  ><small>₹</small><%=totalDiscount %></span></p>
+                        <p class="text-dark font-weight-bold" id="discountId">Total Saved <span class="text-success"  ><small>₹</small><%=totalDiscount %></span></p>
                         <p id="discont" hidden><%=totalDiscount %></p>
                           <p class="font-weight-bold">Subtotal <span><small>₹</small>
                               <%=subTotal %>
@@ -534,16 +534,23 @@
 
   <script>
     document.getElementById('applyCouponButton').addEventListener('click', async function () {
-      // Get the total price
-      const totalPriceElement = document.getElementById('totalPrice');
+     
+     
+     // Get the total price
+     const totalPriceElement = document.getElementById('totalPrice');
       let totalPriceText = totalPriceElement.textContent.trim();
 
       const totalPrice = parseFloat(totalPriceText.replace(/[^0-9]/g, ''));
       console.log(totalPrice, 'this si coupion total price')
+
+      const discout = document.getElementById('discountId')
+     
+      let totalDiscoText = discout.textContent.trim();
+      const totalDiscount = parseFloat(totalDiscoText.replace(/[^0-9]/g, ''));
+      console.log(totalDiscount, 'this si coupion total discount')
       // Get the selected coupon ID
       const selectElement = document.getElementById('inputSelectOption');
-      const selectedCouponId = selectElement.value;
-
+      const selectedCouponId = selectElement.value
       // Check if a coupon is selected
       if (!selectedCouponId) {
         document.getElementById('couponStatus').textContent = "Please select a coupon.";
@@ -566,21 +573,6 @@
           timer: 1000,
           position: 'top-end'
         })
-        
-// Get the total price
-const totalPriceElement = document.getElementById('totalPrice');
-      let totalPriceText = totalPriceElement.textContent.trim();
-
-      const totalPrice = parseFloat(totalPriceText.replace(/[^0-9]/g, ''));
-      console.log(totalPrice, 'this si coupion total price')
-
-      const discout = document.getElementById('discountId')
-     
-      let totalDiscoText = discout.textContent.trim();
-      const totalDiscount = parseFloat(totalDiscoText.replace(/[^0-9]/g, ''));
-      console.log(totalDiscount, 'this si coupion total discount')
-
-
 
         const selectElement = document.getElementById('inputSelectOption');
         const applyCouponButton = document.getElementById('applyCouponButton');
@@ -596,6 +588,11 @@ const totalPriceElement = document.getElementById('totalPrice');
                                     ${data.totalAmount}
                                   </span>`
                 document.getElementById('removeCoupon').addEventListener('click', removeCoupon);
+
+                const afterCoupon =totalDiscount+data.maximumOfferAmt;
+console.log(afterCoupon,'this is afrer coupn',data.maximumOfferAmt,)
+discout.innerHTML=`<span class="text-success"  ><small>₹</small>${afterCoupon}</span>`
+
       } else {
         await Swal.fire({
           icon: 'error',
