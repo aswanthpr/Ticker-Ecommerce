@@ -37,7 +37,7 @@ passport.deserializeUser((id,done)=>{
         new googleStratagy({
            clientID: process.env.CLIENT_ID,
            clientSecret:process.env.CLIENT_SECRET,
-           callbackURL:"/google/callback",
+           callbackURL:"https://www.aswanthpr.site/google/callback",
             passReqToCallback:true,
         },
        async function (req,accessToken ,refreshToken, profile,done){
