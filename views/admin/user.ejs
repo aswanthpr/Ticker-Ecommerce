@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ticker Admin </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="/admin/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="/admin/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="/admin/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="/admin/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="/admin/css/custom.css">
+  <!-- Favicon-->
+  <!-- <link rel="shortcut icon" href=""> -->
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="search-panel">
+        <div class="search-inner d-flex align-items-center justify-content-center">
+          <div class="close-btn">Close <i class="fa fa-close"></i></div>
+          <form class="px-4" id="searchForm" action="/admin/userSearch">
+            <div class="input-group position-relative flex-column flex-lg-row flex-nowrap">
+              <input class="form-control shadow-0 bg-none px-0 w-100" type="search" name="search"
+                placeholder="What are you searching for...">
+              <button class="btn btn-link text-gray-600 px-0 text-decoration-none fw-bold cursor-pointer text-center"
+                type="submit">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="/admin/dashboard" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">TICKER</strong><strong>ADMIN</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div></a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+        </div>
+
+        <div class="right-menu list-inline no-margin-bottom ">  
+          <form id="searchForm" action="/admin/userSearch">
+            <div class="form-group d-flex">
+             
+              <input name="search" id="search" type="search" placeholder="What are you searching for..." class="mr-sm-3 form-control form-control">
+              <button style="width: 90px;" type="submit"  class="btn btn-primary">search</button>
+            </div>
+          </form>
+        </div>
+        <div class="right-menu list-inline no-margin-bottom">  
+          
+          
+          <!-- Log out               -->
+           
+            <div class="list-inline-item logout">
+
+              
+              <a href="/admin/logout" class="btn btn-dark btn-sm ">Logout<i class="icon-logout"></i></a>
+  
+            </div>
+          
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+
+      <!-- Sidebar Navidation Menus-->
+      <ul class="list-unstyled">
+        <li ><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
+        <li><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
+        <li class="active"><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
+        <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
+        <li ><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
+
+       <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
+       <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Offer</a>
+        <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+          <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a></li>
+      <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+        </ul>
+      </li>
+        <li><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
+        <!-- <li><a href=""> <i class="icon-layers"></i>Category</a></li>
+        <li><a href=""> <i class="icon icon-picture"></i>Banner</a></li>  -->
+      </ul>
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <!-- Page Header-->
+      <div class="page-header no-margin-bottom">
+        <div class="container-fluid">
+          <h2 class="h5 no-margin-bottom">U s e r s</h2>
+
+        </div>
+      </div>
+      <!-- Breadcrumb-->
+      <div class="container-fluid">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">users </li>
+        </ul>
+
+
+        <!-- ---------------------table------------------------- -->
+        <div class="col-lg-12">
+          <div class="block">
+
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>NO</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    
+                    
+                    <th>Status</th>
+                    <th>Action</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <% if (userData.length> 0 ){%>
+                    <% for (let i=0 ; i < userData.length; i++) { %>
+
+                      <tr>
+                        <td>
+                          <%= i+1%>
+                        </td>
+                        <td><b>
+                            <%= userData[i].name %>
+                          </b></td>
+                        <td>
+                          <%= userData[i].email %>
+                        </td>
+
+                        <td><b>
+                            <%= userData[i].phone %>
+                          </b></td>
+                       
+                        
+                        <td class="<%=userData[i].isBlocked ? 'text-danger' :'text-success' %>">
+                          <%=userData[i].isBlocked ? 'Block' : 'Active' %>
+
+                        </td>
+                        <td>
+                          <% if (userData[i].isBlocked){%>
+                            <a class="btn btn-outline-success userUnblock btn-sm" 
+                              href="/admin/user-unblock/<%= userData[i]._id %>"
+                              >UnBlock</a>
+
+                            <% } else { %>
+                              <a class="btn btn-outline-danger userBlock btn-sm" 
+                                href="/admin/user-block/<%= userData[i]._id %>" >Block</a>
+                              <% } %>
+
+                        </td>
+
+
+                      </tr>
+                      <%}%>
+                        <% } else { %>
+                          <tr style="color: #1eba0a;">
+                            <td colspan="4">No users found in the database.</td>
+                          </tr>
+                          <% } %>
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer py-4 ">
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center mb-0">
+                <%if(currentPage>1){%>
+                    <li class="page-item ">
+                        <a class="page-link " href="?page=<%= currentPage - 1 %>"
+                            tabindex="-1">
+                            <
+                        </a>
+                    </li>
+                    <%}%>
+                    <%for (let i=1;i<=totalPages;i++){%>
+                    <%if(i==currentPage){%>
+                        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                            <a class="page-link" href="#"> <%=i%></a>
+                            
+                            
+                        </li>
+                        <% }else{ %>
+                            
+
+                                <li class="page-item <%= currentPage === i ? 'active' : '' %>"  >
+                                    <a class="page-link" href="?page=<%=i%>&search=<%=search%>">
+                                        <%=i%>
+                                    </a>
+                                </li>
+                                <%}%>
+                                <%}%>
+                                    <% if(currentPage < totalPages){%>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=<%=totalPages%>&search=<%=search%>">></a>
+                                           
+                                            
+                                        </li>
+                                      <%}%>
+            </ul>
+        </nav>
+    </div>
+    </div>
+    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // User Blocking
+const blockUserBtn = document.querySelectorAll('.userBlock');
+blockUserBtn.forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const userId = event.target.getAttribute('href').split('/')[3];
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to block this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: ' #1eba0a',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, block it!',
+      toast: true,
+                  
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/admin/user-block/${userId}`, {
+          method: 'PATCH'
+        })
+        .then(response => {
+          if (response.ok) {
+            Swal.fire({
+              icon: 'success',
+                  text: 'The user has been blocked.',
+                  toast: true,
+                  timer: 2000,
+                  position: 'top-end',
+                  showConfirmButton: false,
+            }
+              
+            ).then(() => {
+              window.location.reload();
+            });
+          } else {
+            Swal.fire(
+              {
+                icon: 'success',
+                  text: 'Failed to block the user.',
+                  toast: true,
+                  timer: 2000,
+                  position: 'top-end',
+                  showConfirmButton: false,
+              }
+              
+            );
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire(
+            'Error!',
+            'An error occurred while blocking the user.',
+            'error'
+          );
+        });
+      } 
+    });
+  });
+});
+
+// User Unblocking
+const unblockUserBtn = document.querySelectorAll('.userUnblock');
+unblockUserBtn.forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const userId = event.target.getAttribute('href').split('/')[3];
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to unblock this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#1eba0a',
+      cancelButtonColor: '#d33',
+      toast: true,
+                  
+      confirmButtonText: 'Yes, unblock it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/admin/user-unblock/${userId}`, {
+          method: 'PATCH'
+        })
+        .then(response => {
+          if (response.ok) {
+            Swal.fire({
+              icon: 'success',
+                  text: 'The user has been unblocked.',
+                  toast: true,
+                  timer: 2000,
+                  position: 'top-end',
+                  showConfirmButton: false,
+            }
+            
+            ).then(() => {
+              window.location.reload();
+            });
+          } else {
+            Swal.fire({icon: 'success',
+                  text: 'Failed to unblock the user.',
+                  toast: true,
+                  timer: 2000,
+                  position: 'top-end',
+                  showConfirmButton: false,}
+            
+            );
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire(
+            'Error!',
+            'An error occurred while unblocking the user.',
+            'error'
+          );
+        });
+      }
+    });
+  });
+});
+      
+    </script>
+
+    <!-- JavaScript files-->
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/admin/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="/admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/admin/js/front.js"></script>
+</body>
+
+</html>

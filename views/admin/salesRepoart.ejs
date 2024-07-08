@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ticker Admin </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="/admin/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="/admin/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="/admin/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="/admin/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="/admin/css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="/image/download.png">
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif] -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <!-- <div class="search-panel">
+        <div class="search-inner d-flex align-items-center justify-content-center">
+          <div class="close-btn">Close <i class="fa fa-close"></i></div>
+          <form id="searchForm" action="/admin/categorySearch">
+            <div class="form-group">
+              <input type="search" name="search" placeholder="What are you searching for...">
+              <button type="submit" class="submit">Search</button>
+            </div>
+          </form>
+        </div>
+      </div> -->
+
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="/admin/dashboard" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong
+                class="text-primary">TICKER</strong><strong>ADMIN</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div>
+          </a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+        </div>
+
+        <div class="right-menu list-inline no-margin-bottom ">
+          <form id="searchForm" action="/admin/categorySearch">
+            <div class="form-group d-flex">
+
+              <input name="search" id="search" type="search" placeholder="What are you searching for..."
+                class="mr-sm-3 form-control form-control">
+              <button style="width: 90px;" type="submit" class="btn btn-primary">search</button>
+            </div>
+          </form>
+        </div>
+        <div class="right-menu list-inline no-margin-bottom">
+
+
+          <!-- Log out               -->
+
+          <div class="list-inline-item logout">
+
+
+            <a href="/admin/logout" class="btn btn-dark btn-sm ">Logout<i class="icon-logout"></i></a>
+
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+
+      <ul class="list-unstyled">
+        <li><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
+        <li><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
+        <li><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
+        <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
+        <li><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
+
+        <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+              class="icon-windows"></i>Offer</a>
+          <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a>
+            </li>
+            <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+          </ul>
+        </li>
+        <li class="active"><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
+        <!-- <li><a href=""> <i class="icon-layers"></i>Category</a></li>
+        <li><a href=""> <i class="icon icon-picture"></i>Banner</a></li> -->
+      </ul><!-- Sidebar Navidation Menus-->
+
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <!-- Page Header-->
+      <div class="page-header no-margin-bottom ">
+        <div class="container-fluid ">
+          <h2 class="h5 no-margin-bottom ">S a l e s R e p o r t s</h2>
+          <div class="d-flex justify-content-between mt-3">
+            <div class="block-body text-center d-flex justify-content-end">
+           
+              </select> 
+              <select id="filter" class="form-select form-select-sm form-select-danger form-select-border" aria-label=".form-select-sm example">
+                <option selected>
+                  <%= selectValue %>
+              </option>
+              <% filterType.forEach((filterType)=> { %>
+                  <% if (filterType !==selectValue) { %>
+                      <option>
+                          <%= filterType %>
+                      </option>
+                      <% } %>
+                          <% }) %>
+                
+              </select>
+              <a  id="custom" type="button" class="btn btn-outline-info btn-sm ml-1 text-white">Custom</a> 
+            </div>
+            <div class="block-body text-center d-flex justify-content-end">
+              <button id="downloadPdf" type="button" class="btn btn-outline-danger btn-sm text-white">PDF</button>
+              <button id="downloadExcel" type="button" class="btn btn-outline-success btn-sm ml-3">EXECEL</button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- Breadcrumb-->
+      <div class="container-fluid">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Sales Report </li>
+        </ul>
+
+
+        <!-- ---------------------table------------------------- -->
+        <section class="no-padding-top">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-12">
+                <div id="wholeTable" class="block margin-bottom-sm">
+                  <div class="title">
+                    <strong>Sales Report</strong>
+                  </div>
+                  <p class="text-primary fw-bold
+                          u,">Ticker Sales</p>
+                  <div class="d-flex   mb-3">
+                    <span class="fw-bold text-white mr-3"> Total Sales: <span class=" text-info ml-2">
+                        <%= totalOrder %>
+                      </span></span>
+                    <span class="fw-bold text-white mr-3"> Total Order Amount:<span class="text-info ml-2">
+                        <%= totalAmount[0]?.sumAmount %>
+                      </span></span>
+                    <span class="fw-bold text-white mr-3"> Total Discount:<span class="text-info ml-2">
+                        <%= totalOfferAmt[0]?.totalDiscount%>
+                      </span></span>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table  table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="text-center text-primary">No</th>
+                          <th class="text-center text-primary">Order Id</th>
+                          <th class="text-center text-primary">User</th>
+                          <th class="text-center text-primary">Address</th>
+                          <th class="text-center text-primary">Date</th>
+                          <th class="text-center text-primary">Product Name</th>
+                          <th class="text-center text-primary">Quantity</th>
+
+                          <th class="text-center text-primary">Price</th>
+                          <th class="text-center text-primary">Total</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <% salesData.forEach((element,index )=> { %>
+
+
+                          <tr>
+
+
+                            <td class="text-center text-white">
+                              <%= (index + 1) + ((currentPage - 1) * limit) %>
+                            </td>
+
+
+                            <td class="text-center text-white"><small>
+                                <%=element?.orderId%>
+                              </small></td>
+                            <% element?.userDetails?.forEach(user=> { %>
+
+
+                              <td class="text-center text-white"><small>
+                                  <%=user?.name%>
+                                </small></td>
+                              <% }) %>
+                                <td class="text-center text-white">
+                                  <small>
+                                    <%=element?.address.name%>
+                                  </small> ,<small>
+                                    <%=element?.address.house%>
+                                  </small>,
+                                  <small>
+                                    <%=element?.address.locality%>
+                                  </small> ,<small>
+                                    <%=element?.address.city%>
+                                  </small>,
+                                  <small>
+                                    <%=element?.address.landmark%>
+                                  </small>,<small>
+                                    <%=element?.address.state%>
+                                  </small>,
+                                  <small>
+                                    <%=element?.address.phone%>
+                                  </small> ,<small>
+                                    <%=element?.address.pincode%>
+                                  </small>
+
+                                </td>
+                                <td class="text-center text-white">
+                                  <small>
+                                    <%=new Date(element.createdAt).toISOString().split('T')[0]%>
+                                  </small>
+
+                                </td>
+
+                                <td class="text-center text-white"><small>
+                                    <%=element?.orderedItems.productName%>
+                                  </small></td>
+                                <td class="text-center text-white"><small>
+                                    <%=element?.orderedItems.cartQuantity%>
+                                  </small></td>
+
+
+
+                                <td class="text-center text-white"><small>₹<%=element?.orderedItems?.offerPrice%></small>
+                                </td>
+                                <td class="text-center text-white"><small>₹
+                                    <%=(element?.orderedItems?.offerPrice)*(element?.orderedItems?.cartQuantity)%>
+                                  </small>
+                                </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+
+
+                    </table>
+
+                  </div>
+
+
+                </div>
+
+
+
+              </div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm">
+                  <% if (currentPage> 1) { %>
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<%= currentPage - 1 %>" tabindex="-1">Previous</a>
+                    </li>
+                    <% } %>
+                      <% for (let i=1; i <=totalPages; i++) { %>
+                        <% if (i==currentPage) { %>
+                          <li class="page-item active"><a class="page-link" href="#">
+                              <%= i %>
+                            </a></li>
+                          <% } else { %>
+                            <li class="page-item"><a class="page-link" href="?page=<%= i %>">
+                                <%= i %>
+                              </a></li>
+                            <% } %>
+                              <% } %>
+                                <% if (currentPage < totalPages) { %>
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+                                  </li>
+                                  <% } %>
+                </ul>
+              </nav>
+
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+
+
+      </div>
+
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+
+    <!-- Add jsPDF-AutoTable plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- JavaScript files-->
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/popper.js/umd/popper-utils.min.js"> </script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/admin/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="/admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/admin/js/front.js"></script>
+</body>
+<script>
+
+  //date picker implimentaion
+
+
+  document.getElementById('custom').addEventListener('click', async function () {
+    var customButton = document.getElementById('custom')
+  const selectValue=  customButton.value ="custom"
+  let queryParams ="";
+    
+     
+      flatpickr(customButton, {
+        mode: 'range',
+        maxDate: 'today',
+        onChange: async function (selectedDates, dateStr, instance) {
+
+          const splitDate = dateStr.split('to');
+          const startDate = splitDate[0];
+          const endDate = splitDate[1];
+
+          console.log(selectedDates, "first one");
+
+          console.log(dateStr, "second one", endDate);
+          console.log(startDate, endDate)
+         
+          if(startDate && endDate!==undefined){
+            queryParams = `?selectValue=${selectValue}&startDate=${startDate}&endDate=${endDate}`;
+
+            window.location.href=`/admin/sales-report${queryParams}`
+          }
+          
+
+        }
+      });
+
+      customButton._flatpickr.open();
+    
+  });
+
+
+
+document.addEventListener('DOMContentLoaded',function(){
+const selectElement = document.getElementById('filter')
+selectElement.addEventListener('change',function(){
+ const selectValue= selectElement.value;
+ let queryParams ="";
+
+
+  queryParams = `?selectValue=${selectValue}`
+ 
+ window.location.href=`/admin/sales-report${queryParams}`
+})
+})
+
+</script>
+
+
+<script>
+  document.getElementById('downloadPdf').addEventListener('click', async function () {
+
+    let doc = new window.jspdf.jsPDF();
+    let pageCenter = doc.internal.pageSize.getWidth() / 2;
+    //set the document title and subtitle 
+    doc.setFontSize(25);
+    doc.setTextColor(273, 45, 154);
+    doc.text('TICKER', pageCenter, 10, { align: 'center' });
+    doc.setFontSize(25);
+    doc.setTextColor(255, 0, 0);
+    doc.text("Sales Report", pageCenter, 20, { align: 'center' });
+
+    //selecct the table element
+    let table = document.querySelector('.table');
+
+    //generate the PDF with auto Table
+    doc.autoTable({
+      html: table,
+      startY: 35,
+      styles: {
+        fontSize: 8,
+        cellPadding: 1,
+        lineWidth: 0.1,
+
+      },
+      headStyles: {
+        fillColor: [240, 240, 240],//header bg
+        textColor: [0, 0, 0],//black color nu
+        fontSize: 8,//reduce font size for header
+      },
+      bodyStyles: {
+        fillColor: [255, 255, 255],
+        textColor: [0, 0, 0],
+        fontSize: 8,
+
+      }
+    })
+    // //save  aakkan
+    doc.save(`save_report${new Date().toLocaleDateString()}.pdf`);
+
+  })
+
+  //download in excel
+
+  document.getElementById("downloadExcel").addEventListener("click", function () {
+    let workbook = XLSX.utils.book_new();
+
+    let table = document.querySelector(".table");
+
+    let worksheet = XLSX.utils.table_to_sheet(table);
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sales Report");
+
+    let range = XLSX.utils.decode_range(worksheet['!ref']);
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      let max_width = 0;
+      for (let R = range.s.r; R <= range.e.r; ++R) {
+        let cell_address = { c: C, r: R };
+        let cell_ref = XLSX.utils.encode_cell(cell_address);
+        if (!worksheet[cell_ref]) continue;
+        let cell_width = XLSX.SSF.format(cell_address, worksheet[cell_ref].v).length;
+        max_width = Math.max(max_width, cell_width);
+      }
+      worksheet['!cols'] = worksheet['!cols'] || [];
+      worksheet['!cols'][C] = { wch: max_width + 1 };
+    }
+
+    XLSX.writeFile(workbook, `sales_report${new Date().toLocaleDateString()}.xlsx`, { bookSST: true, type: 'binary' });
+  });
+
+
+
+ 
+</script>
+
+
+
+
+
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="M_Adnan">
+  <title>Ticker</title>
+
+  <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+  <link rel="stylesheet" type="text/css" href="/user/rs-plugin/css/settings.css" media="screen" />
+
+  <!-- Bootstrap Core CSS -->
+  <link href="/user/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/user/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/user/css/ionicons.min.css" rel="stylesheet">
+  <link href="/user/css/main.css" rel="stylesheet">
+  <link href="/user/css/style.css" rel="stylesheet">
+  <link href="/user/css/responsive.css" rel="stylesheet">
+  <link href="/user/font/flaticon.css" rel="stylesheet">
+
+  <!-- JavaScripts -->
+  <script src="/user/js/modernizr.js"></script>
+
+  <!-- Online Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900|Poppins:300,400,500,600,700|Montserrat:300,400,500,600,700,800"
+    rel="stylesheet">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  <style>
+    .editAddress {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .editAddress .modal-content {
+      border: none;
+      box-shadow: none;
+    }
+
+    .editAddress .modal-content .row {
+      margin-bottom: 15px;
+    }
+
+    .editAddress label {
+      font-weight: 600;
+    }
+
+    .editAddress input,
+    .editAddress textarea {
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .editAddress .btn {
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .editAddress .btn:hover {
+      background: #000000;
+    }
+
+    .editAddress .form-check-input {
+      margin-right: 10px;
+    }
+
+    .editAddress .form-check-label {
+      margin-right: 20px;
+    }
+
+    .editAddress .close {
+      float: right;
+      font-size: 24px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .editAddress .error {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+
+    <!-- TOP Bar -->
+    <div class="top-bar">
+      <div class="container-full">
+        <p><i class="icon-envelope"></i> Info@boshop.com </p>
+        <p class="call"> <i class="icon-call-in"></i> 001 234 7895 </p>
+
+        <!-- Login Info -->
+        <div class="login-info">
+          <ul>
+            <li><a href="/login">LOGIN</a></li>
+            <li><a href="/user/profile"> MY ACCOUNT </a></li>
+            <li><a href="/wishlist">WISHLIST</a></li>
+            <li><a href="#">CART<i class="icon-basket-loaded"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- header -->
+    <header>
+      <div class="sticky">
+        <div class="container-full">
+
+          <!-- Logo -->
+          <div class="logo"> <a href="/"><img class="img-responsive w-25" src="/image/download.png" alt=""></a> </div>
+          <nav class="navbar ownmenu navbar-expand-lg ">
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span></span> </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <nav class="header__menu mobile-menu">
+                  <ul>
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                    <li><a href="/shop/men">Men</a></li>
+                    <li><a href="/shop/women">Women</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </header>
+
+    <!-- Content -->
+    <div id="content">
+
+      <!-- SUB BANNER -->
+      <section class="sub-bnr" data-stellar-background-ratio="0.5">
+        <div class="position-center-center">
+          <div class="container">
+            <h4>Edit Address</h4>
+            <ol class="breadcrumb">
+              <li><a href="/">Home</a></li>
+              <li><a href="/shop">Shop</a></li>
+              <li> <a href="/cart">Shopping Cart</a></li>
+              <li><a href="/checkout">Checkout </a></li>
+              <li class="active">Edit Address</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGES INNER -->
+      <section class="padding-top-100 padding-bottom-100 pages-in chart-page">
+        <div class="container">
+          <div id="Addaddress" class="editAddress">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="form" method="post">
+
+
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="name">Name</label>
+                        <input class="form-control" id="name" name="name" type="text"
+                            placeholder=" Name" value="<%=address.name%>">
+                        <p style="color: red;" id="nameErr"></p>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="phone">Phone</label>
+                        <input class="form-control" id="phone" name="phone" type="number"
+                            placeholder="10-digits phone No"  value="<%=address.phone%>">
+                        <p style="color: red;" id="phoneErr"></p>
+                    </div>
+                </div>
+        
+                <!-- Form Row        -->
+                
+        
+                <!-- <div class="mb-3">
+                    <label class="small mb-1" for="inputEmailAddress">House/Area/locality</label>
+                    <textarea class="form-control" name="address" id="address" rows="4" tabindex="5"
+                        required="" autocomplete="street-address" style="width: 100%;"></textarea>
+                        <p style="color: red;" id="addressErr"></p>
+                </div> -->
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputOrgName">House </label>
+                        <input class="form-control" id="house" name="house" type="text"
+                            placeholder="House"  value="<%=address.house%>">
+                        <p style="color: red;" id="houseErr"></p>
+                    </div>
+        
+                     <div class="col-md-6">
+                        <label class="small mb-1" for="inputLocation">locality</label>
+                        <input class="form-control" id="locality" name="locality" type="text"
+                            placeholder="Locality"  value="<%=address.locality%>">
+                            <p style="color: red;" id="localityErr"></p>
+                    </div> 
+                </div>
+        
+                <!-- Form Row-->
+                <div class="row gx-3 mb-3">
+        
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputPhone">City/district</label>
+                        <input class="form-control" id="city" name="city" type="text"
+                            placeholder="City/District"  value="<%=address.city%>">
+                            <p style="color: red;" id="cityErr"></p>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputBirthday">State</label>
+                        <input class="form-control" id="state" type="text" name="state"
+                            placeholder="State"  value="<%=address.state%>">
+                            <p style="color: red;" id="stateErr"></p>
+                    </div>
+                </div>
+                <div class="row gx-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputLandmark">Landmark</label>
+                        <input class="form-control" id="landmark" name="landmark" type="text"
+                            placeholder="landmark"  value="<%=address.landmark%>">
+                            <p style="color: red;" id="landmarkErr"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="inputOrgName"> Pincode </label>
+                        <input class="form-control" id="pincode" name="pincode" type="number"
+                            placeholder="Pincode"  value="<%=address.pincode%>">
+                        <p style="color: red;" id="pincodeErr"></p>
+                    </div>
+        
+                    
+                </div>
+        
+                <div class="mb-3">
+                    <label class="small mb-1" for="inputAddressType">Address Type</label>
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="radio" id="home" name="addressType"
+                            value="Home" <%= address.addressType === 'Home' ? 'checked' : '' %>>
+                        <label class="form-check-label" for="home">Home</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="radio" id="work" name="addressType"
+                            value="Work" <%= address.addressType === 'Work' ? 'checked' : '' %>>
+                        <label class="form-check-label" for="work">Work</label>
+                    </div>
+                </div>
+                
+        
+                <input type="text" name="" id="addressId" value="<%=address._id%>" hidden>
+                <!-- Save changes button-->
+                
+                <a href=""> <button class="btn btn-dark" type="submit">Save Address</button> </a>
+            </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="text-center">
+          <a href="index.html"><img src="/image/logo.png" alt=""></a><br>
+          <img class="margin-t-40" src="/image/hammer.png" alt="">
+          <p class="intro-small margin-t-40">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+            nibh
+            euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+        </div>
+
+        <div class="footer-link row">
+          <div class="col-md-6">
+            <ul>
+              <li class="col-sm-6">
+                <h5>INFORMATION</h5>
+                <ul class="f-links">
+                  <li><a href="#."> ABOUT US</a></li>
+                  <li><a href="#."> DELIVERY INFOMATION</a></li>
+                  <li><a href="#."> PRIVACY & POLICY</a></li>
+                  <li><a href="#."> TEMRS & CONDITIONS</a></li>
+                  <li><a href="#."> MANUFACTURES</a></li>
+                </ul>
+              </li>
+              <li class="col-sm-6">
+                <h5>MY ACCOUNT</h5>
+                <ul class="f-links">
+                  <li><a href="#.">MY ACCOUNT</a></li>
+                  <li><a href="#."> LOGIN</a></li>
+                  <li><a href="#."> MY CART</a></li>
+                  <li><a href="#."> WISHLIST</a></li>
+                  <li><a href="#."> CHECKOUT</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="row">
+              <li class="col-sm-6">
+                <h5>TWITTER</h5>
+                <p>Check out new work on my @Behance portfolio: "Herriots #branding"
+                  <br>
+                  <span>http://t.co/OhKbXVA5wT </span>
+                  <br>
+                  <small>3 days ago</small>
+                </p>
+              </li>
+              <li class="col-sm-6">
+                
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- GO TO TOP  -->
+    <a href="#" class="cd-top"><i class="ion-chevron-up"></i></a>
+  </div>
+
+  <script src="/user/js/jquery-1.12.4.min.js"></script>
+  <script src="/user/js/popper.min.js"></script>
+  <script src="/user/js/bootstrap.min.js"></script>
+  <script src="/user/js/own-menu.js"></script>
+  <script src="/user/js/jquery.lighter.js"></script>
+  <script src="/user/js/jquery.magnific-popup.min.js"></script>
+  <script src="/user/js/owl.carousel.min.js"></script>
+  <script src="/user/js/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+document.getElementById("form").addEventListener('submit', async (e) => {
+        e.preventDefault();
+        check();
+    });
+
+    const check = async () => {
+        const name = document.getElementById('name').value.trim();
+        const nameErr = document.getElementById('nameErr');
+        const phone = document.getElementById('phone').value.trim();
+        const phoneErr = document.getElementById('phoneErr');
+        const pincode = document.getElementById('pincode').value.trim();
+        const pincodeErr = document.getElementById('pincodeErr');
+        const locality = document.getElementById('locality').value.trim();
+        const localityErr = document.getElementById('localityErr');
+        const house = document.getElementById('house').value.trim();
+        const houseErr = document.getElementById('houseErr');
+        const city = document.getElementById('city').value.trim();
+        const landmark = document.getElementById('landmark').value.trim();
+        const cityErr = document.getElementById('cityErr');
+        const state = document.getElementById('state').value.trim();
+        const stateErr = document.getElementById('stateErr');
+
+        let isValid = true;
+
+        // Clearing previous error messages
+        nameErr.innerHTML = '';
+        phoneErr.innerHTML = '';
+        pincodeErr.innerHTML = '';
+        localityErr.innerHTML = '';
+        houseErr.innerHTML = '';
+        cityErr.innerHTML = '';
+        stateErr.innerHTML = '';
+        landmarkErr.innerHTML = ""
+
+        // Name validation
+        if (name === '') {
+            nameErr.innerHTML = "Please enter your name.";
+            isValid = false;
+        } else {
+            const nameRegex = /^[a-zA-Z\s]*$/;
+            if (!nameRegex.test(name)) {
+                nameErr.innerHTML = "Please enter a valid name.";
+                isValid = false;
+            }
+        }
+
+        // phone number validation
+        if (!phone) {
+            phoneErr.innerHTML = "Please enter your phone number.";
+            isValid = false;
+        } else {
+            const phoneRegex = /^[1-9][0-9]{9}$/; // Simplified regex for 10-digit numbers, adjust as needed
+            if (!phoneRegex.test(phone)) {
+                phoneErr.innerHTML = "Please enter a valid phone number.";
+                isValid = false;
+            }
+        }
+
+        // Pincode validation
+        if (!pincode) {
+            pincodeErr.innerHTML = "Please enter a pincode.";
+            isValid = false;
+        } else {
+            const pincodeRegex = /^[0-9]{5,6}$/; // Example: 5-6 digit pincodes
+            if (!pincodeRegex.test(pincode)) {
+                pincodeErr.innerHTML = "Please enter a valid pincode.";
+                isValid = false;
+            }
+        }
+
+        // Locality validation
+        if (locality === '') {
+            localityErr.innerHTML = "Please enter the locality.";
+            isValid = false;
+        } else {
+            const localityRegex = /^[a-zA-Z,\s]*$/;
+            if (!localityRegex.test(locality)) {
+                localityErr.innerHTML = "Please enter a valid locality.";
+                isValid = false;
+            }
+        }
+
+        // Address validation
+        if (house === "") {
+            houseErr.innerHTML = "Please enter the house.";
+            isValid = false;
+        }else{
+            const houseRegex = /^[a-zA-Z,\s]*$/;
+            if(!houseRegex.test(house)){
+                houseErr.innerHTML = "Please Enter valid house.";
+                isValid = false
+            }
+        }
+
+        // City validation
+        if (city === "") {
+            cityErr.innerHTML = "Please enter the city name.";
+            isValid = false;
+        } else {
+            const cityRegex = /^[a-zA-Z,\s]*$/;
+            if (!cityRegex.test(city)) {
+                cityErr.innerHTML = "Please enter a valid city name.";
+                isValid = false;
+            }
+        }
+
+
+         // City validation
+         if (landmark === "") {
+            landmarkErr.innerHTML = "Please enter the landmark name.";
+            isValid = false;
+        } else {
+            const landmarkRegex = /^[a-zA-Z,\s]*$/;
+            if (!landmarkRegex.test(landmark)) {
+                landmarkErr.innerHTML = "Please enter a valid landmark.";
+                isValid = false;
+            }
+        }
+        // State validation
+        if (state === "") {
+            stateErr.innerHTML = "Please enter the state name.";
+            isValid = false;
+        } else {
+            const stateRegex = /^[a-zA-Z\s]*$/;
+            if (!stateRegex.test(state)) {
+                stateErr.innerHTML = "Please enter a valid state name.";
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            const formElement = document.getElementById('form');
+            const addressId = document.getElementById("addressId").value;
+           
+            const formData = new FormData(formElement);
+             const formValues = {};
+            
+            for (const entry of formData.entries()) {
+                const [key, value] = entry;
+                formValues[key] = value;
+            }
+
+            console.log(formValues);
+
+            try {
+        const response = await fetch(`http://localhost:3000/checkout/editAddress?id=${addressId}`,{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(formValues)
+        })
+        console.log("one")
+        const data = await response.json();
+        if(data.success){
+            await Swal.fire({
+                icon:'success',
+                title:'success',
+                text:data.message
+            }).then(()=>{ 
+                window.location.href="/checkout"
+            })
+        }else{
+            await Swal.fire({
+                icon:'error',
+                title:'Error',
+                text:data.message
+            }).then(()=>{
+                window.location.href="/checkout"
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        await Swal.fire({
+            icon:'error',
+            title:'Error',
+            text:'Something went wrong'
+
+        })
+    }
+
+           
+        }
+    }
+
+</script>
+
+</body>
+
+</html>

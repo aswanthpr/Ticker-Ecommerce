@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Your CSS -->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="../../admin/css/style.css">
+    <link rel="stylesheet" href="/user/css/table.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<body>
+    <!-- Top bar -->
+
+    <body>
+        <div class="mt-5">
+            <section class="breadcrumb-option">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb__text">
+                                <h5>order Detailes</h5>
+                                <div class="breadcrumb__links">
+                                    <a href="/" class="text-dark text-decoration-none">Home</a>
+                                    <span>></span>
+                                    <a href="/user/profile" class="text-dark text-decoration-none">profile</a>
+                                    <span>></span>
+                                    <span>Orders</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class=" fluid-container mt-4 ml-5">
+            <div class="main-body">
+                <div class="bg0 p-t-40 p-b-85">
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body ">
+                                    <div class="d-flex flex-column align-items-center text-align-center">
+                                        <img src="/userOrders/img/icon/icons8-male-user-30.png" alt="Admin"
+                                            class="rounded-circle p-1 bg-dark" width="110">
+                                        <div class="mt-3">
+                                            <!-- <h4>
+                                               
+                                            </h4> -->
+                                            <!-- <p class="text-secondary mb-1"></p>
+									<p class="text-muted font-size-sm"></p>
+									<button class="btn btn-primary">Follow</button>
+									<button class="btn btn-outline-primary">Message</button> -->
+                                        </div>
+                                    </div>
+                                    <hr class="my-4">
+                                    <ul class="list-group list-group-flush align-items-center ">
+                                        <li class="list-group-item " style="width: 310px;">
+                                            <a href="/user/profile"> <button type="button" class="btn btn-outline-dark"
+                                                    style="width: 280px;">User Profile</button> </a>
+                                        </li>
+                                        <li class="list-group-item " style="width: 310px;">
+                                            <a href="/user/address"> <button type="button" class="btn btn-outline-dark "
+                                                    style="width: 280px;">Address Management</button> </a>
+                                        </li>
+                                        <li class="list-group-item " style="width: 310px;">
+                                            <a href="/user/changePass"> <button type="button"
+                                                    class="btn btn-outline-dark" style="width: 280px;">Change
+                                                    Password</button> </a>
+                                        </li>
+
+                                        <li class="list-group-item " style="width: 310px;">
+                                            <a href="/user/order"> <button type="button"
+                                                    class="btn btn-outline-dark active"
+                                                    style="width: 280px;">Order</button> </a>
+                                        </li>
+
+                                       <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/wallet"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Wallet</button> </a>
+                                    </li>
+                                    <!-- <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/referrel"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Referrel Code</button> </a>
+                                    </li> -->
+                                        <li class="list-group-item " style="width: 310px;">
+                                            <a href="/logout"> <button type="button" class="btn btn-outline-dark"
+                                                    style="width: 280px;">Logout</button> </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGES INNER -->
+                        <section class="pages-in chart-page col-lg-8">
+
+
+
+
+
+                            <div class="col">
+                                <div class="card shadow">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center  table  ">
+                                            <!-- <thead class="thead-light">
+                                                <tr>
+                                                    <th class="text-dark fw-bold" scope="col">Product</th>
+                                                    <th class="text-dark fw-bold" scope="col">Price</th>
+                                                    <th class="text-dark fw-bold" scope="col">Quantity</th>
+                                                    <th class="text-dark fw-bold" scope="col">Status</th>
+                                                    <th class="text-dark fw-bold" scope="col">Action</th>
+                                              
+                                                </tr>
+                                            </thead> -->
+
+                                            <% for(let i=0 ; i<orderData.length ; i++){ %>
+                                                <tr>
+                                                    <td colspan="4" class="text-dark ">
+                                                        <span class="">
+                                                            <strong>Order ID:</strong> #<%= orderData[i].orderId %>
+                                                        </span> ||
+                                                        <span>
+                                                            <strong>Order Date:</strong>
+                                                            <%= new Date(orderData[i].createdAt).toLocaleDateString() %>
+                                                        </span>
+                                                        <span class="fw-bold ml-3 text-dark " style="font-size:14px;"> Total Price:
+                                                            ₹<%= orderData[i].totalPrice%>
+                                                        </span>
+
+
+                                                    </td>
+
+                                                    <td class="fw-semibold">
+                                                      
+                                                    </td>
+
+                                                    <td>
+                                                        <a href="/user/order/orderDetails?orderId=<%=orderData[i].orderId %>"
+                                                            class="text-decoration-none fw-bold text-dark">View 
+                                                            Details</a>
+
+                                                    </td>
+                                                    <% if (orderData[i].paymentMethod==="Razorpay" &&
+                                                        orderData[i].paymentStatus=="Pending" ) { %>
+
+
+                                                        <td><a onclick="rePayment('<%=orderData[i].totalPrice%>','<%=orderData[i]._id%>')"
+                                                                class="btn btn-outline-success btn-sm fw-bold text-dark">Retry
+                                                                Payment</a></td>
+                                                        <% } %>
+                                                </tr>
+
+                                                <% for(let j=0 ; j<orderData[i].orderedItems.length ; j++){ %>
+
+                                                    <tbody class="text-align-center">
+                                                        <!-- Order Details Row -->
+
+
+                                                        <!-- Product Details Row -->
+                                                        <tr>
+                                                            <td class="d-flex ">
+                                                                <div>
+                                                                    <img id="firstImage"
+                                                                        src="/uploads/<%= orderData[i].orderedItems[j].image[0] %>"
+                                                                        alt="" style="width: 50px; height: 50px;">
+                                                                </div>
+                                                                <div class="mx-2">
+
+                                                                    <a href="/product?id=<%=orderData[i].orderedItems[j].productId %>" class="pt-4 fw-bold text-dark"
+                                                                        style="font-size: small;text-decoration: none;">
+                                                                        <%= orderData[i].orderedItems[j].productName %>
+                                                                    </a>
+
+                                                                </div>
+
+                                                            </td>
+                                                            <td class="fw-bold ">
+                                                               <span class="fw-bold text-secondary">₹<%= orderData[i]?.orderedItems[j]?.offerPrice %></span> 
+                                                                <span class="fw-bold text-success">(<%= orderData[i]?.orderedItems[j]?.offer %>%)</span>
+                                                            </td>
+                                                            
+                                                            <td class="fw-semibold">
+                                                                QTY:<%= orderData[i].orderedItems[j].cartQuantity %>
+                                                            </td>
+                                                            <td>
+                                                                <% if(orderData[i].orderedItems[j].orderStatus=="Pending"
+                                                                    ) { %>
+                                                                    <span class="p-1 badge badge-info ">
+                                                                        <%= orderData[i].orderedItems[j].orderStatus %>
+                                                                    </span>
+
+                                                                    <% }else
+                                                                        if(orderData[i].orderedItems[j].orderStatus=="Shipped"
+                                                                        ){ %>
+                                                                        <span class="badge badge-waring p-1">
+                                                                            <%= orderData[i].orderedItems[j].orderStatus
+                                                                                %>
+                                                                        </span>
+                                                                        <% }else
+                                                                            if(orderData[i].orderedItems[j].orderStatus=="Delivered"
+                                                                            ){ %>
+                                                                            <span class="badge badge-success p-1">
+                                                                                <%= orderData[i].orderedItems[j].orderStatus
+                                                                                    %>
+                                                                            </span>
+                                                                            <% }else
+                                                                                if(orderData[i].orderedItems[j].orderStatus=="Cancelled"
+                                                                                ||
+                                                                                orderData[i].orderedItems[j].orderStatus=="Returned"
+                                                                                ){ %>
+                                                                                <span class="badge badge-danger p-1">
+                                                                                    <%= orderData[i].orderedItems[j].orderStatus
+                                                                                        %>
+                                                                                </span>
+                                                                                <% } %>
+
+                                                            </td>
+
+                                                            <td class="fw-semibold">
+                                                                <% if (orderData[i].orderedItems[j].returnApprove==1) {
+                                                                    %>
+                                                                    <div>
+
+                                                                        <p class=" fw-light text-success"
+                                                                            style="font-size: 12px;">Return Requested
+                                                                        </p>
+
+                                                                    </div>
+
+                                                                    <% }else
+                                                                        if(orderData[i].orderedItems[j].returnApprove==2){
+                                                                        %>
+                                                                        <div>
+
+                                                                            <p class=" fw-light text-success"
+                                                                                style="font-size: 12px;">Refunded
+                                                                                </p>
+
+                                                                        </div>
+                                                                        <% }else
+                                                                            if(orderData[i].orderedItems[j].returnApprove==3){
+                                                                            %>
+                                                                            <div>
+
+                                                                                <p class=" fw-light text-danger"
+                                                                                    style="font-size: 12px;">Return
+                                                                                    Rejected</p>
+
+                                                                            </div>
+                                                                            <% } %>
+
+                                                                                <div
+                                                                                    class="btn-group d-flex flex-column">
+                                                                                    <% if(
+                                                                                        orderData[i].orderedItems[j].orderStatus=="Pending"
+                                                                                        ||orderData[i].orderedItems[j].orderStatus=="Shipped"
+                                                                                        ){%>
+
+                                                                                        <button
+                                                                                            onclick="cancelProduct('<%= orderData[i].orderedItems[j].productId%>', '<%= orderData[i].orderId %>')"
+                                                                                            type="button"
+                                                                                            class="btn btn-warning btn-sm text-white cancelOrder"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#cancelReasonModal">
+                                                                                            Cancel
+                                                                                        </button>
+
+
+                                                                                        <% }else
+                                                                                            if(orderData[i].orderedItems[j].orderStatus=="Delivered"
+                                                                                            &&
+                                                                                            orderData[i].orderedItems[j].returnApprove==0){%>
+
+
+                                                                                            <button
+                                                                                                onclick="returnProduct('<%= orderData[i].orderedItems[j].productId%>', '<%= orderData[i].orderId %>')"
+                                                                                                type="button"
+                                                                                                class="btn btn-danger btn-sm text-white returnOrder"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#returnReasonModal">
+                                                                                                Return
+                                                                                            </button>
+                                                                                            <%}%>
+
+
+
+                                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+                                                    </tbody>
+                                                    <% } %>
+                                                        <% } %>
+                                        </table>
+                                    </div>
+
+
+                                    <!-- ========================== -->
+
+                                    <div class="card-footer py-4 ">
+                                        <nav aria-label="...">
+                                            <ul class="pagination justify-content-center mb-0">
+                                                <%if(currentPage>1){%>
+                                                    <li class="page-item ">
+                                                        <a class="page-link " href="?page=<%= currentPage - 1 %>"
+                                                            tabindex="-1">
+                                                            < </a>
+                                                    </li>
+                                                    <%}%>
+                                                        <%for (let i=1;i<=totalPages;i++){%>
+                                                            <%if(i==currentPage){%>
+                                                                <li
+                                                                    class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                                                    <a class="page-link" href="#">
+                                                                        <%=i%>
+                                                                    </a>
+
+
+                                                                </li>
+                                                                <% }else{ %>
+
+
+                                                                    <li
+                                                                        class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                                                        <a class="page-link" href="?page=<%=i%>">
+                                                                            <%=i%>
+                                                                        </a>
+                                                                    </li>
+                                                                    <%}%>
+                                                                        <%}%>
+                                                                            <% if(currentPage < totalPages){%>
+                                                                                <li class="page-item">
+                                                                                    <a class="page-link"
+                                                                                        href="?page=<%=totalPages%>">></a>
+
+
+                                                                                </li>
+                                                                                <%}%>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- cancel reason modal -->
+
+        <div class="modal fade" id="cancelReasonModal" tabindex="-1" aria-labelledby="reasonModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="cancelReasonModalLabel">Select
+                            Cancellation Reason</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-control rounded" id="cancelReasonSelect">
+                            <option disabled selected>Select
+                                Cancellation Reason</option>
+                            <option>Order Created by Mistake
+                            </option>
+                            <option>Item(s) Would Not Arrive on Time
+                            </option>
+                            <option>Item Price Too High</option>
+                            <option>Need to Change Shipping Address
+                            </option>
+                            <option>Need to Change Payment Method
+                            </option>
+                            <option>Other</option>
+                        </select>
+                        <span id="cancel-selection-error" style="color: #BA0933; font-size: 13px;"></span>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" id="cancel-reason-btn">Cancel
+                            Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Return reason modal -->
+        <div class="modal fade" id="returnReasonModal" tabindex="-1" aria-labelledby="reasonModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="returnReasonModalLabel">Select
+                            Return Reason</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-control rounded" id="returnReasonSelect">
+                            <option disabled selected>Select Return
+                                Reason</option>
+                            <option value="Received Wrong Item">
+                                Received Wrong Item</option>
+                            <option value="Defective or Damaged Product">
+                                Defective or Damaged Product
+                            </option>
+                            <option value="Wrong Size or Fit">Wrong
+                                Size </option>
+                            <option value="Unsatisfactory Quality">
+                                Unsatisfactory Quality</option>
+                            <option value="Late Delivery">Late
+                                Delivery</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span id="return-selection-error" style="color: #BA0933; font-size: 13px;"></span>
+                        <input type="text" class="form-control mt-3 rounded" id="otherReasonInput"
+                            placeholder="Enter Other Reason..." style="display: none;">
+                        <span id="return-input-error" style="color: #BA0933; font-size: 13px;"></span>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" id="return-reason-btn">Return
+                            Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- Custom JS -->
+
+        <script>
+            //cancel order
+            let productId;
+            let orderId;
+
+            function cancelProduct(prodId, ordId) {
+                productId = prodId;
+                orderId = ordId;
+                console.log(productId + " productId");
+                console.log(orderId + " orderId");
+            }
+
+            function returnProduct(prodId, ordId) {
+                productId = prodId;
+                orderId = ordId;
+                console.log(productId + " productId");
+                console.log(orderId + " orderId");
+            }
+
+            document.getElementById('cancel-reason-btn').addEventListener('click', async function () {
+                let cancellationReason = document.getElementById('cancelReasonSelect').value;
+                let errorElement = document.getElementById('cancel-selection-error');
+                errorElement.textContent = "";
+
+                if (cancellationReason === "Select Cancellation Reason" || cancellationReason === "") {
+                    errorElement.textContent = 'Please select a cancellation reason.';
+                    return;
+                }
+
+                let data = {
+                    cancellationReason: cancellationReason,
+                    productId: productId,
+                    orderId: orderId,
+                };
+                console.log(data);
+
+                try {
+                    const response = await fetch('/order/cancel-order', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+                    const resp = await response.json();
+                    console.log(resp + "this is response")
+                    if (resp.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: resp.message,
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            position: 'top-end'
+                        }).then(() => {
+                            window.location.reload();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Error',
+                            text: resp.message,
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            position: 'top-end',
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while cancelling the order. Please try again.',
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        position: 'top-end'
+                    });
+                    console.error('Error:', error);
+                }
+            });
+
+
+            const returnReasonSelect = document.getElementById('returnReasonSelect');
+            const otherReasonInput = document.getElementById('otherReasonInput');
+            const returnReasonBtn = document.getElementById('return-reason-btn');
+            const returnSelectionError = document.getElementById('return-selection-error');
+            const returnInputError = document.getElementById('return-input-error');
+
+            returnReasonSelect.addEventListener('change', function () {
+                if (returnReasonSelect.value === 'Other') {
+                    otherReasonInput.style.display = 'block';
+                } else {
+                    otherReasonInput.style.display = 'none';
+                    returnInputError.textContent = '';
+                }
+                returnSelectionError.textContent = '';
+            });
+
+            returnReasonBtn.addEventListener('click', async function () {
+                const selectedReason = returnReasonSelect.value;
+                let otherReason = '';
+
+                if (selectedReason === 'Other') {
+                    otherReason = otherReasonInput.value.trim();
+                    if (otherReason === '') {
+                        returnInputError.textContent = 'Please enter a reason.';
+                        return;
+                    }
+                }
+
+                if (selectedReason === 'Select Return Reason') {
+                    returnSelectionError.textContent = 'Please select a return reason.';
+                    return;
+                }
+                let reason = selectedReason === 'Other' ? otherReason : selectedReason
+
+                console.log(orderId, productId, reason + " this is we called return data")
+
+                try {
+                    const response = await fetch('/order/return-order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ orderId, productId, reason }),
+                    });
+                    const resp = await response.json();
+                    console.log(resp + "this is response")
+                    if (resp.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: resp.message,
+                            toast: true,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            position: 'top-end'
+                        }).then(() => {
+                            window.location.reload();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            toast: true,
+                            text: resp.message,
+                            showConfirmButton: false,
+                            timer: 2000,
+                            position: 'top-end'
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while submitting the return request. Please try again.',
+                        toast: true,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        position: 'top-end'
+                    });
+                    console.error('Error:', error);
+                }
+                $('#returnReasonModal').modal('hide');
+            });
+
+
+
+            //REPAYMENT RAZORPAY PENDING PAYMENT 
+
+            async function rePayment(totalCost, orderId) {
+                console.log(totalCost, orderId)
+                Swal.fire({
+                    title: "Do you want to retry the payment ?",
+
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+
+                }).then(async (result) => {
+
+                    if (result.isConfirmed) {
+                        const response = await fetch('/retryPayment', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+
+                            body: JSON.stringify({ totalCost, orderId })
+                        })
+
+
+                        const data = await response.json();
+                        console.log(data);
+
+
+                        const options = {
+                            "key": data.key_id,
+                            "amount": data.amount,
+                            "currency": "INR",
+                            "name": "TICKER",
+                            "description": "Retry Payment",
+                            "image": "/images/download.png",
+                            "order_id": data.razorpayOrderId,
+                            "handler": function (response) {
+
+                                console.log(response, "this is the response")
+                                verifyRetryPayment(response.razorpay_payment_id, orderId,);
+                            },
+                            "prefill": {
+                                "name": "USER",
+                                "email": "example@gmail.com",
+                                "contact": "9562200681"
+                            },
+                            "notes": {
+                                "address": "Razorpay Corporate Office"
+                            },
+                            "theme": {
+                                "color": "#000000"
+                            }
+                        };
+                        var rzp1 = new Razorpay(options);
+                        rzp1.on('payment.failed', function (response) {
+                            alert(response.error.code);
+                            alert(response.error.description);
+                            alert(response.error.source);
+                            alert(response.error.step);
+                            alert(response.error.reason);
+                            alert(response.error.metadata.order_id);
+                            alert(response.error.metadata.payment_id);
+                        });
+                        var paymentGateway = new Razorpay(options);
+                        paymentGateway.open();
+                        paymentGateway.on('payment.failed', function (response) {
+
+                            setTimeout(() => {
+                                paymentGateway.close();
+                                window.location.href = "/user/order"
+                            }, 2000)
+
+                        });
+                    }
+                });
+            }
+            async function verifyRetryPayment(rpyPaymentId, orderId) {
+                console.log(rpyPaymentId, orderId)
+
+                try {
+                    const response = await fetch('/verify-Retry-Payment', {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rpyPaymentId, orderId })
+
+                })
+
+                const data =await response.json();
+                console.log(data, 'this is verify data')
+                if (data.success) {
+
+               Swal.fire({
+
+                        icon: 'success',
+                        title: 'Success',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        text: data.message,
+                        timer:1000
+
+                    }).then(() => {
+                        window.location.reload()
+                    })
+                } else {
+
+                   Swal.fire({
+                        icon: "error",
+                        title: "Your payment is Failed",
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        text: data.message,
+                        timer:1000
+                    }).then(() => {
+                        window.location.reload()
+                    })
+
+
+                }
+                } catch (error) {
+                    console.log(error.message)
+                }
+
+               
+            }
+        </script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <!-- Bootstrap and Custom JavaScript libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+        <script src="../../admin/vendors/js/vendor.bundle.base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    </body>
+
+</html>

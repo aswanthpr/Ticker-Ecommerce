@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ticker Admin </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="/admin/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="/admin/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="/admin/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="/admin/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="/admin/css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="/image/download.png">
+
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"> -->
+
+  <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
+  <script src="https://unpkg.com/cropperjs"></script>
+
+  <style>
+    .cropper-container {
+      width: 100%;
+      height: 100%;
+      max-height: 400px;
+      margin-bottom: 10px;
+    }
+
+    .modal-content {
+      margin: 10% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      background-color: #363636;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="search-panel">
+        <div class="search-inner d-flex align-items-center justify-content-center">
+          <div class="close-btn">Close <i class="fa fa-close"></i></div>
+          <form id="searchForm" action="#">
+            <div class="form-group">
+              <input type="search" name="search" placeholder="What are you searching for...">
+              <button type="submit" class="submit">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="/admin/dashboard" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong
+                class="text-primary">TICKER</strong><strong>Admin</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div>
+          </a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+        </div>
+        <div class="right-menu list-inline no-margin-bottom">
+          <div class="list-inline-item"><a href="#" class="search-open nav-link"><i
+                class="icon-magnifying-glass-browser"></i></a></div>
+
+
+
+
+
+          <!-- Log out               -->
+
+          <div class="list-inline-item logout">
+
+            <form action="/admin/logout" method="post">
+              <button class="btn btn-dark btn-sm mb-2" type="submit">Logout<i class="icon-logout"></i></button>
+            </form>
+
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+
+      <!-- Sidebar Navidation Menus-->
+      <ul class="list-unstyled">
+        <li><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
+        <li class="active"><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
+        <li><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
+        <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
+        <li class="active"><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
+
+        <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+              class="icon-windows"></i>Offer</a>
+          <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a>
+            </li>
+            <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+          </ul>
+        </li>
+        <li><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
+        <!--<li><a href="forms.html"> <i class="icon-layers"></i>Category</a></li>
+        <li><a href="forms.html"> <i class="icon icon-picture"></i>Banner</a></li>-->
+      </ul>
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <!-- Page Header-->
+      <div class="page-header no-margin-bottom">
+        <div class="container-fluid">
+          <h2 class="h5 no-margin-bottom">P r o d u c t s</h2>
+          <div class="block-body text-center d-flex justify-content-end">
+            <!-- <a type="button" href="/admin/add-product" data-target="#myModal" class="btn btn-primary text-white">+ Add New
+              Product</a> -->
+            <!-- Modal-->
+            <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+              class="modal fade text-left">
+              <div role="document" class="modal-dialog">
+                <div class="modal-content">
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Breadcrumb-->
+      <div class="container-fluid">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+          <li class="breadcrumb-item active"><a href="/admin/product">Products</a> </li>
+          <li class="breadcrumb-item active">create proudct</li>
+        </ul>
+      </div>
+
+
+      <div class="col-lg-12">
+        <div class="block mb-5">
+          <div class="title "><strong>Create Products</strong></div>
+          <div class="block-body">
+            <form class="form-horizontal" action="/admin/add-product" method="post" id="formData"
+              enctype="multipart/form-data">
+
+
+              <!-- <div class="form-group row">
+            <label class="col-sm-3 form-control-label">Placeholder</label>
+            <div class="col-sm-9">
+              <input type="text" placeholder="placeholder" class="form-control">
+            </div>
+          </div> -->
+
+
+
+              <div class="row mt-4">
+                <label class="col-sm-3 form-control-label">Product Name</label>
+                <div class="col-sm-9">
+                  <div class="form-group-material">
+                    <input id="name" type="text" name="name" class="input-material">
+                    <label for="register-username" class="label-material">Enter Name</label>
+                    <h6 class="text-danger" id="nameMessage"></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <label class="col-sm-3 form-control-label">Subtitle</label>
+                <div class="col-sm-9">
+                  <div class="form-group-material">
+                    <input id="subtitle" type="text" name="subtitle" class="input-material">
+                    <label for="register-username" class="label-material">Enter Subtitle</label>
+                    <h6 class="text-danger" id="subtitleMessage"></h6>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <label class="col-sm-3 form-control-label">Brand</label>
+                <div class="col-sm-9">
+                  <div class="form-group-material">
+                    <input id="brand" type="text" name="brand" class="input-material">
+                    <label for="register-username" class="label-material">Enter Brand</label>
+                    <h6 class="text-danger" id="brandMessage"></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <label class="col-sm-3 form-control-label">color</label>
+                <div class="col-sm-9">
+                  <div class="form-group-material">
+                    <input id="color" type="text" name="color" class="input-material">
+                    <label for="register-username" class="label-material">Enter color</label>
+                    <h6 class="text-danger" id="colorMessage"></h6>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="line"></div>
+              <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Gender</label>
+                <div class="col-sm-9">
+
+                  <select name="gender" id="gender" class="form-control mb-3 mb-3">
+                    <option value="" selected disabled>Choose a gender</option>
+                    <option>Men</option>
+                    <option>Women</option>
+                    <option>Pair</option>
+                    <option>Unisex</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="line"></div>
+              <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Function</label>
+                <div class="col-sm-9">
+                  <select name="category" id="category" class="form-control mb-3 mb-3">
+                    <option value="" disabled selected> choose a category</option>
+                    <% categoryData.forEach(element=> { %>
+
+                      <option>
+                        <%= element.categoryName %>
+                      </option>
+                      <% }) %>
+
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <label class="col-sm-3 form-control-label">Stock</label>
+                <div class="col-sm-9">
+                  <div class="form-group-material">
+                    <input id="stock" type="number" name="stock" class="input-material" min="0">
+                    <label for="register-username" class="label-material">Enter Stock</label>
+                    <h6 class="text-danger" id="stockMessage"></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <label class="col-sm-3 form-control-label">MRP</label>
+                <div class="col-sm-9">
+                  <div class="form-group-material">
+                    <input id="mrp" type="number" name="mrp" class="input-material" min="0">
+                    <label for="register-username" class="label-material">Enter MRP</label>
+                    <h6 class="text-danger" id="mrpMessage"></h6>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <label for="image-upload-1" class="custom-file-upload btn btn-success mb-3 mr-3 btn-sm ">Upload Image
+                1</label>
+              <label for="image-upload-2" class="custom-file-upload btn btn-success mb-3 mr-3 btn-sm ml-5">Upload Image
+                2</label>
+              <label for="image-upload-3" class="custom-file-upload btn btn-success mb-3 mr-3 btn-sm ml-5">Upload Image
+                3</label>
+              <div class="d-flex">
+
+
+                <div class="form-group  ">
+                  <i class="fa-solid fa-photo-film fa-2x ms-3"></i>
+
+                  <img src="" class="image-preview" alt="">
+                  <input type="file" class="form-control col-lg-4 col-md-4 col-sm-4" style="display: none;"
+                    id="image-upload-1" name="Image0" accept=".jpg, .png, image/jpeg, image/png"
+                    onchange=" previewImage(event)">
+                  <div id="image1Error" class="text-danger"></div>
+
+                </div>
+
+                <div class="form-group ml-4">
+                  <i class="fa-solid fa-photo-film fa-2x ms-3"></i>
+
+                  <img src="" class="image-preview" alt="">
+                  <input type="file" class="form-control col-lg-4 col-md-4 col-sm-4" style="display: none;"
+                    id="image-upload-2" name="image1" accept=".jpg, .png, image/jpeg, image/png"
+                    onchange=" previewImage(event)">
+                  <div id="image2Error" class="text-danger"></div>
+                </div>
+
+                <div class="form-group  ml-4">
+
+                  <i class="fa-solid fa-photo-film fa-2x ms-3"></i>
+
+                  <img src="" class="image-preview" alt="">
+                  <input type="file" class="form-control col-lg-4 col-md-4 col-sm-4 " style="display: none;"
+                    id="image-upload-3" name="image2" accept=".jpg, .png, image/jpeg, image/png"
+                    onchange=" previewImage(event)">
+                  <div id="image3Error" class="text-danger"></div>
+                </div>
+              </div>
+
+
+
+              <div class="line mt-5 "></div>
+              <div class="form-group row d-flex mt-5 mx-aut">
+                <div class="col-sm-9 mr-auto">
+                  <a type="button" href="/admin/product" class=" btn btn-secondary">Close</a>
+                  <button id="submitBtn" type="submit" class="btn btn-primary">Save </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <!-- Modal for cropping -->
+
+      <div id="cropperModal" class="modal ">
+        <div class="modal-content">
+          <div class="cropper-container">
+            <img id="cropperImage" src="" alt="Image for cropping" />
+          </div>
+          <button onclick="cropImage()">Crop</button>
+          <button onclick="closeModal()">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/admin/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="/admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/admin/js/front.js"></script>
+    <script>
+
+      let cropper;
+      let currentInput;
+      let croppedFiles = new Map(); // To store the cropped files
+
+      function previewImage(event) {
+        const input = event.target;
+        const file = input.files[0];
+        currentInput = input; // Save the reference to the current input
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const cropperImage = document.getElementById('cropperImage');
+            cropperImage.src = e.target.result;
+            document.getElementById('cropperModal').style.display = 'block';
+            if (cropper) {
+              cropper.destroy();
+            }
+            cropper = new Cropper(cropperImage, {
+              // aspectRatio: 3 / 4, // Portrait aspect ratio
+              // viewMode: 1,
+              aspectRatio: 1,
+              viewMode: 1
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function cropImage() {
+        if (cropper) {
+          cropper.getCroppedCanvas({
+            width: 150, // desired width
+            height: 150, // desired height
+          }).toBlob(function (blob) {
+            const croppedImageSrc = URL.createObjectURL(blob);
+            const imagePreview = currentInput.previousElementSibling;
+            if (imagePreview && imagePreview.tagName === 'IMG') {
+              imagePreview.src = croppedImageSrc;
+            }
+            // Replace the file input with the cropped image blob
+            const dataTransfer = new DataTransfer();
+            const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
+            dataTransfer.items.add(file);
+            currentInput.files = dataTransfer.files;
+            // Store the cropped file in the Map
+            croppedFiles.set(currentInput.name, file);
+            closeModal();
+          }, 'image/jpeg');
+        }
+      }
+
+      function closeModal() {
+        document.getElementById('cropperModal').style.display = 'none';
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
+      }
+
+
+
+
+      // document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('formData');
+
+      const nameInput = document.getElementById('name');
+      const subtitleInput = document.getElementById('subtitle');
+      const brandInput = document.getElementById('brand');
+      const colorInput = document.getElementById('color');
+      const stockInput = document.getElementById('stock');
+      const mrpInput = document.getElementById('mrp');
+      const offerPriceInput = document.getElementById('offerPrice');
+      const imageInput = document.getElementById('image');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+
+
+        // Name validation
+        if (!/^[A-Za-z][A-Za-z\d ]{4,29}$/.test(nameInput.value.trim()) || nameInput.value.trim().length < 5) {
+          document.getElementById('nameMessage').textContent = 'cannot start with  Numbers, total length of the name is between 5 and 30 characters, special characters not allowded';
+          isValid = false;
+
+        } else {
+          document.getElementById('nameMessage').textContent = '';
+        }
+
+        // Subtitle validation
+        if (subtitleInput.value.trim().length < 4 || !/^[a-zA-Z\s]+$/.test(subtitleInput.value.trim())) {
+          document.getElementById('subtitleMessage').textContent = 'Subtitle must be at least 4 characters long and contain only letters and spaces';
+          isValid = false;
+
+        } else {
+          document.getElementById('subtitleMessage').textContent = '';
+        }
+        // Brand validation
+        if (brandInput.value.trim().length < 3 || !/^[a-zA-Z\s]+$/.test(brandInput.value.trim())) {
+          document.getElementById('brandMessage').textContent = 'Brand must be at least 3 characters long and contain only letters and spaces';
+          isValid = false;
+
+        } else {
+          document.getElementById('brandMessage').textContent = '';
+        }
+
+        // Color validation
+        if (colorInput.value.trim().length < 3 || !/^[a-zA-Z\s]+$/.test(colorInput.value.trim())) {
+          document.getElementById('colorMessage').textContent = 'Color is required and must contain only letters and spaces';
+          isValid = false;
+
+        } else {
+          document.getElementById('colorMessage').textContent = '';
+        }
+
+
+        // Stock validation
+        const stockValue = stockInput.value.trim();
+        if (!/^[1-9]\d*$/.test(stockValue)) {
+          document.getElementById('stockMessage').textContent = 'Stock must be a positive non-zero number';
+          isValid = false;
+
+        } else {
+          document.getElementById('stockMessage').textContent = '';
+        }
+
+        // MRP validation
+        const mrpValue = mrpInput.value.trim();
+        if (!/^[1-9]\d*$/.test(mrpValue)) {
+          document.getElementById('mrpMessage').textContent = 'MRP must be a positive non-zero number';
+          isValid = false;
+
+        } else {
+          document.getElementById('mrpMessage').textContent = '';
+        }
+
+
+
+
+        const imageInputs = [
+          document.getElementById('image-upload-1'),
+          document.getElementById('image-upload-2'),
+          document.getElementById('image-upload-3')
+        ];
+
+
+        imageInputs.forEach((input, index) => {
+          const errorDiv = document.getElementById(`image${index + 1}Error`);
+          if (!input.files.length) {
+            errorDiv.textContent = 'This field is required.';
+            isValid = false;
+          } else {
+            errorDiv.textContent = '';
+          }
+        });
+
+        // Prevent form submission if not valid
+        if (!isValid) {
+          console.log("8888888888888")
+          event.preventDefault();
+        }
+
+        if (isValid) {
+          const formData = new FormData(document.getElementById('formData'));
+
+          console.log('FormData:', formData, 'this is formadata');
+
+          // croppedFiles.forEach((file, key) => {
+          //   console.log(key,file,'console')
+          //       formData.append(key, file);
+          //        });
+
+
+          for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+          }
+
+          console.log(formData)
+          console.log(formData, 'form');
+          try {
+            const response = await fetch('/admin/add-product', {
+              method: 'POST',
+              // headers:{'Content-Type':'application/json'},
+              // body:JSON.stringify(formData)
+              body: (formData)
+            });
+            console.log(response.status, " this is status")
+            const data = await response.json()
+            console.log(data, " this is response", data.message, data.success)
+            if (data.success) {
+              await Swal.fire({
+                icon: 'success',
+                text: data.message,
+                toast: true,
+                position: 'top-end',
+                timer: 1000,
+                showConfirmButton: false,
+
+              }).then(() => {
+                window.location.href = '/admin/product'
+              })
+            } else {
+              await Swal.fire({
+                icon: 'warning',
+                text: data.message,
+                toast: true,
+                position: 'top-end',
+                timer: 1000,
+                showConfirmButton: false,
+
+              })
+            }
+
+          } catch (error) {
+            console.error('Error:', error);
+            await Swal.fire({
+              icon: 'error',
+              text: data.message || "Something went wrong",
+              toast: true,
+              position: 'top-end',
+              timer: 1000,
+              showConfirmButton: false,
+
+            })
+          }
+
+        }
+      });
+      // });
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

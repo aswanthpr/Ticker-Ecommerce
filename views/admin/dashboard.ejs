@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ticker Admin </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="/admin/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="/admin/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="/admin/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="/admin/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="/admin/css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="/image/download.png">
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+  <style>
+    #myChart {
+      width: 100%;
+      max-width: 900px;
+      /* Increase max-width */
+      height: 250px;
+      /* Set a specific height */
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="/admin/dashboard" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong
+                class="text-primary">TICKER</strong><strong>ADMIN</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div>
+          </a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+        </div>
+
+        <!-- <div class="right-menu list-inline no-margin-bottom ">  
+            <form id="searchForm" action="">
+              <div class="form-group d-flex">
+               
+                <input name="search" id="search" type="search" placeholder="What are you searching for..." class="mr-sm-3 form-control form-control">
+                <button style="width: 90px;" type="submit"  class="btn btn-primary">search</button>
+              </div>
+            </form>
+          </div> -->
+        <div class="right-menu list-inline no-margin-bottom">
+
+
+          <!-- Log out               -->
+
+          <div class="list-inline-item logout">
+
+
+            <a href="/admin/logout" class="btn btn-dark btn-sm ml-2 mr-4">Logout<i class="icon-logout"></i></a>
+
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+
+      <!-- Sidebar Navidation Menus-->
+      <ul class="list-unstyled">
+        <li class="active"><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
+        <li><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
+        <li><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
+        <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
+        <li><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
+
+        <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+              class="icon-windows"></i>Offer</a>
+          <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a>
+            </li>
+            <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+          </ul>
+        </li>
+        <li><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
+
+        <!-- <li><a href="forms.html"> <i class="icon icon-picture"></i>Banner</a></li> -->
+      </ul>
+
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <div class="page-header">
+        <div class="container-fluid">
+          <h2 class="h5 no-margin-bottom">D a s h b o a r d</h2>
+        </div>
+      </div>
+
+      <section>
+        <section class="no-padding-top no-padding-bottom">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                  <div class="progress-details d-flex align-items-end justify-content-between">
+                    <div class="title">
+                      <div class="icon"><i class=" icon-page  "></i></div><strong>Total sales</strong>
+                    </div>
+                    <div class="number dashtext-1">
+                      <%=totalSales[0].count %>
+                    </div>
+                  </div>
+                  <div class="progress progress-template">
+                    <div role="progressbar" style="width:<%=(totalSales[0].count/1000)*100 %>%"
+                      aria-valuenow="<%=(totalSales[0].count/1000)*100 %>" aria-valuemin="0" aria-valuemax="100"
+                      class="progress-bar progress-bar-template dashbg-1"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                  <div class="progress-details d-flex align-items-end justify-content-between">
+                    <div class="title">
+                      <div class="icon"><i class="icon-new-file"></i></div><strong>Total Amount</strong>
+                    </div>
+                    <div class="number dashtext-2">
+                      <%=totalCost[0]?.sumAmount %>
+                    </div>
+                  </div>
+                  <div class="progress progress-template">
+                    <div role="progressbar" style="width:<%=(totalCost[0]?.sumAmount/100000)*100 %>%"
+                      aria-valuenow="<%=(totalCost[0].sumAmount/100000)*100  %>" aria-valuemin="0" aria-valuemax="100"
+                      class="progress-bar progress-bar-template dashbg-2"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                  <div class="progress-details d-flex align-items-end justify-content-between">
+                    <div class="title">
+                      <div class="icon"><i class="icon-pencil-case"></i></div><strong>Total discount</strong>
+                    </div>
+                    <div class="number dashtext-3">
+                      <%=totalOfferAmt[0].totalDiscount%>
+                    </div>
+                  </div>
+                  <div class="progress progress-template">
+                    <div role="progressbar" style="width:<%=(totalOfferAmt[0].totalDiscount/100000)*100%>%"
+                      aria-valuenow="<%=(totalOfferAmt[0].totalDiscount/100000)*100%>" aria-valuemin="0"
+                      aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                  <div class="progress-details d-flex align-items-end justify-content-between">
+                    <div class="title">
+                      <div class="icon"><i class="icon-user"></i></div><strong>Total Users</strong>
+                    </div>
+                    <div class="number dashtext-4">
+                      <%=userData%>
+                    </div>
+                  </div>
+                  <div class="progress progress-template">
+                    <div role="progressbar" style="width:<%=(userData/1000)*100%>%"
+                      aria-valuenow="<%=(userData/1000)*100%>" aria-valuemin="0" aria-valuemax="100"
+                      class="progress-bar progress-bar-template dashbg-4"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="d-flex ">
+          <div class="row col-lg-12">
+            <div class="col-lg-12 col-md-12 grid-margin stretch-card">
+              <div class="card col-lg-12 col-md-12">
+                <div class="card-body col-lg-12">
+                  <div class="clearfix">
+                    <h4 class="card-title float-left">Ticker Sales Statistics</h4>
+                    <div id="visit-sale-chart-legend"
+                      class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                  </div>
+                  <div class="d-flex justify-content-end  my-4">
+                    <label for="time-period-select" class="mx-2 mt-1">Select Time Period:</label>
+                    <select id="time-period">
+                      <option>
+                        <%=currentPeriod%>
+                      </option>
+
+                      <% timePeriods.forEach((timePeriod)=>{%>
+                        <% if(timePeriod!==currentPeriod){%>
+                          <option>
+                            <%=timePeriod%>
+                          </option>
+                          <%} %>
+                            <%})%>
+
+
+                    </select>
+                    <!-- <div>
+                  <button id="apply-btn" class="btn btn-success  mx-2 p-2 btn-sm ">Apply</button>
+                </div> -->
+                  </div>
+                  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class=" ">
+          <div class="row w-100">
+            <div class="w-50  grid-margin stretch-card">
+              <div class="card ">
+                <div class="card-body ">
+                  <div class="clearfix">
+                    <h4 class="card-title float-left">Ticker Best Selling Product</h4>
+                    <div id="visit-sale-chart-legend"
+                      class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                  </div>
+
+
+
+
+                  <canvas id="donought" style="width:100%;max-width:600px"></canvas>
+                </div>
+
+
+
+              </div>
+            </div>
+
+            <div class="w-50  grid-margin stretch-card">
+              <div class="card ">
+                <div class="card-body ">
+                  <div class="clearfix">
+                    <h4 class="card-title float-left">Ticker Best Selling Category</h4>
+                    <div id="visit-sale-chart-legend"
+                      class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                  </div>
+
+
+
+
+                  <canvas id="piechart" style="width:100%;max-width:600px"></canvas>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </section>
+        <div class="row col-lg-12">
+          <div class="col-lg-12 col-md-12 grid-margin stretch-card">
+            <div class="card col-lg-12 col-md-12">
+              <div class="card-body col-lg-12">
+                <div class="clearfix">
+                  <h4 class="card-title float-left">Top Brand</h4>
+                  <div id="visit-sale-chart-legend"
+                    class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                </div>
+
+                <div id="myPlot" style="width:100%;max-width:700px"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+    </div>
+  </div>
+
+  <!-- JavaScript files-->
+  <script src="/admin/vendor/jquery/jquery.min.js"></script>
+  <script src="/admin/vendor/popper.js/umd/popper.min.js"> </script>
+  <script src="/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/admin/vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <!-- <script src="/admin/vendor/chart.js/Chart.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="/admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+  <script src="/admin/js/front.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+
+    let xValues = [];
+    const currentPeriod = "<%=currentPeriod%>";
+    if (currentPeriod === "Last-year") {
+      xValues = [
+        'Jan', 'Feb', 'Mar',
+        'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sept',
+        'Oct', 'Nov', 'Dec']
+    } else {
+      xValues = JSON.parse("<%=xValues%>");
+    }
+
+    const yValues = JSON.parse("<%= yValues%>");
+
+    console.log("xValues:", xValues, currentPeriod);
+    console.log("zValues:", yValues);
+
+    var lineColors = "rgba(255, 99, 132, 1)";
+
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          label: 'Total Sales',
+          backgroundColor: lineColors,
+          borderColor: lineColors,
+          data: yValues,
+          fill: true
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+            }
+          }],
+          xAxes: [{
+
+          }]
+        }
+      }
+    });
+
+    document.getElementById('time-period').addEventListener('change', function () {
+      const timePeriod = document.getElementById('time-period').value;
+      console.log("time-period:", timePeriod)
+      window.location.href = `/admin/dashboard?timePeriod=${timePeriod}`;
+    });
+  </script>
+
+  <script>
+
+    const decodeHTML = (str) => {
+      let txt = document.createElement("textarea");
+      txt.innerHTML = str;
+      return txt.value;
+    }
+    const prodX = `<%=productX%>`
+    const prodY = "<%=productY%>"
+
+    let xValue = JSON.parse(decodeHTML(prodX));
+    let yValue = JSON.parse(decodeHTML(prodY));
+
+
+    var barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145"
+    ];
+
+    new Chart("donought", {
+      type: "doughnut",
+      data: {
+        labels: xValue,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValue
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: ""
+        }
+      }
+    });
+  </script>
+
+  <script>
+
+    const decodeHtml = (str) => {
+      var txt = document.createElement("textarea");
+      txt.innerHTML = str;
+      return txt.value;
+    }
+
+    const categX = `<%=categoryX%>`
+    const categY = `<%=categoryY%>`
+    const xVal = JSON.parse(decodeHTML(categX));
+    const yVal = JSON.parse(decodeHTML(categY));
+    var barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145"
+    ];
+
+    new Chart("piechart", {
+      type: "pie",
+      data: {
+        labels: xVal,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yVal
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: ""
+        }
+      }
+    });
+  </script>
+
+
+  
+<script>
+  const decodeHtmlCode = (str) => {
+        var txt = document.createElement("textarea");
+        txt.innerHTML = str;
+        return txt.value;
+      }
+      const DataX = '<%=brandX%>'
+      const topBrandX = JSON.parse(decodeHtmlCode(DataX))
+      const DataY = '<%=brandY%>'
+      const topBrandY = JSON.parse(decodeHtmlCode(DataY))
+  const xArray = topBrandY
+  const yArray = topBrandX
+  
+  const data = [{
+    x:xArray,
+    y:yArray,
+    type:"bar",
+    orientation:"h",
+    marker: {color:"rgba(255,0,0,0.6)"}
+  }];
+  
+  const layout = {title:"",
+     paper_bgcolor: "rgba(0,0,0,0.1)",  // Change this to your desired background color
+    plot_bgcolor: "rgba(0,0,0,0.1)"
+  };
+  
+  Plotly.newPlot("myPlot", data, layout);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ticker Admin </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="/admin/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="/admin/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="/admin/css/font.css">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="/admin/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="/admin/css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="/image/download.png">
+
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="search-panel">
+        <div class="search-inner d-flex align-items-center justify-content-center">
+          <div class="close-btn">Close <i class="fa fa-close"></i></div>
+          <form id="searchForm" action="#">
+            <div class="form-group">
+              <input type="search" name="search" placeholder="What are you searching for...">
+              <button type="submit" class="submit">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header">
+          <!-- Navbar Header--><a href="/admin/dashboard" class="navbar-brand">
+            <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">TICKER</strong><strong>ADMIN</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div></a>
+          <!-- Sidebar Toggle Btn-->
+          <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+        </div>
+
+        <div class="right-menu list-inline no-margin-bottom ">  
+          <form id="searchForm" action="/admin/orderMgt">
+            <div class="form-group d-flex">
+             
+              <input name="search" id="search" type="search" placeholder="What are you searching for..." class="mr-sm-3 form-control form-control">
+              <button style="width: 90px;" type="submit"  class="btn btn-primary">search</button>
+            </div>
+          </form>
+        </div>
+        <div class="right-menu list-inline no-margin-bottom">  
+          
+          
+          <!-- Log out               -->
+           
+            <div class="list-inline-item logout">
+
+              
+              <a href="/admin/logout" class="btn btn-dark btn-sm ">Logout<i class="icon-logout"></i></a>
+  
+            </div>
+          
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="d-flex align-items-stretch">
+    <!-- Sidebar Navigation-->
+    <nav id="sidebar">
+      <!-- Sidebar Header-->
+ 
+      <!-- Sidebar Navidation Menus--> 
+      <ul class="list-unstyled">
+        <li ><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
+        <li ><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
+        <li><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
+        <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
+        <li class="active"><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
+        <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Offer</a>
+            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+              <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a></li>
+          <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+            </ul>
+          </li>
+        <li><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
+        
+      </ul>
+    </nav>
+    <!-- Sidebar Navigation end-->
+    <div class="page-content">
+      <!-- Page Header-->
+      <div class="page-header no-margin-bottom">
+        <div class="container-fluid">
+          <h2 class="h5 no-margin-bottom ">P r o d u c t  D e t a i l s</h2>
+          
+        </div>
+      </div>
+      <!-- Breadcrumb-->
+      <div class="container-fluid">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+          <li class="breadcrumb-item"><a href="/admin/orderMgt">orders</a></li>
+          <li class="breadcrumb-item active">Order Details </li>
+        </ul>
+
+
+        <!-- ---------------------table------------------------- -->
+        <div class="col-lg-12">
+          <div class="block">
+            <div class="table-responsive">
+              
+
+              <section class="pages-in chart-page col-lg-12">
+    <div class="col">
+        
+                <% console.log("haoiiofsaoif") %>
+                <section class="py-4">
+                    <% if(orderData !== null){ %>
+                        <div class="container">
+                            <h3 class="d-none">Account</h3>
+                            <div class="row">
+                                <!-- Order Details and Address -->
+
+                                <div class="col-md-4 d-flex flex-column">
+                                    <div class="card flex-grow-1">
+                                        <div class="card-body">
+  
+                                            
+                                            <!-- Order Details -->
+                                            <!-- <% var deliveryDate = new Date(orderData.currentDate); %>
+                                            <% var today = new Date(); %>
+                                            <% deliveryDate.setDate(deliveryDate.getDate() + 7); %> -->
+                                            <div class="order-details">
+                                                <h4 class="text-primary">Order Details</h4>
+                                                <p class="fw-bolder text-secondary">Order ID: <span class="fw-bolder text-light "><%= orderData.orderId %></span></p>
+                                                <p class="fw-bolder text-secondary">Ordered Date: <span class="fw-bolder text-light"><%= new Date(orderData.createdAt).toLocaleDateString() %></span></p>
+                                                
+                                                <p class="fw-bolder text-secondary">Total Price: <span class="fw-bolder text-light" >RS:<%= orderData.totalPrice %></span></p>
+                                                <p class="fw-bolder text-secondary">Payment Method: <span class="fw-bolder badge badge-success"><%= orderData.paymentMethod %></span></p>
+                                                 <p class="status-text fw-bolder ">Payment status: 
+                                                   
+                                                        <span class="fw-bolder badge             
+                                                        <%= 
+                                                        orderData.paymentStatus == 'Pending' ? 'badge-info' : 
+                                                        orderData.paymentStatus == 'Refunded' ? 'badge-warning' : 
+                                                        orderData.paymentStatus == 'Paid' ? 'badge-success' : 
+                                                        orderData.paymentStatus == 'Failed' ? 'badge-danger' :'' 
+                                                      %>" ><%= orderData.paymentStatus %></span>
+                                                       
+                                                      
+                                                    </p>
+                                                
+                                            </div>
+                                            <!-- Status text -->
+                                            <!-- <p class="status-text fw-bolder text-secondary">Payment status: <span class="fw-bolder text-success" style="font-size: 18px;"><%= orderData.paymentStatus %></span></p> -->
+                                       
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex flex-column">
+                                    <div class="card flex-grow-1 mt-3 mt-md-0">
+                                        <div class="card-body">
+                                            <!-- Address -->
+                                            <div class="address">
+                                                <h4  class="text-primary">Address</h4>
+                                               
+                                                    <p class="fw-bolder text-secondary">Name: <span class="fw-bolder text-light"><%= orderData.address.name %></span></p>
+                                                    <p class="fw-bolder text-secondary">Mobile:<span class="fw-bolder text-light"><%= orderData.address.phone %></span></p>
+                                                    
+                                                    <p class="fw-bolder text-secondary">Locality:<span class="fw-bolder text-light"><%= orderData.address.locality %></span></p>
+                                                    <p class="fw-bolder text-secondary">House:<span class="fw-bolder text-light"><%= orderData.address.house %></span></p>
+                                                    <p class="fw-bolder text-secondary">City:<span class="fw-bolder text-light"><%= orderData.address.city %></span></p>
+                                                    <p class="fw-bolder text-secondary">Landmark:<span class="fw-bolder text-light"><%= orderData.address.landmark %></span></p>
+                                                    <p class="fw-bolder text-secondary">State:<span  class="fw-bolder text-light"><%= orderData.address.state %></span></p>
+                                                    <p class="fw-bolder text-secondary">Pincode: <span class="fw-bolder text-light"><%= orderData.address.pincode %></span></p>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 d-flex flex-column">
+                                  <div class="card flex-grow-1">
+                                      <div class="card-body">                                         
+                                          <!-- Order Details -->
+                                          <!-- <% var deliveryDate = new Date(orderData.currentDate); %>
+                                          <% var today = new Date(); %>
+                                          <% deliveryDate.setDate(deliveryDate.getDate() + 7); %> -->
+                                          <div class="order-details">
+                                              <h4 class="text-primary">User Details</h4>
+                                              <p class="fw-bolder text-secondary">Name: <span class="fw-bolder text-light "><%= orderData.userId.name %></span></p>
+                                              <p class="fw-bolder text-secondary">Email: <span class="fw-bolder text-light"><%= orderData.userId.email %></span></p>
+                                            
+                                              <p class="fw-bolder text-secondary">Phone: <span class="fw-bolder text-light" ><%= orderData.userId.phone %></span></p>
+                                              <!-- <p class="fw-bolder text-secondary">Joined Date: <span class="fw-bolder text-success"><%= new Date(orderData.createdAt).toLocaleDateString() %></span></p> -->
+                                              
+                                          </div>
+                                          <!-- Status text -->
+                                          
+                                     
+                                      </div>
+                                  </div>
+                              </div>
+
+
+
+                            </div>
+                            <!-- Product Details -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                           
+                                                     
+                                                    
+                                           <% orderData.orderedItems.forEach(item => { %>
+                                            <!-- Product Details -->
+                                            <div class="product-details">
+                                                <div class="row">
+                                                   
+                                                 
+                                                        <hr>
+                                                        <!-- Left side for the image -->
+                                                        <div class="col-md-4">
+                                                            <img  src="/uploads/<%= item.image[0] %>" alt="Product Image" class="img-fluid w-75 h-100" style="height: 17em;">
+                                                        </div>
+                                                        <!-- Right side for other details -->
+                                                        <div class="col-md-4">
+                                                            <h4  class="text-primary">Product Details</h4>
+                                                            <div class="product">
+                                                                <p class="fw-bolder text-secondary">Product Name: <span class="fw-bolder text-light"><%= item.productName %></span></p>
+                                                                <p class="fw-bolder text-secondary">Quantity: <span class="fw-bolder text-light"><%= item.cartQuantity %></span></p>
+                                                                <p class="fw-bolder text-secondary">Price: <span class="fw-bolder text-light">Rs:<%= item.offerPrice %></span></p>
+                                                                <p class="fw-bolder text-secondary">Order Status: 
+                                                                  <span class="fw-bolder badge <%= 
+                                                                    item.orderStatus === 'Pending' ? 'badge-info' : 
+                                                                    item.orderStatus === 'Shipped' ? 'badge-warning' : 
+                                                                    item.orderStatus === 'Delivered' ? 'badge-success' : 
+                                                                    item.orderStatus === 'Cancelled' ? 'badge-danger' : 
+                                                                    item.orderStatus === 'Returned' ? 'badge-primary' : '' 
+                                                                  %>"><%= item.orderStatus %></span>
+                                                                </p>
+                                                                <% if (item?.Reason!==null) { %>
+                                                                    <p class="fw-bolder text-secondary">Reason: <span class="fw-bolder text-light"><%= item.Reason %></span></p>
+                                                                <% } %>
+                                                               
+                                                              <!-- <p class="status-text fw-bolder ">Payment status:  -->
+                                                                
+                                                                <% if (item.orderStatus==="Returned") { %>
+                                                                    
+                                                                    <span class="badge badge-warning  ml-4" style="font-size: 12px;">Refund Issued ✓</span>
+                                                                <% }%> 
+                                                                 <!-- <%if(orderData.paymentStatus) {%>
+                                                                    <span class="fw-bolder badge <%=orderData.paymentStatus=="Pending"?' badge-info':
+                                                                orderData.paymentStatus=="Paid"? 'badge-success':
+                                                                orderData.paymentStatus=="Failed"?' badge-danger':''
+                                                                %>" ><%= orderData.paymentStatus %></span>
+                                                                    <%}%>
+                                                                
+                                                                </p> -->
+                                                                
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                        
+                                                         
+                                                        
+                                                          <div>
+                                                            <% if (item.orderStatus ==='Pending'||item.orderStatus ==='Shipped') { %>
+                                                            <p class="text-center text-primary">Change Order Status</p>
+                                                            <select id="orderStatusSelect-<%= item.productId %>" class="form-select border border-light" aria-label="Default select example">
+                                                              <option selected>SELECT AN OPTION</option>
+                                                              <option value="Shipped">Shipped</option>
+                                                              <option value="Delivered">Delivered</option>
+                                                              <option value="Cancelled">Cancelled</option>
+                                                             
+                                                            </select>
+  
+                                                            <button class="btn btn-success btn-sm" onclick="changeOrderStatus('<%=orderData.orderId%>','<%=item.productId%>')">change</button>
+                                                            <% } %>
+                                                          </div>
+                                                          
+                                                          
+                                                          <% if (item.returnApprove==1) { %>
+                                                            <div class="col-lg-3 mt-2">
+                                                              <div class="row">
+                                                                  <div class="col-lg-12 text-center">
+                                                                      <span class="alert alert-danger p-1"> Return
+                                                                          requested!
+                                                                      </span>
+
+                                                                  </div>
+                                                                  <div class="col-lg-12 text-center mt-2">
+                                                                      <span style="font-size: 12px;">Reason : <%=
+                                                                              item.Reason %>
+                                                                      </span>
+
+                                                                  </div>
+                                                                  <div
+                                                                      class="col-lg-12 d-flex justify-content-center mt-2">
+                                                                      <button class="btn btn-danger p-2 mx-1"
+                                                                          onclick="declineReturn('<%= orderData.orderId %>', '<%= item.productId %>','<%= item.Reason%>')">Decline</button>
+                                                                      <button class="btn btn-info p-2 mx-1"
+                                                                          onclick="approveReturn('<%= orderData.orderId %>', '<%= item.productId %>','<%= item.Reason%>')">Approve</button>
+
+                                                                  </div>
+
+                                                              </div>
+
+                                                          </div>
+                                                           
+                                                          <% } %>
+                                                      </div>
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                            <hr class="bg-dark">
+                                            <% }) %>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <% console.log('No orders found') %>
+                        <p>NO ORDERS FOUND</p>
+                        
+                    <% } %>
+               </section>
+               
+           
+    </div>
+</section>
+
+
+
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      async function changeOrderStatus(orderId, productId) {
+          const selectElement = document.getElementById(`orderStatusSelect-${productId}`);
+          const newStatus = selectElement.value;
+  
+          if (newStatus === 'SELECT AN OPTION') {
+              Swal.fire({
+                  icon: 'warning',
+                  title: 'Please select a valid status.',
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+              });
+              return;
+          }
+  
+          try {
+              const response = await fetch('/admin/order/change-order-status', {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      orderId: orderId,
+                      productId: productId,
+                      newStatus: newStatus
+                  })
+              });
+  
+              const data = await response.json();
+              if (data.success) {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Order status updated successfully',
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                  }).then(()=>{window.location.reload()})
+              } else {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Failed to update order status',
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                  }).then(()=>{window.location.reload()})
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error updating order status',
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+              })
+          }
+      }
+  
+      async function approveReturn(orderId, productId, reason) {
+          try {
+              const response = await fetch('/admin/order/approve-return', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      orderId: orderId,
+                      productId: productId,
+                      reason: reason
+                  })
+              });
+  
+              const data = await response.json();
+              if (data.success) {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Return approved successfully',
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                  }).then(()=>{window.location.reload()})
+              } else {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Failed to approve return',
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                  }).then(()=>{window.location.reload()})
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error approving return',
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+              });
+          }
+      }
+  
+      async function declineReturn(orderId, productId, reason) {
+          try {
+              const response = await fetch('/admin/order/decline-return', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      orderId: orderId,
+                      productId: productId,
+                      reason: reason
+                  })
+              });
+  
+              const data = await response.json();
+              if (data.success) {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Return declined successfully',
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                  }).then(()=>{window.location.reload()})
+              } else {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Failed to decline return',
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 1500,
+                      timerProgressBar: true,
+                  }).then(()=>{window.location.reload()})
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error declining return',
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+              });
+          }
+      }
+  </script>
+    <!-- JavaScript files-->
+    <script src="/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/admin/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="/admin/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/admin/js/front.js"></script>
+</body>
+
+</html>

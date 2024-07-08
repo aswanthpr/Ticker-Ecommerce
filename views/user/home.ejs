@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+ <!-- Added by HTTrack -->
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="M_Adnan">
+    <title>TICKER</title>
+
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="/user/rs-plugin/css/settings.css" media="screen" />
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/user/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/user/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/user/css/ionicons.min.css" rel="stylesheet">
+    <link href="/user/css/main.css" rel="stylesheet">
+    <link href="/user/css/style.css" rel="stylesheet">
+    <link href="/user/css/responsive.css" rel="stylesheet">
+    <link href="/user/font/flaticon.css" rel="stylesheet">
+
+    <!-- JavaScripts -->
+    <script src="/user/js/modernizr.js"></script>
+
+    <!-- Online Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900|Poppins:300,400,500,600,700|Montserrat:300,400,500,600,700,800"
+      rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+
+    <!-- LOADER -->
+    <div id="loader">
+      <div class="position-center-center">
+        <div class="ldr"></div>
+      </div>
+    </div>
+
+    <!-- Wrap -->
+    <div id="wrap">
+
+      <!-- header -->
+      <header class="sticky head-absul">
+        
+        <div class="container-full ">
+          <div class="d-flex justify-content-between">
+            <div class="logo "> 
+              <a href="/"><img class="img-responsive w-25" src="/image/download.png" alt=""></a>
+  
+              
+            </div>
+            <div class="">
+              <!-- <form id="searchForm" action=""  class="search-form"> -->
+                         
+                <div class="input-group flex-nowrap">  
+                    <input id="searchInput" class="input-group__field  w-100  border " type="search" name="search" placeholder="Search" aria-label="search">
+                    <button id="searchButton" class="btn rounded-end px-3 text-nowrap " type="submit"><i class="icon-magnifier "></i></button>
+                </div>
+            <!-- </form> -->
+            </div>
+  
+            <nav class="navbar ownmenu navbar-expand-lg">
+  
+  
+  
+              <!-- <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span></span> </button> -->
+              <div class="collapse navbar-collapse" id="navbarNav">
+  
+  
+                <ul class="nav d-flex">
+                  <li class=" mr-5">
+  
+  
+                   
+  
+  
+                  </li>
+                  <li class="dropdown active"> <a href="/" class="dropdown-toggle" >Home</a>
+  
+                  </li>
+                  <li class="dropdown"> <a href="/shop" class="dropdown-toggle" >Shop</a>
+                    
+                  </li>
+  
+                </ul>
+              </div>
+  
+              <!-- Nav Right -->
+              <div class="nav-right">
+                <ul class="navbar-right">
+                  <!-- USER INFO -->
+                
+                  <%if(user){%>
+                    <li> <a href="/user/profile"><i class="lnr lnr-user"></i> </a></li>
+                    <%}else{%>
+                      <li> <a href="/login"><i class="lnr lnr-user"></i> </a></li>
+                      <%}%>
+                  <!-- USER BASKET -->
+                  <li> <a href="/wishlist" id="wishlist" ><i  class="lnr lnr-heart"></i> </a></li>
+                  <li> <a href="/cart" id="menu-trigger" ><i  class="lnr lnr-cart"></i><span class="c-no"><%=cartCount %></span> </a>
+                  </li>
+                 
+                  
+                </ul>
+              </div>
+            </nav>
+          </div>
+          <!-- Logo -->
+          
+        </div>
+        <!-- <div class="clearfix"></div> -->
+      </header>
+
+      <!-- HOME MAIN  -->
+      <!-- <section class="home-slide simple-head" data-stellar-background-ratio="0.5">
+        <div class="container-fluid">
+         
+          <div class="single-slide">
+
+           
+            <div class="owl-slide" >
+             
+              <div class="text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg"> 
+                <img  class="object-fit-cover" src=" /image/WW_D.jpg" alt="Summer Shop" style="width: 1700px;height: 600px;">
+                <h4>The Latest Winter Product for 2018</h4>
+                <h1 class="extra-huge-text">look hot with 2018 style</h1>
+                <div class="text-btn"> <a href="/shop" class="btn btn-inverse margin-top-40">SHOP NOW</a> </div>
+              </div>
+            </div>
+
+            
+            <div class="owl-slide">
+             
+              <div class="text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg"> 
+                <img  class="object-fit-cover" src=" /image/IB_D_310124.webp" alt="Summer Shop" style="width: 1700px;height: 600px;">
+                <h4>The Latest Winter Product for 2018</h4>
+                <h1 class="extra-huge-text">look hot with 2018 style</h1>
+                <div class="text-btn"> <a href="/shop" class="btn btn-inverse margin-top-40">SHOP NOW</a> </div>
+              </div>
+            </div>
+
+            
+            <div class="owl-slide">
+             
+              <div class="text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg"> 
+               
+                <img  class="object-fit-cover" src=" /image/1920x822_57c8a338-1525-460f-bd12-93d860e25757.jpg" alt="Summer Shop" style="width: 1700px;height: 600px;">
+                <h4>The Latest Winter Product for 2018</h4>
+                <h1 class="extra-huge-text">look hot with 2018 style</h1>
+                <div class="text-btn"> <a href="/shop" class="btn btn-inverse margin-top-40">SHOP NOW</a> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+      <section class="home-slide simple-head col-lg-12 col-md-12 col-sm-12" data-stellar-background-ratio="0.5">
+        <div class="container-fluid">
+            <div class="single-slide">
+    
+                <div class="owl-slide">
+                    <div class="position-relative text-left col-lg-12  no-padding" data-setbg="/images/WW_D.jpg">
+                        <img class="object-fit-cover" src="/image/WW_D.jpg" alt="Winter Product" style="width: 1620px; height: 600px;">
+                        <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+                            <!-- <h4>The Latest Winter Product for 2018</h4>
+                            <h1 class="extra-huge-text">Look Hot with 2018 Style</h1> -->
+                            <div class="text-btn">
+                                <a href="/shop" class="btn btn-inverse margin-top-40">SHOP NOW</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="owl-slide">
+                    <div class="position-relative text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg">
+                        <img class="object-fit-cover" src=" /image/IB_D_310124.webp" alt="Summer Shop" style="width: 1700px; height: 600px;">
+                        <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+                            <!-- <h4>The Huge Summer Shop for 2018</h4>
+                            <h1 class="extra-huge-text">Perfect 2018 Fashion Style</h1> -->
+                            <div class="text-btn">
+                                <a href="/shop" class="btn btn-inverse margin-top-40">SHOP NOW</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="owl-slide">
+                    <div class="position-relative text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg">
+                        <img class="object-fit-cover" src=" /image/1920x822_57c8a338-1525-460f-bd12-93d860e25757.jpg" alt="Best Collections" style="width: 1700px; height: 600px;">
+                        <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+                            <!-- <h4>Summer/Winter for 2018</h4> -->
+                            <h6 class="extra-huge-text">All of the Best Collections</h5>
+                            <div class="text-btn">
+                                <a href="/shop" class="btn btn-inverse margin-top-40">SHOP NOW</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+      <!-- Content -->
+      <div id="content" class="padding-top-0"> 
+
+        <!-- New Arrival -->
+        <section class="on-home-demo padding-top-100 padding-bottom-100">
+          <div class="container-full">
+
+            <!-- Main Heading -->
+            <div class="heading text-center">
+              <h4>Best Collection Arrived</h4>
+              <span> </span>
+            </div>
+
+            <!-- New Arrival -->
+            <div class="arrival-block">
+              <!-- <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"> <a class="active" id="Best-tab" data-toggle="tab" href="#bst-sell" role="tab"
+                    aria-selected="true">Best Selling</a> </li>
+                <li class="nav-item"> <a id="Papular-tab" data-toggle="tab" href="#pap" role="tab"
+                    aria-selected="false">Hand Made Items</a> </li>
+                <li class="nav-item"> <a id="Top-tab" data-toggle="tab" href="#top-10" role="tab"
+                    aria-selected="false">Top 10 Items <span class="top-tgs">Specials</span></a> </li>
+              </ul> -->
+
+              
+              <div class="tab-content" id="arrival-tab">
+
+              
+                <!-- <div class="tab-pane fade show active" id="bst-sell" role="tabpanel">
+                  
+                 
+                </div> -->
+                <div id="products" class="arrival-block col-item-4 list-group">
+                  <div class="row">
+
+                    <% for (let i=0; i < productData.length; i++) { %>
+                      <div class="item">
+                        <div class="img-ser">
+                          <div class="on-sale">Sale</div>
+                          <a href="/product?id=<%=productData[i]._id%>">
+                            <!-- Item -->
+                            <!-- Images -->
+                            <div class="thumb">
+                              <a  href="/product?id=<%=productData[i]._id%>" class="i-tittle">
+                                
+                              <img class="img-1" src="/uploads/<%=productData[i].image[0] %>" alt="">
+                              <img class="img-2" src="/uploads/<%=productData[i].image[1] %>" alt="">
+                              
+                            </a>
+                            </div>
+                          </a>
+                          <!-- Overlay  -->
+                          <div class="overlay">
+                            <!-- <div class="position-center-center">
+                            <a class="popup-with-move-anim" href="/product?id=<%=productData[i]._id%>">
+                              <i class="icon-eye"></i>
+                            </a>
+                          </div> -->
+                            <div class="add-crt">
+                              <% if (productData[i].stock==0) { %>
+                                <a>
+                                  <i class="icon-basket margin-right-10"></i> Currently unavalilable.
+                                </a>
+                                <% }else{ %>
+                                  <a onclick="addToCart('<%=productData[i]._id%>')" href="#.">
+                                    <i class="icon-basket margin-right-10"></i> Add To Cart
+                                  </a>
+                                  <% } %>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Item Name -->
+                        <div class="item-name fr-grd">
+
+                          <a href="/product?id=<%=productData[i]._id%>" class="i-tittle">
+                            <%=productData[i].name%>
+                          </a>
+                          <div class="mb-4 d-flex">
+                            <div class="stras">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-half-o"></i>
+
+                            </div>
+
+
+
+
+
+
+                            <a onclick="addToWishlist('<%=productData[i]._id%>')" class="wsh-list ml-5">
+
+
+                              <i class="fa fa-heart-o"></i>
+
+
+                            </a>
+
+                          </div>
+                          <% if (productData[i]?.offerPrice) { %>
+                            <span class="price">
+                              <small>₹</small>
+                              <span class="line-through"><%= productData[i].mrp %></span>
+                              <small>₹</small>
+                              <%= productData[i].offerPrice %>
+                              <span class="text-success ml-2"><%= productData[i].offer %>%</span>
+                            </span>
+                          <% }else{%>
+                            <span class="price">
+                              <small></small>
+                              <span class="line-through"></span>
+                              <small>₹</small>
+                              <%= productData[i].mrp %>
+                              
+                            </span>
+                          <%} %>
+                         
+                        </div>
+                      </div>
+                      <% } %>
+
+
+
+
+
+
+                  </div>
+                </div>
+                <!-- Papular Items -->
+                <!-- <div class="tab-pane animated fadeInDown" id="pap" role="tabpanel">
+
+
+
+
+
+
+                  
+                  <div class="item">
+                 
+                    <div class="on-sale"> Sale </div>
+                    <div class="img-ser">
+                   
+                      <img class="img-1 lazyload" src="images/item-img-1-8.jpg" alt=""> <img class="img-2 lazyload"
+                        src="images/item-img-1-8-1.jpg" alt="">
+                      
+                      <div class="overlay">
+                        <div class="position-center-center"> <a class="popup-with-move-anim" href="#qck-view-shop"><i
+                              class="icon-eye"></i></a> </div>
+                        <div class="add-crt"><a href="#."><i class="icon-basket margin-right-10"></i> Add To Cart</a>
+                        </div>
+                      </div>
+                    </div>
+                   
+                    <div class="item-name"> <a href="#." class="i-tittle">Mid Rise Skinny Jeans</a> <span
+                        class="price"><small>$</small><span class="line-through">299.00</span>
+                        <small>$</small>199.00</span> <a class="deta animated fadeInRight" href="#.">View Detail</a>
+                    </div>
+                  </div>
+
+
+
+                </div> -->
+
+
+
+                <!-- Top 10 Items -->
+
+
+                <!-- <div class="tab-pane fade" id="top-10" role="tabpanel">
+
+                 
+                  <div class="item">
+                    <div class="img-ser">
+                     
+                      <img class="img-1 lazyload" src="images/item-img-1-10.jpg" alt=""> <img class="img-2 lazyload"
+                        src="images/item-img-1-10-1.jpg" alt="">
+                      
+                      <div class="overlay">
+                        <div class="position-center-center"> <a class="popup-with-move-anim" href="#qck-view-shop"><i
+                              class="icon-eye"></i></a> </div>
+                        <div class="add-crt"><a href="#."><i class="icon-basket margin-right-10"></i> Add To Cart</a>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="item-name"> <a href="#." class="i-tittle">Mid Rise Skinny Jeans</a> <span
+                        class="price"><small>$</small><span class="line-through">299.00</span>
+                        <small>$</small>199.00</span> <a class="deta animated fadeInRight" href="#.">View Detail</a>
+                    </div>
+                  </div>
+
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+
+
+
+        <!-- Popular Products -->
+        <!-- <section class="light-gray-bg padding-top-100 padding-bottom-100">
+          <div class="container"> -->
+
+            <!-- Main Heading -->
+            <!-- <div class="heading text-center">
+              <h4>Popular Products</h4>
+              <hr>
+            </div> -->
+
+            <!-- Popular Item Slide -->
+            <!-- <div class="papular-block block-slide-con"> -->
+              <!-- Item -->
+              <!-- <div class="item"> -->
+                <!-- Sale -->
+                <!-- <div class="on-sale"> Sale </div> -->
+                <!-- Item img -->
+                <!-- <div class="item-img"> <img class="img-1" src="images/item-img-1-1.jpg" alt=""> <img class="img-2" -->
+                    <!-- src="images/item-img-1-1-1.jpg" alt=""> -->
+                  <!-- Overlay -->
+                  <!-- <div class="overlay">
+                    <div class="position-bottom">
+                      <div class="inn"><a href="images/product-1.jpg" data-lighter><i class="icon-magnifier"></i></a> <a
+                          href="#." data-toggle="tooltip" data-placement="top" title="Add To Cart"><i
+                            class="icon-basket"></i></a> <a href="#." data-toggle="tooltip" data-placement="top"
+                          title="Add To WishList"><i class="icon-heart"></i></a></div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!-- Item Name -->
+                <!-- <div class="item-name"> <a href="#.">Mid Rise Skinny Jeans </a>
+                  <p>Lorem ipsum dolor sit amet</p>
+                </div> -->
+                <!-- Price -->
+                <!-- <span class="price"><small>$</small><span class="line-through">299.00</span>
+                  <small>$</small>199.00</span>
+              </div>
+
+
+            </div>
+          </div>
+        </section> -->
+
+
+        </section>
+
+      </div>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="container-full">
+          <div class="insta-g">
+            <!-- <div class="position-center-center">
+          <h3></h3>
+        </div>
+        <ul>
+          <li><img src="images/insta-post-1.jpg" alt="" ></li>
+          <li><img src="images/insta-post-2.jpg" alt="" ></li>
+          <li><img src="images/insta-post-6.jpg" alt="" ></li>
+          <li><img src="images/insta-post-4.jpg" alt="" ></li>
+          <li><img src="images/insta-post-5.jpg" alt="" ></li>
+          <li><img src="images/insta-post-3.jpg" alt="" ></li>
+        </ul>
+      </div> -->
+          </div>
+          <div class="clearfix"></div>
+          <div class="container">
+            <div class="row">
+              <!-- ABOUT Location -->
+              <div class="col-md-4">
+                <div class="about-footer"><img class="margin-bottom-30 w-25" src=" /image/images.png" alt="">
+                  <p><i class="icon-pointer"></i> Street No. 12, Newyork 12, <br>
+                    MD - 123, USA.</p>
+                  <p><i class="icon-call-end"></i> 1.800.123.456789 <br>
+                    1.800.123.456789</p>
+                  <p><i class="icon-envelope"></i> info@TickerShop.com <br>
+                    contact@TickerShop.com</p>
+                </div>
+              </div>
+
+              <!-- HELPFUL LINKS -->
+              <div class="col-md-5">
+                <h6>Links</h6>
+                <ul class="link two-half">
+                  <li><a href="#."> Products</a></li>
+                  <li><a href="#."> Find a Store</a></li>
+                  <li><a href="#."> Features</a></li>
+                  <li><a href="#."> Privacy Policy</a></li>
+                  <li><a href="#."> Blog</a></li>
+                  <li><a href="#."> Press Kit </a></li>
+                  <li><a href="#."> Products</a></li>
+                  <li><a href="#."> Find a Store</a></li>
+                  <li><a href="#."> Features</a></li>
+                  <li><a href="#."> Privacy Policy</a></li>
+                  <li><a href="#."> Blog</a></li>
+                  <li><a href="#."> Press Kit </a></li>
+                </ul>
+              </div>
+
+              <!-- HELPFUL LINKS -->
+              <div class="col-md-3">
+                <h6>Account Info</h6>
+                <ul class="link">
+                  <li><a href="#."> Products</a></li>
+                  <li><a href="#."> Find a Store</a></li>
+                  <li><a href="#."> Features</a></li>
+                  <li><a href="#."> Privacy Policy</a></li>
+                  <li><a href="#."> Blog</a></li>
+                  <li><a href="#."> Press Kit </a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rights -->
+          <div class="rights">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <p>© 2018 BoShop All right reserved. <a href="https:/webicode.com/">webicode</a></p>
+                </div>
+                <div class="col-md-6 text-right"> <img src="images/card-icon.png" alt=""> </div>
+              </div>
+            </div>
+          </div>
+      </footer>
+
+      <!-- GO TO TOP  -->
+      <a href="#" class="cd-top"><i class="fa fa-angle-up"></i></a>
+      <!-- GO TO TOP End -->
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      async function addToCart(prodId) {
+      console.log(prodId, "   this is muy productid")
+      try {
+        const response = await fetch("/addToCart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ prodId })
+        });
+        const data = await response.json();
+        console.log(data);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+
+        if (data.success) {
+          await Toast.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: "Success",
+            text: data.message,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+
+          }).then(() => window.location.href = "/cart")
+
+          // window.location.href=`/product?id=${prodId}`
+        } else {
+          await Toast.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'error',
+            title: 'Error',
+            text: data.message,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+          });
+          //window.location.href=`/product?id=${prodId}`
+        }
+      } catch (error) {
+        console.log("Error occured  " + error)
+      }
+    }
+
+
+
+
+    async function addToWishlist(productId){
+      try {
+        
+        console.log(productId+ " product id")
+        const response = await fetch('/add-wishlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId })
+        });
+        const data = await response.json();
+        if(data.success){
+          Swal.fire({
+            icon: "success",
+          text:data.message,
+          toast: true,
+          position: 'top-end',
+          timer: 1000,
+          showConfirmButton: false,
+          })
+        }else{
+          Swal.fire({
+            icon: "error",     
+          text: data.message,
+          toast: true,
+          position: 'top-end',
+          timer: 1000,
+          showConfirmButton: false,
+          })
+        }
+      } catch (error) {
+        console.log(error.message)
+        Swal.fire({
+          icon: "error",
+         
+          text: "Something Went Wrong",
+          toast: true,
+          position: 'top-end',
+          timer: 1000,
+          showConfirmButton: false,
+        })
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    //search
+    
+    const fetchFilteredProducts = async () => {
+      try {
+
+        const searchQuery = document.getElementById('searchInput').value.trim();
+       
+
+        const queryParams = new URLSearchParams({
+          search: searchQuery,
+          
+        });
+        console.log(queryParams)
+        console.log("enetered")
+        
+       window.location.href=`/shop?${queryParams}`;
+
+      } catch (error) {
+        console.error('Error filtered products:', error);
+      }
+    };
+
+    // Call the fetchFilteredProducts function whenever filter btn clicks 
+    document.getElementById('searchButton').addEventListener('click',fetchFilteredProducts )
+   
+    </script>
+    <script src="/user/js/jquery-1.12.4.min.js"></script>
+    <script src="/user/js/popper.min.js"></script>
+    <script src="/user/js/bootstrap.min.js"></script>
+    <script src="/user/js/own-menu.js"></script>
+    <script src="/user/js/jquery.lighter.js"></script>
+    <script src="/user/js/jquery.magnific-popup.min.js"></script>
+    <script src="/user/js/owl.carousel.min.js"></script>
+    <script src="/user/js/main.js"></script>
+
+  </body>
+
+
+</html>

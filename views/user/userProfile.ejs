@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TICKER</title>
+
+
+
+    <link rel="icon" type="image/png" href="/image/download.png" />
+
+    <link rel="stylesheet" type="text/css" href="/profile/util.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/profile/main.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="/profile/userProfile.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+
+</head>
+
+<body>
+
+
+    <div class="top-bar">
+        <div class="content-topbar flex-sb-m h-full container">
+            <div class="left-top-bar">
+
+            </div>
+
+            <div class="right-top-bar flex-w h-full">
+
+
+
+
+                <a href="/" class="flex-c-m trans-04 p-lr-25 text-white">
+                    Home
+                </a>
+
+                <a href="/user/profile" class="flex-c-m trans-04 p-lr-25 text-white">
+                    profile
+                </a>
+
+                <a href="/logout" class="flex-c-m trans-04 p-lr-25 text-white">
+                    Logout
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+
+
+   
+    <div class="mt-5">
+        <section class="breadcrumb-option ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb__text">
+                            <h5>Profile</h5>
+                            <div class="breadcrumb__links">
+                                <a href="/" class="text-dark text-decoration-none">Home</a>
+                                <span>></span>
+                                <span>profile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+    <div class="container">
+        <div class="main-body">
+            <div class="bg0 p-t-40 p-b-85">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body ">
+                                <div class="d-flex flex-column align-items-center text-align-center">
+                                    <img src="/userOrders/img/icon/icons8-male-user-30.png" alt="img"
+                                        class="rounded-circle p-1 bg-dark" width="110">
+                                    <div class="mt-3">
+                                        <!-- <h4>
+                                            <%=userData.name %>
+                                        </h4> -->
+                                        <!-- <p class="text-secondary mb-1"></p>
+									<p class="text-muted font-size-sm"></p>
+									<button class="btn btn-primary">Follow</button>
+									<button class="btn btn-outline-primary">Message</button> -->
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <ul class="list-group list-group-flush align-items-center">
+                                    <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/profile"> <button type="button" class=" btn btn-outline-dark active"
+                                                style="width: 280px;">User Profile</button> </a>
+                                    </li>
+                                    <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/address"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Address Management</button> </a>
+                                    </li>
+                                    <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/changePass"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Change Password</button> </a>
+                                    </li>
+                                   
+                                    <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/order"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Order</button> </a>
+                                    </li>
+                                    
+                                    <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/wallet"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Wallet</button> </a>
+                                    </li>
+                                    <!-- <li class="list-group-item " style="width: 310px;">
+                                        <a href="/user/referrel"> <button type="button" class="btn btn-outline-dark"
+                                                style="width: 280px;">Referrel Code</button> </a>
+                                    </li> -->
+                                    <li class="list-group-item "
+                                    style="width: 310px;">
+                                    <a href="/logout"> <button type="button" class="btn btn-outline-dark"
+                                            style="width: 280px;">Logout</button> </a>
+                                </li>
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <form action="/user/profile" method="put" class="form">
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Full Name</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" name="name" id="name" class="form-control"
+                                            value="<%= userData ? (userData.name ? userData.name : 'USER NAME') : 'USER NAME' %>"   required>
+                                            <p style="color: red;" id="nameErr"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Phone</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="text" name="phone" id="phone" class="form-control" min="10" max="10"
+                                                value="<%=userData?(userData.phone?userData.phone:'PHONE'):'PHONE'%>" required>
+                                                <p style="color: red;" id="phoneErr"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Email</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="email" name="email" id="email" class="form-control"
+                                            value="<%=userData?(userData.email?userData.email:'EMAIL'):'EMAIL'%>" required disabled>
+                                                <%=console.log(userData?.email)  %>
+                                           
+                                            <p style="color: red;" id="emailErr"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 mt-3 ">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Referral Code</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary d-flex">
+                                            <input id="referralCode" type="text" value="<%=userData?(userData.referral?userData.referral:'Referral Code'):'Referral Code'%>" class="form-control col-md-4" disabled   aria-describedby="button-addon2">
+                                            <button class="btn btn-dark text-white" type="button" id="copyButton" alt="Copy">Copy</button> 
+                                           
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <button type="button" class="btn btn-dark" onclick="updateUserData()">
+                                                Save
+                                                Changes </button>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-success mt-3 text-center"> *Share your referral code and earn *100 cashback to your wallet and your frined earn *50 cashback.</p>
+                                    
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/profile/jquery.min.js"></script>
+    <!-- Include Bootstrap JS -->
+<!-- <script src="/profile/bootstrap.bundle.min.js"></script> -->
+
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    
+	<script>
+//refferal copy
+document.getElementById('copyButton').addEventListener('click', function() {
+    const referralCodeInput = document.getElementById('referralCode');
+    referralCodeInput.disabled = false;
+    referralCodeInput.select();
+    referralCodeInput.setSelectionRange(0, 99999); // For mobile devices
+    document.execCommand('copy');
+    referralCodeInput.disabled = true;
+    Swal.fire({
+        icon:"success",
+        text:'Referral code copied to clipboard!',
+        toast:true,
+        showConfirmButton:false,
+        timer:1500,
+        position:'top-end'
+    })
+    
+});
+
+
+
+		async function updateUserData() {
+			const name = document.getElementById('name').value.trim();
+			const nameErr = document.getElementById('nameErr');
+			const email = document.getElementById('email').value.trim();
+			const emailErr = document.getElementById('emailErr');
+			const phone = document.getElementById("phone").value.trim();
+			const phoneErr = document.getElementById("phoneErr")
+			const nameErrMsg = [];
+			const emailErrMsg = [];
+			const phoneErrMsg = [];
+
+			if (name === '') {
+				nameErrMsg.push("Please enter your name.");
+			} else {
+				const nameRegex = /^[a-zA-Z\s]*$/;
+				if (!nameRegex.test(name)) {
+					nameErrMsg.push("Please enter a valid name.");
+				}
+			}
+
+			if (email === '') {
+				emailErrMsg.push("Please enter your email.");
+			} else {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				if (!emailRegex.test(email)) {
+					emailErrMsg.push("Please enter a valid email address.");
+				}
+			}
+
+			if (phone === '') {
+				phoneErrMsg.push("Please enter your phone number.");
+			} else {
+				const phoneRegex = /^(?!([0-9])\1{9})[1-9]\d{9}$/;
+				if (!phoneRegex.test(phone)) {
+					phoneErrMsg.push("Please enter a valid phone number.");
+				}
+			}
+
+			nameErr.innerHTML = nameErrMsg.join("<br>");
+			emailErr.innerHTML = emailErrMsg.join("<br>");
+			phoneErr.innerHTML = phoneErrMsg.join("<br>");
+
+			if (nameErrMsg.length > 0 || emailErrMsg.length > 0 || phoneErrMsg.length > 0) {
+				return;
+			}
+
+			const confirmation = await Swal.fire({
+				title: 'Are you sure?',
+				text: 'You won\'t be able to revert this!',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, Update Profile!'
+			});
+
+			if (!confirmation.isConfirmed) {
+				return;
+			}
+
+			try {
+        const response = await fetch('/user/profile',{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json',
+
+            },
+            body:JSON.stringify({name,phone})
+
+        });
+        const data = await response.json();
+        if(data.success){
+            await Swal.fire({
+                icon:'success',
+                title:'updation successfull',
+                text:data.message
+            }).then(()=>{
+                window.location.href = '/user/profile';
+
+            });
+
+        }else{
+            await Swal.fire({
+                icon:'error',
+                text:'updation failed',
+                text:data.message
+            }).then(()=>{
+                window.location.href("/user/profile")
+            })
+        }
+    } catch (error) {
+        await Swal.fire({
+            icon:'error',
+            title:'Error',
+            text:'There was an error updating the profile'
+        })
+       console.log(error)
+    }
+		}
+
+	</script> 
+
+<script>
+    
+</script>
+
+
+
+
+
+</body>
+
+</html>

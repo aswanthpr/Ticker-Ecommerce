@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from demos.webicode.com/html/Bo-shop-html/shop_02.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 04:38:59 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="M_Adnan">
+  <title>TICKER</title>
+
+  <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+  <link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.css" media="screen" />
+
+  <!-- Bootstrap Core CSS -->
+  <link href="/user/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="/user/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/user/css/ionicons.min.css" rel="stylesheet">
+  <link href="/user/css/main.css" rel="stylesheet">
+  <link href="/user/css/style.css" rel="stylesheet">
+  <link href="/user/css/responsive.css" rel="stylesheet">
+  <link href="/user/font/flaticon.css" rel="stylesheet">
+
+  <!-- JavaScripts -->
+  <script src="/user/js/modernizr.js"></script>
+
+  <!-- Online Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900|Poppins:300,400,500,600,700|Montserrat:300,400,500,600,700,800"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  <style>
+    ::selection {
+      /* color: #fff; */
+      background: #000000;
+    }
+
+
+    .price-input {
+      width: 100%;
+      display: flex;
+      margin: 30px 0 35px;
+    }
+
+    .price-input .field {
+      display: flex;
+      width: 100%;
+      height: 45px;
+      align-items: center;
+    }
+
+    .field input {
+      width: 100%;
+      height: 100%;
+      outline: none;
+      font-size: 19px;
+      margin-left: 12px;
+      border-radius: 5px;
+      text-align: center;
+      border: 1px solid #999;
+      appearance: textfield;
+      -moz-appearance: textfield;
+      -webkit-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .price-input .separator {
+      width: 130px;
+      display: flex;
+      font-size: 19px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider {
+      height: 5px;
+      position: relative;
+      background: #ddd;
+      border-radius: 5px;
+    }
+
+    .slider .progress {
+      height: 100%;
+      left: 25%;
+      right: 25%;
+      position: absolute;
+      border-radius: 5px;
+      background: #020404;
+    }
+
+    .range-input {
+      position: relative;
+    }
+
+    .range-input input {
+      position: absolute;
+      width: 100%;
+      height: 5px;
+      top: -5px;
+      background: none;
+      pointer-events: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      height: 17px;
+      width: 17px;
+      border-radius: 50%;
+      background: #000000;
+      pointer-events: auto;
+      -webkit-appearance: none;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      height: 17px;
+      width: 17px;
+      border: none;
+      border-radius: 50%;
+      background: #17a2b8;
+      pointer-events: auto;
+      -moz-appearance: none;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+
+
+
+    .cart-count {
+      font-size: 12px;
+      position: absolute;
+      top: 5px;
+      /* Adjust as needed */
+      right: -14px;
+      /* Adjust as needed */
+    }
+
+    li {
+      position: relative;
+    }
+
+    #Count {
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="position-center-center">
+      <div class="ldr"></div>
+    </div>
+  </div>
+
+  <!-- Wrap -->
+  <div id="wrap">
+
+    <!-- TOP Bar -->
+    <div class="top-bar">
+      <div class="container-full">
+        <p><i class="icon-envelope"></i> Info@TikcerShop.com </p>
+        <p class="call"> <i class="icon-call-in"></i> 001 234 7895 </p>
+
+        <!-- Login Info -->
+        <div class="login-info">
+          <ul>
+            <% if (!userId) { %>
+              <li><a href="/login">LOGIN</a></li>
+              <% }else{%>
+                <li><a href="/user/profile">MY ACCOUNT </a></li>
+                <%} %>
+
+
+                  <li><a href="/wishlist">WISHLIST </a></li>
+                  <li><a id="Count" href="/cart">CART<i class="icon-basket-loaded"></i> <span
+                        class="c-no badge badge-warning " style="font-size: 12px;">
+                        <%=cartCount %>
+                      </span></a></li>
+
+                  <!-- USER BASKET -->
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- header -->
+    <header>
+      <div class="sticky">
+        <div class="container-full d-flex justify-content-between">
+
+          <!-- Logo -->
+          <div class="logo"> <a href="/"><img class="img-responsive w-25" src="/image/download.png" alt=""></a> </div>
+
+          <div class="mr-5 pr-5">
+            <form action="" class="search-form" id="navbar-search-form">
+                       
+              <div class="input-group flex-nowrap">  
+                  <input class="input-group__field  w-100  border " type="search" name="search" placeholder="Search" aria-label="search" id="navbar-search" >
+                  <button id="searchButton" class="btn rounded-end px-3 text-nowrap " type="submit"><i class="icon-magnifier "></i></button>
+              </div>
+          </form>
+          </div>
+          <!-- <div class="mr-5 pr-5">
+            <form action="#" method="post" class="search-form" id="navbar-search-form">
+              <div class="input-group flex-nowrap">
+                <input class="input-group__field w-100 border" type="search" id="navbar-search" name="search" placeholder="Search" aria-label="search" autocomplete="off">
+              </div>
+            </form>
+          </div> -->
+
+          <nav class="navbar ownmenu navbar-expand-lg ml-5 pl-5">
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span></span> </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+              <ul class="nav ">
+
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/shop">Shop</a></li>
+                <!-- <li><a href="/shop/men">Men</a></li>
+                <li><a href="/shop/women">Women</a></li> -->
+
+
+
+              </ul>
+            </div>
+          </nav>
+
+          <!-- Curency -->
+          <!-- <div class="curency"> <a href="#." class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> USD<i class="fa fa-angle-down"></i> </a>
+          <div class="dropdown-menu"> <a class="dropdown-item" href="#">EU</a> <a class="dropdown-item" href="#">USD</a> <a class="dropdown-item" href="#">CA</a> <a class="dropdown-item" href="#">PKR</a> </div>
+        </div> -->
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </header>
+
+    <!-- Content -->
+    <div id="content">
+      <!--======= SUB BANNER =========-->
+      <section class="sub-bnr" data-stellar-background-ratio="0.5">
+        <div class="position-center-center">
+          <div class="container">
+            <h4>The Best Collection</h4>
+            <ol class="breadcrumb">
+              <li><a href="/">Home</a></li>
+              <!-- <li><a href="#">Pages</a></li> -->
+              <li class="active">Shop</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Products -->
+      <section class="shop-page padding-top-100 padding-bottom-20">
+        <div class="container-full">
+          <div class="row">
+
+            <!-- Shop SideBar -->
+            <div class="col-md-2">
+              <div class="shop-sidebar">
+
+                <!-- Category -->
+                <!-- <h5 class="shop-tittle margin-bottom-30">Category</h5>
+              <ul class="shop-cate">
+                <li><a href="#."> Chair <span>24</span></a></li>
+                
+              </ul> -->
+
+                <!-- FILTER BY PRICE -->
+                <!-- <h5 class="shop-tittle margin-top-60 margin-bottom-30">Filter By Price</h5> -->
+
+                <!-- TAGS -->
+                <!-- <h5 class="shop-tittle margin-top-60 margin-bottom-30">Filter By Colors</h5>
+              <ul class="colors">
+                <li><a href="#." style="background:#958170;"></a></li>
+                <li><a href="#." style="background:#c9a688;"></a></li>
+               
+              </ul>
+               -->
+                <!-- TAGS -->
+                <!-- <h5 class="shop-tittle margin-top-60 margin-bottom-30">Papular Tags</h5>
+              <ul class="shop-tags">
+                <li><a href="#.">Towels</a></li>
+              
+              </ul>
+               -->
+                <!-- BRAND -->
+                <!-- <h5 class="shop-tittle margin-top-60 margin-bottom-30">Brands</h5>
+              <ul class="shop-cate">
+                <li><a href="#.">G-Furniture</a></li>
+               
+              </ul> -->
+
+                <!-- SIDE BACR BANER -->
+                <!-- <div class="side-bnr margin-top-50"> <img class="img-responsive" src="images/sidebar-bnr.jpg" alt="">
+                <div class="position-center-center"> <span class="price"><small>$</small>299</span>
+                  <div class="bnr-text">look hot with style</div>
+                </div>
+              </div> -->
+
+
+
+
+                <!-- <div class="col-md-4 col-lg-3"> -->
+                <!-- <form action="#" class="search-form">
+                  <div class="form-group">
+                    <span class="icon ion-ios-search"></span>
+                    <input type="text" class="form-control" id="search" placeholder="Search for a product"
+                      autocomplete="off">
+                  </div>
+                </form> -->
+
+                <div class="sidebar-box ">
+
+                  <div class="d-flex justify-content-between border-bottom border-solid border-2">
+                    <p style="color: #000; font-weight: 600;">FILTERS</p>
+                    <a href="#" id="clear-all" class="text-danger font-weight-bold " style="display: none;">Clear
+                      all</a>
+                  </div>
+
+
+                  <div class="my-3  ">
+                    <p style="color: #000; font-weight: 600;">CATEGORIES</p>
+
+                    <div>
+                      <% if(categories && categories.length> 0){ %>
+                        <% categories.forEach((category)=> { %>
+                          <div class="checkbox-item my-1">
+                            <input type="checkbox" id="category_<%= category._id %>" name="category"
+                              value="<%= category._id %>" <%if(selectedCategories.includes(String(category._id))) { %>
+                            checked
+                            <% } %> >
+
+                              <label for="category_<%= category._id %>">
+                                <%= category.categoryName %>
+                              </label>
+                          </div>
+                          <% }) %>
+                            <% } %>
+                    </div>
+                  </div>
+
+                  <div class="my-3 ">
+                    <p style="color: #000; font-weight: 600;">GENDER</p>
+
+                    <div>
+                      <% if (genders && genders.length) { %>
+                        <% genders.forEach(gender=> { %>
+
+
+                          <div class="checkbox-item my-1">
+                            <input itemid="genderInput" type="checkbox" id="<%= gender %>" name="gender" value="<%=gender%>" <%
+                              if(selectedGenders.includes(gender)) { %>
+                            checked
+                            <% } %>>
+
+                              <label for="<%= gender %>">
+                                <%= gender %>
+                              </label>
+                          </div>
+                          <% }) %>
+                            <% } %>
+
+
+
+                    </div>
+
+                  </div>
+
+                  <!-- <div>
+                    <p style="color: #000; font-weight: 600;">PRICE RANGE</p>
+                    <div id="price-range-slider" class="w-100 my-2 "></div>
+                    <span id="price-range"></span>
+                  </div> -->
+                  <div class="d-flex w-75">
+                    <div class="wrapper">
+                      <p style="color: #000; font-weight: 400;">PRICE RANGE</p>
+
+                      <div class="price-input">
+                        <div class="field">
+                          <span>Min</span>
+                          <input type="number" class="input-min" value="0">
+                        </div>
+                        <div class="separator">-</div>
+                        <div class="field">
+                          <span>Max</span>
+                          <input type="number" class="input-max" value="10000">
+                        </div>
+                      </div>
+                      <div class="slider">
+                        <div class="progress"></div>
+                      </div>
+                      <div class="range-input">
+                        <input type="range" class="range-min" min="0" max="10000" step="100" value="0">
+                        <input type="range" class="range-max" min="0" max="10000" step="100" value="10000">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="sidebar-box-2 mt-4 ">
+                    <button id="filter-btn" class="btn btn-primary col-md-12 font-weight-bold rounded">Apply
+                      Filter</button>
+                  </div>
+                </div>
+
+
+
+
+
+
+              </div>
+            </div>
+
+            <!-- Item Content -->
+            <div class="col-md-10">
+              <div class="sidebar-layout">
+
+                <!-- Item Filter -->
+                <div class="item-fltr">
+                  <!-- short-by -->
+                  <!-- <div class="short-by"> Showing 1–10 of 20 results </div>-->
+                  <!-- List and Grid Style -->
+                  <div class="lst-grd"> <a href="#" id="list"><i class="flaticon-interface"></i></a> <a href="#"
+                      id="grid"><i class="icon-grid"></i></a>
+                    <!-- Select -->
+                    <select id="sortBy" style="height: 40px;background-color: aliceblue;" class="w-25">
+                      <option class="one" value='aA-zZ' <%if(sortBy==="aA-zZ" ){%>selected <%}%> >Sort By:aA-zZ
+                      </option>
+                      <option class="one" value='zZ-aA' <%if(sortBy==="zZ-aA" ){%>selected <%}%> >Sort By:zZ-aA
+                      </option>
+                      <option class="one" value='New arrived' <%if(sortBy==="New arrived" ){%>selected <%}%>>Sort By: New Arrival
+                      </option>
+                      <option class="one" value='High to low' <%if(sortBy==="High to low" ){%>selected <%}%>>Sort By:High to Low
+                      </option>
+                      <option class="one" value='Low to high' <%if(sortBy==="Low to high" ){%>selected <%}%>>Sort By:Low to High
+                      </option>
+
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div id="products" class="arrival-block col-item-4 list-group">
+                  <div class="row">
+
+                    <% for (let i=0; i < productData.length; i++) { %>
+                      <div class="item">
+                        <div class="img-ser">
+                          <div class="on-sale">Sale</div>
+                          <a href="/product?id=<%=productData[i]._id%>">
+                            <!-- Item -->
+                            <!-- Images -->
+                            <div class="thumb">
+                              <img class="img-1" src="/uploads/<%=productData[i].image[0] %>" alt="">
+                              <img class="img-2" src="/uploads/<%=productData[i].image[1] %>" alt="">
+                            </div>
+                          </a>
+                          <!-- Overlay  -->
+                          <div class="overlay">
+                            <!-- <div class="position-center-center">
+                            <a class="popup-with-move-anim" href="/product?id=<%=productData[i]._id%>">
+                              <i class="icon-eye"></i>
+                            </a>
+                          </div> -->
+                            <div class="add-crt">
+                              <% if (productData[i].stock==0) { %>
+                                <a>
+                                  <i class="icon-basket margin-right-10"></i> Currently unavalilable.
+                                </a>
+                                <% }else{ %>
+                                  <a onclick="addToCart('<%=productData[i]._id%>')" href="#.">
+                                    <i class="icon-basket margin-right-10"></i> Add To Cart
+                                  </a>
+                                  <% } %>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Item Name -->
+                        <div class="item-name fr-grd">
+
+                          <a href="/product?id=<%=productData[i]._id%>" class="i-tittle">
+                            <%=productData[i].name%>
+                          </a>
+                          <div class="mb-4 d-flex">
+                            <div class="stras">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-half-o"></i>
+
+                            </div>
+
+
+
+
+
+
+                            <a onclick="addToWishlist('<%=productData[i]._id%>')" class="wsh-list ml-5">
+
+
+                              <i class="fa fa-heart-o"></i>
+
+
+                            </a>
+
+                          </div>
+                          <% if (productData[i]?.offerPrice) { %>
+                            <span class="price">
+                              <small>₹</small>
+                              <span class="line-through"><%= productData[i].mrp %></span>
+                              <small>₹</small>
+                              <%= productData[i].offerPrice %>
+                              <span class="text-success ml-2"><%= productData[i].offer %>%</span>
+                            </span>
+                          <% }else{%>
+                            <span class="price">
+                              <small></small>
+                              <span class="line-through"></span>
+                              <small>₹</small>
+                              <%= productData[i].mrp %>
+                              
+                            </span>
+                          <%} %>
+                        </div>
+                      </div>
+                      <% } %>
+
+
+
+
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+      </section>
+      <div class="row">
+        <div class="col-md-8">
+
+          <ul class="pagination  d-flex justify-content-center ">
+            <% if (currentPage>1) { %>
+              <li><a
+                  href="?page=1&search=<%= search %>&category=<%= selectedCategories.join(',') %>&gender=<%= selectedGenders.join(',') %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sortBy=<%= sortBy %>"><span
+                    class="text-lg"> &laquo;
+                  </span></a></li>
+              <% } %>
+                <% for( let i=1; i <=totalPages; i++ ) { %>
+                  <% if (i==currentPage) { %>
+                    <li class="<%= currentPage !== i ? 'active' : '' %>"><a>
+                        <%=i %>
+                      </a></li>
+                    <% }else{ %>
+                      <li><a
+                          href="?page=<%= i %>&search=<%= search %>&category=<%= selectedCategories.join(',') %>&gender=<%= selectedGenders.join(',') %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sortBy=<%= sortBy %>">
+                          <%=i %>
+                        </a></li>
+                      <% } %>
+                        <% } %>
+                          <% if (currentPage< totalPages) { %>
+                            <li><a
+                                href="?page=<%= totalPages %>&search=<%= search %>&category=<%= selectedCategories.join(',') %>&gender=<%= selectedGenders.join(',') %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sortBy=<%= sortBy %>"><span
+                                  class="text-lg">&raquo;</span></a></li>
+                            <% } %>
+
+
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container-full">
+        <div class="insta-g">
+
+
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="container">
+        <div class="row">
+          <!-- ABOUT Location -->
+          <div class="col-md-4">
+            <div class="about-footer"> <img class="margin-bottom-30 w-25" src="/image/images.png" alt="">
+              <p><i class="icon-pointer"></i> Street No. 12, Newyork 12, <br>
+                MD - 123, USA.</p>
+              <p><i class="icon-call-end"></i> 1.800.123.456789 <br>
+                1.800.123.456789</p>
+              <p><i class="icon-envelope"></i> info@BoShop.com <br>
+                contact@BoShop.com</p>
+            </div>
+          </div>
+
+          <!-- HELPFUL LINKS -->
+          <div class="col-md-5">
+            <h6>Links</h6>
+            <ul class="link two-half">
+              <li><a href="#."> Products</a></li>
+              <li><a href="#."> Find a Store</a></li>
+              <li><a href="#."> Features</a></li>
+              <li><a href="#."> Privacy Policy</a></li>
+              <li><a href="#."> Blog</a></li>
+              <li><a href="#."> Press Kit </a></li>
+              <li><a href="#."> Products</a></li>
+              <li><a href="#."> Find a Store</a></li>
+              <li><a href="#."> Features</a></li>
+              <li><a href="#."> Privacy Policy</a></li>
+              <li><a href="#."> Blog</a></li>
+              <li><a href="#."> Press Kit </a></li>
+            </ul>
+          </div>
+
+          <!-- HELPFUL LINKS -->
+          <div class="col-md-3">
+            <h6>Account Info</h6>
+            <ul class="link">
+              <li><a href="#."> Products</a></li>
+              <li><a href="#."> Find a Store</a></li>
+              <li><a href="#."> Features</a></li>
+              <li><a href="#."> Privacy Policy</a></li>
+              <li><a href="#."> Blog</a></li>
+              <li><a href="#."> Press Kit </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Rights -->
+      <div class="rights">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <p>© 2018 BoShop All right reserved. <a href="https://webicode.com/">webicode</a></p>
+            </div>
+            <div class="col-md-6 text-right"> <img src="images/card-icon.png" alt=""> </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- GO TO TOP  -->
+    <a href="#" class="cd-top"><i class="fa fa-angle-up"></i></a>
+    <!-- GO TO TOP End -->
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+
+  <script>
+    async function addToWishlist(productId) {
+      try {
+
+        console.log(productId + " product id")
+        const response = await fetch('/add-wishlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId })
+        });
+        const data = await response.json();
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            text: data.message,
+            toast: true,
+            position: 'top-end',
+            timer: 1000,
+            showConfirmButton: false,
+          })
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: data.message,
+            toast: true,
+            position: 'top-end',
+            timer: 1000,
+            showConfirmButton: false,
+          })
+        }
+      } catch (error) {
+        console.log(error.message)
+        Swal.fire({
+          icon: "error",
+
+          text: "Something Went Wrong",
+          toast: true,
+          position: 'top-end',
+          timer: 1000,
+          showConfirmButton: false,
+        })
+      }
+    }
+
+    async function addToCart(prodId) {
+      console.log(prodId, "   this is muy productid")
+      try {
+        const response = await fetch("/addToCart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ prodId })
+        });
+        const data = await response.json();
+        console.log(data);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+
+        if (data.success) {
+          await Toast.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: "Success",
+            text: data.message,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+
+          }).then(() => window.location.href = "/cart")
+
+          // window.location.href=`/product?id=${prodId}`
+        } else {
+          await Toast.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'error',
+            title: 'Error',
+            text: data.message,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+          });
+          //window.location.href=`/product?id=${prodId}`
+        }
+      } catch (error) {
+        console.log("Error occured  " + error)
+      }
+    }
+
+
+
+
+
+
+
+
+    const rangeInput = document.querySelectorAll(".range-input input"),
+       priceInput = document.querySelectorAll(".price-input input"),
+      range = document.querySelector(".slider .progress");
+      
+
+    let priceGap = 500;
+
+    priceInput.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        let minPrice = parseInt(priceInput[0].value),
+          maxPrice = parseInt(priceInput[1].value);
+
+        if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+          if (e.target.className === "input-min") {
+            rangeInput[0].value = minPrice;
+            range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+          } else {
+            rangeInput[1].value = maxPrice;
+            range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+          }
+        }
+      });
+    });
+
+    rangeInput.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        let minVal = parseInt(rangeInput[0].value),
+          maxVal = parseInt(rangeInput[1].value);
+
+        if (maxVal - minVal < priceGap) {
+          if (e.target.className === "range-min") {
+            rangeInput[0].value = maxVal - priceGap;
+          } else {
+            rangeInput[1].value = minVal + priceGap;
+          }
+        } else {
+          priceInput[0].value = minVal;
+          priceInput[1].value = maxVal;
+          range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+          range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+        }
+      });
+    });
+
+
+
+
+
+
+
+    //filter product functionality
+
+    const fetchFilteredProducts = async () => {
+      try {
+
+        const searchQuery = document.getElementById('navbar-search').value.trim();
+        const categoryFilters = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(input => input.value).join(',');
+        const genderFilters = Array.from(document.querySelectorAll('input[name="gender"]:checked')).map(input => input.value).join(',');
+        // const priceRange = $("#price-range-slider").slider("values");
+        // const priceRangeOne= document.querySelectorAll('.range-min').slider('values')
+        // const priceRangeTwo= document.querySelectorAll('.range-max').slider("values")
+        // const minPrice = priceRangeOne[0];
+        // const maxPrice = priceRangeTwo[1];
+        const priceRangeOne = parseInt(document.querySelector('.range-min').value);
+        const priceRangeTwo = parseInt(document.querySelector('.range-max').value);
+        const minPrice = priceRangeOne;
+        const maxPrice = priceRangeTwo;
+        const sortBy = document.getElementById('sortBy').value;
+
+        const queryParams = new URLSearchParams({
+          search: searchQuery,
+          category: categoryFilters,
+          gender: genderFilters,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+          sortBy: sortBy
+        });
+        console.log(queryParams)
+        console.log("enetered")
+        window.location.href = `/shop?${queryParams}`;
+
+      } catch (error) {
+        console.error('Error filtered products:', error);
+      }
+    };
+
+    // Call the fetchFilteredProducts function whenever filter btn clicks 
+
+    document.getElementById('filter-btn').addEventListener('click', fetchFilteredProducts);
+    document.getElementById('sortBy').addEventListener("change", fetchFilteredProducts);
+    document.getElementById('searchButton').addEventListener('click',fetchFilteredProducts )
+    document.getElementById("clear-all").addEventListener('click', function () {
+      window.location.href = "/shop";
+
+    });
+ 
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+      checkbox.addEventListener('change', function () {
+        const clearAllButton = document.getElementById('clear-all');
+        if (document.querySelector('input[type="checkbox"]:checked')) {
+          clearAllButton.style.display = 'block';
+        } else {
+          clearAllButton.style.display = 'none';
+        }
+      });
+    });
+
+    document.getElementById('clear-all').addEventListener('click', function (event) {
+      event.preventDefault();
+      window.location.href = "/shop";
+    });
+
+  </script>
+
+  <script src="/user/js/jquery-1.12.4.min.js"></script>
+  <script src="/user/js/popper.min.js"></script>
+  <script src="/user/js/bootstrap.min.js"></script>
+  <script src="/user/js/own-menu.js"></script>
+  <script src="/user/js/jquery.lighter.js"></script>
+  <script src="/user/js/jquery.magnific-popup.min.js"></script>
+  <script src="/user/js/owl.carousel.min.js"></script>
+  <script src="/user/js/main.js"></script>
+</body>
+
+
+</html>
