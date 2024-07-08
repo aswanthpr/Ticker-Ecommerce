@@ -338,20 +338,20 @@
                       <% for(let i=0 ; i<cartProduct.length ; i++){ %>
                         <p class="text-dark">
                           <%=cartProduct[i].productDetails[0].name %> <span class="text-primary"><small>₹</small>
-                              <%= (cartProduct[i].productDetails[0]?.mrp ?
-                                cartProduct[i].productDetails[0]?.mrp : cartProduct[i].productDetails[0]?.offerPrice)*
+                              <%= (cartProduct[i].productDetails[0]?.offerPrice?
+                                cartProduct[i].productDetails[0]?.offerPrice : cartProduct[i].productDetails[0]?.mrp )*
                                 cartProduct[i].products.quantity %>
                             </span>
                         </p>
                         <input type="text" name="cartId" id="cartId" hidden value="<%=cartProduct[i]._id%>">
 
                         <% } %>
-
+                        <p class="text-dark font-weight-bold" id="discountId">Total Discount <span class="text-success"  ><small>₹</small><%=totalDiscount %></span></p>
+                        <p id="discont" hidden><%=totalDiscount %></p>
                           <p class="font-weight-bold">Subtotal <span><small>₹</small>
                               <%=subTotal %>
                             </span></p>
-                            <p class="text-dark font-weight-bold" id="discountId">Discount <span class="text-success"  ><small>₹</small><%=totalDiscount %></span></p>
-                            <p id="discont" hidden><%=totalDiscount %></p>
+                          
 
                           <% if (subTotal<2500) { %>
                             <p class="text-danger">Delivery Charge <span><small>₹</small>99</span></p>

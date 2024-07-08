@@ -9,7 +9,7 @@ const compression = require('compression');
 
  const {catch404,catch500, err500} = require("./middleware/errorHandler")
 
-
+   
 
 //database connection
 const dataBase  = require("./config/database")

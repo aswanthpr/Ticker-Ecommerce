@@ -62,6 +62,8 @@ const getCheckout = async (req, res) => {
 
 
         let subTotal = 0;
+        let mrpTotal =0;
+        let offerPriceTotal = 0;
 
         for (let i = 0; i < cartProduct.length; i++) {
             const products = cartProduct[i].products;
@@ -73,7 +75,9 @@ const getCheckout = async (req, res) => {
             for (let j = 0; j < productDetails.length; j++) {
                 const quantity = products.quantity;
                 const productStock = productDetails[j].stock;
-
+                
+                mrpTotal += productDetails[j].mrp*cartProduct[i].products.quantity;
+                offerPriceTotal+=  productDetails[j].offerPrice*cartProduct[i].products.quantity;
                 // Check if quantity is more than product stock
                 if (quantity > productStock) {
                     return res.json({ success: false, message: "Insufficient Quantity, Reduce cart Quantity" });
@@ -103,7 +107,8 @@ const getCheckout = async (req, res) => {
                 validity: { $gt: new Date() }
             }
         )
-
+        const totalDiscount =mrpTotal -offerPriceTotal;
+        req.session.totalDiscount = totalDiscount;
         res.render("checkout", {
             success: true, message: 'Proceed to checkout',
             cartProduct,
@@ -112,6 +117,7 @@ const getCheckout = async (req, res) => {
             couponData,
             subTotal,
             userId,
+            totalDiscount
         })
 
 
@@ -290,10 +296,11 @@ const applyCoupon = async (req, res) => {
         req.session.offerAmount = maximumOfferAmt;
         req.session.offer = couponData.offer;
         req.session.b4CouponPrice = totalPrice;
+        const totalDiscout = req.session.totalDiscount;
 
         if (req.session.couponDiscount !== 0 && req.session.couponCode !== 0) {
 
-            return res.json({ success: true, message: 'Coupon is applied', totalAmount })
+            return res.json({ success: true, message: 'Coupon is applied', totalAmount,maximumOfferAmt,totalDiscout })
         } else {
             return res.json({ success: false, message: ' Failed to  apply Coupon' })
         }
@@ -561,7 +568,7 @@ const deleteCoupon = async (req, res) => {
         delete req.session.couponCode;
         delete req.session.offerAmount;
         delete req.session.offer;
-        res.json({ success: true, message: 'coupon removed successfully', b4CouponPrice: req.session.b4CouponPrice });
+        res.json({ success: true, message: 'coupon removed successfully', b4CouponPrice: req.session.b4CouponPrice,discuntAmt:req.session.totalDiscount  });
     } catch (error) {
         throw new Error(error.message);
     }
