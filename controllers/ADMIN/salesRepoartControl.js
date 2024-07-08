@@ -4,6 +4,7 @@ const orderSchema = require('../../models/orderModel');
 const getSalesPage = async (req, res) => {
     try {
 const { selectValue, startDate,endDate} = req.query;
+
 const filterType = ['all','daily','weekly','monthly','yearly']
 
         let totalPages
@@ -448,19 +449,6 @@ const filterType = ['all','daily','weekly','monthly','yearly']
     }
 }
 //FULL SALES DATA 
-const fullSales = async (req, res) => {
-    try {
-        const salesData = await orderSchema.aggregate([
-            { $unwind: "$orderedItems" },
-            { $match: { "orderedItems.orderStatus": { $nin: ["Returned", "Cancelled"] } } },
-            { $lookup: { from: "users", localField: "userId", foreignField: "_id", as: "userDetails" } },
-            { $sort: { createdAt: -1 } }
-        ]);
-        return res.json({ salesData })
-    } catch (error) {
-        throw new Error(error)
-    }
-}
 
 
 //EXPORTS
