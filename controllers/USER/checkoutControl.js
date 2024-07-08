@@ -217,7 +217,8 @@ const editCheckoutAddress = async (req, res) => {
         res.render("editCheckAdd", { address });
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message)
+        // throw new Error(error)
     }
 }
 
@@ -256,7 +257,8 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
         }
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message)
+        //throw new Error(error.message);
     }
 
 }

@@ -164,8 +164,9 @@ const getAddAddress = async (req, res) => {
         res.render('addAddress', { userData, userId })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal server Error' })
-        throw new Error(error)
+        console.log(error.message)
+        // res.status(500).json({ success: false, message: 'Internal server Error' })
+        // throw new Error(error)
     }
 }
 //POST ADDRESS =====================================================
@@ -240,8 +241,9 @@ const postAddAddress = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal server Error' })
-        throw new Error(error)
+        console.log(error.message)
+        // res.status(500).json({ success: false, message: 'Internal server Error' })
+        // throw new Error(error)
 
     }
 }
@@ -296,7 +298,8 @@ console.log(updateAddress,'this is update address')
             res.json({ success: false, message: " Sorry updation failed" });
         }
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message)
+        // throw new Error(error)
     }
 }
 //DELETE PRODUCTS=============================================
