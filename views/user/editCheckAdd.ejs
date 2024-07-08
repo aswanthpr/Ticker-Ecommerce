@@ -502,7 +502,7 @@ document.getElementById("form").addEventListener('submit', async (e) => {
             console.log(formValues);
 
             try {
-        const response = await fetch(`http://localhost:3000/checkout/editAddress?id=${addressId}`,{
+        const response = await fetch(`/editAddress?id=${addressId}`,{
             method:'PUT',
             headers:{
                 'Content-Type':'application/json'
