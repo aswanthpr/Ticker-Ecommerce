@@ -136,7 +136,7 @@ const getViewProduct = async (req, res,next) => {
       $and: [
         { _id: { $ne: prodId }, },
         { status: true },
-        { category: productData.category }
+        { category: productData?.category }
       ]
     }).populate('category').limit(7);
 
@@ -225,7 +225,7 @@ const getAllProduct = async (req, res,next) => {
     //Query parameters
 
     const searchQuery = req.query.search || "";
-    const categoryFilter = req.query.category ? req.query.category.split(',') : [];
+    const categoryFilter = req.query?.category ? req.query?.category.split(',') : [];
     const genderFilter = req.query.gender ? req.query.gender.split(',') : [];
     const minPrice = parseInt(req.query.minPrice) || 0;
     const maxPrice = parseInt(req.query.maxPrice) || Infinity;
