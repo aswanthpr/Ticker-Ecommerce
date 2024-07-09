@@ -13,19 +13,20 @@ const productSchema = require('../../models/productModel');
 
 //GET ADMIN LOGIN =============================================
 
-const getAdminLogin = async (req, res) => {
+const getAdminLogin = async (req, res,next) => {
     try {
 
 
         res.render("adminlogin");
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
 
     }
 
 }
 //POST ADMIN LOGIN=============================================
-const postAdminLogin = async (req, res) => {
+const postAdminLogin = async (req, res,next) => {
     try {
         const { email, password } = req.body;
 
@@ -58,11 +59,12 @@ const postAdminLogin = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //GET ADMIN DASHBOARD==========================================
-const getDashboard = async (req, res) => {
+const getDashboard = async (req, res,next) => {
     try {
         //userCount
         const userData = await userSchema.countDocuments({ isBlocked: false });
@@ -277,14 +279,15 @@ const getDashboard = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 }
 
 
 
 //LOGOUT ====================================================
-const postLogout = async (req, res) => {
+const postLogout = async (req, res,next) => {
     try {
         req.session.id = null
 
@@ -293,12 +296,13 @@ const postLogout = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 
 //GET USERS===================================================
-const getUsers = async (req, res) => {
+const getUsers = async (req, res,next) => {
     try {
         const { search } = req.query;
         const page = parseInt(req.query.page) || 1;
@@ -311,11 +315,12 @@ const getUsers = async (req, res) => {
         res.render("user", { userData, currentPage: page, totalPages,search });
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //BLOCK USER
-const blockUser = async (req, res) => {
+const blockUser = async (req, res,next) => {
     try {
 
         const id = req.params.id;
@@ -330,13 +335,13 @@ const blockUser = async (req, res) => {
 
     } catch (error) {
 
-        
-        return res.status(500).json({ error: 'Internal Server Error' });
+        console.log(error.message);
+       next(error)
     }
 };
 
 //UNBLOCK USER
-const unblockUser = async (req, res) => {
+const unblockUser = async (req, res,next) => {
     try {
         const id = req.params.id;
 
@@ -350,11 +355,12 @@ const unblockUser = async (req, res) => {
 
     } catch (error) {
       
-        return res.status(500).json({ error: 'Internal Server Error' });
+        console.log(error.message);
+        next(error)
     }
 };
 //ADMIN LOGOUT================================================
-const adminLogout = async (req, res) => {
+const adminLogout = async (req, res,next) => {
     try {
         req.session.destroy(() => {
 
@@ -364,13 +370,14 @@ const adminLogout = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 
 }
 //USER SEARCH==================================================
 
-const userSearch = async (req, res) => {
+const userSearch = async (req, res,next) => {
     try {
 
         const { search } = req.query;
@@ -388,7 +395,8 @@ const userSearch = async (req, res) => {
             res.render("user", { search })
         }
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 
 

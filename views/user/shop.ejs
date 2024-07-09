@@ -680,7 +680,7 @@
     async function addToWishlist(productId) {
       try {
 
-        console.log(productId + " product id")
+       
         const response = await fetch('/add-wishlist', {
           method: 'POST',
           headers: {
@@ -723,7 +723,7 @@
     }
 
     async function addToCart(prodId) {
-      console.log(prodId, "   this is muy productid")
+      
       try {
         const response = await fetch("/addToCart", {
           method: "POST",
@@ -733,7 +733,7 @@
           body: JSON.stringify({ prodId })
         });
         const data = await response.json();
-        console.log(data);
+       
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -862,8 +862,7 @@
           maxPrice: maxPrice,
           sortBy: sortBy
         });
-        console.log(queryParams)
-        console.log("enetered")
+      
         window.location.href = `/shop?${queryParams}`;
 
       } catch (error) {

@@ -5,7 +5,7 @@ const addressSchema = require("../../models/addressModel");
 
 //  GET CART PAGE
 
-const getCart = async (req, res) => {
+const getCart = async (req, res,next) => {
     try {
         const userId = req.session.user;
 
@@ -41,11 +41,12 @@ const getCart = async (req, res) => {
 
         res.render("cart", { cartProduct, userId, totalCost })
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 
-const cartRemove = async (req, res) => {
+const cartRemove = async (req, res,next) => {
     try {
         const { productId } = req.body;
 
@@ -85,13 +86,13 @@ const cartRemove = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error)
-
+        console.log(error.message);
+        next(error)
     }
 }
 
 //increase Cart quantity
-const incrementQty = async (req, res) => {
+const incrementQty = async (req, res,next) => {
     try {
         const userId = req.session.user;
         const { cartItemId } = req.body
@@ -128,12 +129,13 @@ const incrementQty = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error.mesage)
+        console.log(error.message);
+        next(error)
     }
 }
 
 // decrement cart quantity   
-const decrementQty = async (req, res) => {
+const decrementQty = async (req, res,next) => {
     try {
         const userId = req.session.user;
         const { cartItemId } = req.body;
@@ -165,12 +167,13 @@ const decrementQty = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 
 //CART CONDITION CHECKING
-const cartCondition = async (req, res) => {
+const cartCondition = async (req, res,next) => {
     try {
         const userId = req.session.user;
 
@@ -236,8 +239,8 @@ const cartCondition = async (req, res) => {
         return res.json({ success: true })
 
     } catch (error) {
-        throw new Error(error.message);
-        return res.status(500).json({ success: false, message: error.message });
+        console.log(error.message);
+       next(error)
 
     }
 }

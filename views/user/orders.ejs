@@ -19,10 +19,27 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<body>
-    <!-- Top bar -->
+
+    <style>
+        body {
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        .breadcrumb__links a {
+            display: inline-block;
+            white-space: nowrap; 
+        }
+        .table-responsive {
+            overflow-x: auto; 
+        }
+        .modal-dialog {
+            max-width: 100%;
+        }
+    </style>
 
     <body>
+    <!-- Top bar -->
+
+   
         <div class="mt-5">
             <section class="breadcrumb-option">
                 <div class="container">
@@ -118,16 +135,9 @@
                                 <div class="card shadow">
                                     <div class="table-responsive">
                                         <table class="table align-items-center  table  ">
-                                            <!-- <thead class="thead-light">
-                                                <tr>
-                                                    <th class="text-dark fw-bold" scope="col">Product</th>
-                                                    <th class="text-dark fw-bold" scope="col">Price</th>
-                                                    <th class="text-dark fw-bold" scope="col">Quantity</th>
-                                                    <th class="text-dark fw-bold" scope="col">Status</th>
-                                                    <th class="text-dark fw-bold" scope="col">Action</th>
-                                              
-                                                </tr>
-                                            </thead> -->
+                                     <% if (orderData.length==0) { %>
+                                      <p class="fw-bold text-danger text-center"> NO ORDER FOUND</p>
+                                     <% } %>
 
                                             <% for(let i=0 ; i<orderData.length ; i++){ %>
                                                 <tr>
@@ -466,15 +476,13 @@
             function cancelProduct(prodId, ordId) {
                 productId = prodId;
                 orderId = ordId;
-                console.log(productId + " productId");
-                console.log(orderId + " orderId");
+                
             }
 
             function returnProduct(prodId, ordId) {
                 productId = prodId;
                 orderId = ordId;
-                console.log(productId + " productId");
-                console.log(orderId + " orderId");
+              
             }
 
             document.getElementById('cancel-reason-btn').addEventListener('click', async function () {
@@ -492,7 +500,7 @@
                     productId: productId,
                     orderId: orderId,
                 };
-                console.log(data);
+               
 
                 try {
                     const response = await fetch('/order/cancel-order', {
@@ -503,7 +511,7 @@
                         body: JSON.stringify(data),
                     });
                     const resp = await response.json();
-                    console.log(resp + "this is response")
+                   
                     if (resp.success) {
                         Swal.fire({
                             icon: 'success',
@@ -587,7 +595,7 @@
                         body: JSON.stringify({ orderId, productId, reason }),
                     });
                     const resp = await response.json();
-                    console.log(resp + "this is response")
+                   
                     if (resp.success) {
                         Swal.fire({
                             icon: 'success',
@@ -631,7 +639,7 @@
             //REPAYMENT RAZORPAY PENDING PAYMENT 
 
             async function rePayment(totalCost, orderId) {
-                console.log(totalCost, orderId)
+               
                 Swal.fire({
                     title: "Do you want to retry the payment ?",
 

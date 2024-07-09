@@ -516,7 +516,7 @@
               if (cropper) {
                 cropper.destroy();
                 cropper = null;
-                console.log('ithu nadakkuo')
+               
                 await saveImage();
               }
             }
@@ -536,14 +536,14 @@
 
                   body: (formData)
                 })
-                console.log(response, 'thu response')
+               
                 if (response.ok) {
                   const result = await response.json();
                   if (result.success) {
                     window.location.reload()
                   }
 
-                  console.log('Image saved successfully', result);
+                 
                   // Handle success (e.g., show a success message, redirect, etc.)
                 } else {
                   console.error('Error saving image', response.statusText);
@@ -590,7 +590,7 @@
               if (subtitleInput.value.trim().length < 4 || !/^[a-zA-Z\s]+$/.test(subtitleInput.value.trim())) {
                 document.getElementById('subtitleMessage').textContent = 'Subtitle must be at least 4 characters long and contain only letters and spaces';
                 isValid = false;
-                console.log("2222222")
+              
               } else {
                 document.getElementById('subtitleMessage').textContent = '';
               }
@@ -599,7 +599,7 @@
               if (brandInput.value.trim().length < 2 || !/^[a-zA-Z\s]+$/.test(brandInput.value.trim())) {
                 document.getElementById('brandMessage').textContent = 'Brand must be at least 3 characters long and contain only letters and spaces';
                 isValid = false;
-                console.log("o3333333ne")
+               
               } else {
                 document.getElementById('brandMessage').textContent = '';
               }
@@ -608,7 +608,7 @@
               if (colorInput.value.trim().length === 0 || !/^[a-zA-Z\s]+$/.test(colorInput.value.trim())) {
                 document.getElementById('colorMessage').textContent = 'Color is required and must contain only letters and spaces';
                 isValid = false;
-                console.log("4444444444444")
+              
               } else {
                 document.getElementById('colorMessage').textContent = '';
               }
@@ -617,7 +617,7 @@
               if (stockInput.value.trim().length === 0 || parseInt(stockInput.value.trim()) < 0) {
                 document.getElementById('stockMessage').textContent = 'Stock must be a non-negative number';
                 isValid = false;
-                console.log("55555555555555")
+               
               } else {
                 document.getElementById('stockMessage').textContent = '';
               }
@@ -626,7 +626,7 @@
               if (mrpInput.value.trim().length === 0 || parseInt(mrpInput.value.trim()) < 0) {
                 document.getElementById('mrpMessage').textContent = 'MRP must be a non-negative number';
                 isValid = false;
-                console.log("66666666666666")
+               
               } else {
                 document.getElementById('mrpMessage').textContent = '';
               }
@@ -636,19 +636,19 @@
               // if (!files || files.length <=2) {
               //   document.getElementById('imageMessage').textContent = 'Please upload at least 3 images';
               //   isValid = false;
-              //   console.log("77777777777777")
+              //  
               // } else {
               //   document.getElementById('imageMessage').textContent = '';
               // }
 
               // Prevent form submission if not valid
               if (!isValid) {
-                console.log("8888888888888")
+                
                 event.preventDefault();
               }
 
               //==============================
-              console.log(isValid + " this is validation check")
+            
               if (isValid) {
 
                 const confirmation = await Swal.fire({
@@ -672,7 +672,7 @@
                   const categorySelect = document.getElementById('category')?.value || "";
 
 
-                  console.log(mrpInput, stockInput, nameInput)
+                 
 
                   const editData = {
                     name: nameInput,
@@ -701,7 +701,7 @@
                     });
 
                     const data = await response.json();
-                    console.log(data, 'this is data mone')
+                    
                     if (response.ok) {
                       Swal.fire({
                         icon: 'success',

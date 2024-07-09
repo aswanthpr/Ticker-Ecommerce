@@ -212,21 +212,21 @@
                         </td>
                         <td>
                         
-                          <%= offerData[i].productId.name.length > 20 ? offerData[i].productId.name.slice(0, 20) + '...' : offerData[i].productId.name %>
+                          <%= offerData[i]?.productId?.name.length > 20 ? offerData[i]?.productId?.name.slice(0, 20) + '...' : offerData[i]?.productId?.name %>
                         </td>
                         <td>
-                          <%= offerData[i].offer %>
+                          <%= offerData[i]?.offer %>
                         </td>
                         <td>
-                          <%= new Date(offerData[i].createdAt).toLocaleDateString() %>
+                          <%= new Date(offerData[i]?.createdAt).toLocaleDateString() %>
                         </td>
                         <td>
-                          <%= new Date(offerData[i].validity).toLocaleDateString() %>
+                          <%= new Date(offerData[i]?.validity).toLocaleDateString() %>
                         </td>
 
 
                         <td class="">
-                          <% if (new Date(offerData[i].validity) < new Date()) { %>
+                          <% if (new Date(offerData[i]?.validity) < new Date()) { %>
                             <span class="text-danger"> Inactive </span>
                           <% } else { %>
                             <span class="text-success"> Active </span>
@@ -236,7 +236,7 @@
                           <div class="block-body text-center d-flex ">
                             <button type="button" data-toggle="modal" data-target="#editmyModal"
                               class="btn btn-outline-success icon icon-new-file btn-sm"
-                              onclick="editProductOffer('<%= offerData[i]._id %>','<%= offerData[i].offer %>','<%= offerData[i].validity %>','<%= offerData[i].productId.name %>')"></button>
+                              onclick="editProductOffer('<%= offerData[i]?._id %>','<%= offerData[i]?.offer %>','<%= offerData[i]?.validity %>','<%= offerData[i]?.productId?.name %>')"></button>
 
                           </div>
                         </th>
@@ -244,7 +244,7 @@
 
                         <th>
                           <a class="btn btn-outline-danger icon icon-close btn-sm"
-                            onclick="deleteoffer('<%=offerData[i]._id%>')"></a>
+                            onclick="deleteoffer('<%=offerData[i]?._id%>')"></a>
                         </th>
                       </tr>
                       <% } %>
@@ -365,12 +365,12 @@
 
 
       function editProductOffer(offerId,offer,validity,productName) {
-        console.log(offerId,offer,validity,productName,'this is data of edit')
+       
         // Set the offer ID and name in the modal inputs
         document.getElementById('offerid').value = offerId;
         document.getElementById('selectProductName').value = productName ;
         const time = document.getElementById('editProductValidity').value =new Date(validity).toISOString().split("T")[0]
-        console.log(time,'tis is time')
+      
         document.getElementById('editProductOffer').value = offer;
 
         // Show the modal
@@ -379,65 +379,6 @@
 
 
 
-
-      // async function validateCouponAdd(event) {
-      //   event.preventDefault();
-      //   let valid = true;
-      //   // const formData =document.getElementById('couponForm');
-      //   const couponCode = document.getElementById('couponCode').value;
-      //   const offer = document.getElementById('offer').value;
-      //   const minPrice = document.getElementById('minPrice').value;
-      //   const maxRedeem = document.getElementById('maxRedeem').value;
-      //   const date = document.getElementById('date').value;
-
-      //   const couponCodeMessage = document.getElementById('couponcodeMessage');
-      //   const offerMessage = document.getElementById('offerMessage');
-      //   const minPriceMessage = document.getElementById('minPriceMessage');
-      //   const maxRedeemMessage = document.getElementById('maxredeemMessage');
-      //   const validityMessage = document.getElementById('validityMessage');
-      //   const showMessage = document.getElementById('showMessage');
-
-      //   const couponCodeRegex = /^[A-Za-z0-9]{4,15}$/;
-      //   const numberRegex = /^[0-9]+$/;
-      //   const today = new Date().toISOString().split('T')[0];
-
-      //   couponCodeMessage.textContent = '';
-      //   offerMessage.textContent = '';
-      //   minPriceMessage.textContent = '';
-      //   maxRedeemMessage.textContent = '';
-      //   validityMessage.textContent = '';
-
-      //   if (!couponCodeRegex.test(couponCode)) {
-      //     couponCodeMessage.textContent = "Offer Code must be 4-15 characters long, alphanumeric, and contain no spaces or special characters.";
-      //     valid = false;
-      //   }
-
-      //   if (!numberRegex.test(offer)) {
-      //     offerMessage.textContent = "Offer must contain only numbers.";
-      //     valid = false;
-      //   }
-
-      //   if (!numberRegex.test(minPrice)) {
-      //     minPriceMessage.textContent = "Minimum Purchase Amount must contain only numbers.";
-      //     valid = false;
-      //   }
-
-      //   if (!numberRegex.test(maxRedeem)) {
-      //     maxRedeemMessage.textContent = "Max Redeemable Amount must contain only numbers.";
-      //     valid = false;
-      //   }
-
-      //   if (date < today) {
-      //     validityMessage.textContent = "Validity date must be today or a future date.";
-      //     valid = false;
-      //   }
-
-      //   if (valid) {
-      //     showMessage.textContent = "";
-
-      //     // Manually submit the form if valid
-      //     document.getElementById('couponForm').submit();
-      //   }
 
 
       document.getElementById('productOfferform').addEventListener('submit', async function (event) {
@@ -482,13 +423,13 @@
         };
 
         try {
-          console.log(formData, 'formdata toto')
+        
           const response = await fetch("/admin/add-product-offers", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
           });
-          console.log('heyymannn')
+         
           const data = await response.json();
           if (data.success) {
             Swal.fire({
@@ -576,13 +517,13 @@
         };
 
         try {
-          console.log(formData, 'formdata toto')
+         
           const response = await fetch("/admin/edit-product-offer", {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
           });
-          console.log('heyymannn')
+        
           const data = await response.json();
           if (data.success) {
             Swal.fire({
@@ -640,7 +581,7 @@
           confirmButtonText: "Yes, unlist it!",
         }).then(async (result) => {
           if (result.isConfirmed) {
-            console.log(result, "this")
+           
             try {
               // Make AJAX request to backend
               const response = await fetch(`/admin/status-offer`, {

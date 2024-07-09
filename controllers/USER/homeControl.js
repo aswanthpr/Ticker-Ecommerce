@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 
 
 
-const getHome = async (req, res) => {
+const getHome = async (req, res,next) => {
   try {
     const user = req.session.user;
 
@@ -117,12 +117,13 @@ const getHome = async (req, res) => {
 
     res.render("home", { productData, user, cartCount });
   } catch (error) {  
-    throw new Error(error)
+    console.log(error.message);
+    next(error)
   }
 };
 
 //VIEW PRODUCT DETAILES ==========================================================
-const getViewProduct = async (req, res) => {
+const getViewProduct = async (req, res,next) => {
   try {
     const userId = req.session.user;
     const prodId = req.query.id;
@@ -142,14 +143,15 @@ const getViewProduct = async (req, res) => {
 
     res.render("productDetail", { productData, relatedData, userId, cartCount })
   } catch (error) {
-    throw new Error(error)
+    console.log(error.message);
+    next(error)
 
   }
 
 }
 
 //ADD TO CART================================================
-const addToCart = async (req, res) => {
+const addToCart = async (req, res,next) => {
   try {
     const userId = req.session.user;
     const { prodId } = req.body;
@@ -203,13 +205,14 @@ const addToCart = async (req, res) => {
 
     )
   } catch (error) {
-    throw new Error(error.message)
+    console.log(error.message);
+    next(error)
 
   }
 }
 
 //  ALL PRODUCTS ==============================================
-const getAllProduct = async (req, res) => {
+const getAllProduct = async (req, res,next) => {
   try {
 
     const userId = req.session.user;
@@ -285,7 +288,8 @@ const getAllProduct = async (req, res) => {
 
     res.render("shop", { productData, categories, userId, genders, cartCount, totalPages, currentPage: page, selectedCategories: categoryFilter, selectedGenders: genderFilter, minPrice, maxPrice, sortBy, search: searchQuery });
   } catch (error) {
-    throw new Error(error.message);
+    console.log(error.message);
+       next(error)
   }
 }
 

@@ -4,7 +4,7 @@ const orderSchema = require("../../models/orderModel");
 const mongoose = require("mongoose")
  
 //GET PRODUCT=================================================
-const getProduct = async (req, res) => {
+const getProduct = async (req, res,next) => {
     try {
         const {search} = req.query;
         const page = parseInt(req.query.page) || 1;
@@ -29,23 +29,25 @@ const getProduct = async (req, res) => {
         return res.render("product", { productData,currentPage:page,totalPages,search });
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 }
 
 //GET CREATE PRODUCT==================================
-const getCreateProduct = async (req, res) => {
+const getCreateProduct = async (req, res,next) => {
     try {
         const categoryData = await categorySchema.find({ status: true })
 
         res.render("createProducts", { categoryData })
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 }
 //ADD PRODUCT ===========================================
 
-const createProduct = async (req, res) => {
+const createProduct = async (req, res,next) => {
     try {
       
 
@@ -90,13 +92,14 @@ const createProduct = async (req, res) => {
 
     } catch (error) {
       
-        return res.status(500).json({ success: false, message: "Internal server error" });
+        console.log(error.message);
+        next(error)
     }
 }
 
 //LIST AND UNLIST  PRODUCT ===========================================
 
-const productList = async (req, res) => {
+const productList = async (req, res,next) => {
     try {
         const id = req.params.id;
 
@@ -111,11 +114,12 @@ const productList = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     } 
 }
 
-const productUnlist = async (req, res) => {
+const productUnlist = async (req, res,next) => {
     try {
         const id = req.params.id;
 
@@ -129,11 +133,12 @@ const productUnlist = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 
-const getEditProduct = async (req, res) => {
+const getEditProduct = async (req, res,next) => {
     try {
         const id = req.params.id;
         const proData = await productSchema.find({ _id: id }).populate('category')
@@ -142,11 +147,12 @@ const getEditProduct = async (req, res) => {
         res.render("editProducts", { proData, category })
  
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 
-const uploadImage = async(req,res)=>{
+const uploadImage = async(req,res,next)=>{
     try {
          
         const {prodId} = req.params
@@ -164,10 +170,11 @@ const uploadImage = async(req,res)=>{
             }
            
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 }
-const editProduct = async (req, res) => {
+const editProduct = async (req, res,next) => {
     try {
         const {prodId} = req.params;
   
@@ -208,10 +215,11 @@ const editProduct = async (req, res) => {
 
     } catch (error) {
        
-        res.status(500).json({ message: 'Internal server error' });
+        console.log(error.message);
+        next(error)
     }
 }
-const deleteImage = async(req,res)=>{
+const deleteImage = async(req,res,next)=>{
     try {
         const {id,imageId} = req.query;
 
@@ -227,13 +235,13 @@ const deleteImage = async(req,res)=>{
                 res.status(400).json({success:false,message:'image is not found in products or product not found'})
             }
     } catch (error) {
-        res.status(500).json({success:true,message:"Internal server error"});
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
 
     }
 }
 
-const deleteProduct = async (req, res) => { 
+const deleteProduct = async (req, res,next) => { 
     try {
         const {productId} = req.body;
        
@@ -245,27 +253,30 @@ const deleteProduct = async (req, res) => {
               }
             }
           });
-      
+   
 
      
-        if(checkProduct){
-            return res.status(400).json({ message: "Product is ordered and cannot be deleted" });
+        if(checkProduct.length>0){
+            return res.status(400).json({success:false, message: "Product is ordered and cannot be deleted" });
         }else{
-            const deleted = await productSchema.findByIdAndDelete({ _id: productId })
+
+           const deleted = await productSchema.findByIdAndDelete({ _id: productId })
+        
             if (deleted) {
-                return res.status(200).json({ message: "Product deleted successfully" });
+                return res.status(200).json({success:true, message: "Product deleted successfully" });
             } else {
-                return res.status(404).json({ message: "Product not found" });
+                return res.status(404).json({success:false, message: "Product not found" });
             }
         }
        
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 };
 
 //ADMIN SEARCH=======================================================
-const productSearch = async(req,res)=>{
+const productSearch = async(req,res,next)=>{
     try {
   
       const {search} = req.query;
@@ -293,7 +304,8 @@ const productSearch = async(req,res)=>{
         res.render("product",{search})
       }
     } catch (error) {
-      throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
    
     

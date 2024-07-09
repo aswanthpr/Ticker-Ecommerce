@@ -126,7 +126,7 @@
               <section class="pages-in chart-page col-lg-12">
     <div class="col">
         
-                <% console.log("haoiiofsaoif") %>
+              
                 <section class="py-4">
                     <% if(orderData !== null){ %>
                         <div class="container">
@@ -140,16 +140,16 @@
   
                                             
                                             <!-- Order Details -->
-                                            <!-- <% var deliveryDate = new Date(orderData.currentDate); %>
+                                            <!-- <% var deliveryDate = new Date(orderData?.currentDate); %>
                                             <% var today = new Date(); %>
                                             <% deliveryDate.setDate(deliveryDate.getDate() + 7); %> -->
                                             <div class="order-details">
                                                 <h4 class="text-primary">Order Details</h4>
-                                                <p class="fw-bolder text-secondary">Order ID: <span class="fw-bolder text-light "><%= orderData.orderId %></span></p>
-                                                <p class="fw-bolder text-secondary">Ordered Date: <span class="fw-bolder text-light"><%= new Date(orderData.createdAt).toLocaleDateString() %></span></p>
+                                                <p class="fw-bolder text-secondary">Order ID: <span class="fw-bolder text-light "><%= orderData?.orderId %></span></p>
+                                                <p class="fw-bolder text-secondary">Ordered Date: <span class="fw-bolder text-light"><%= new Date(orderData?.createdAt).toLocaleDateString() %></span></p>
                                                 
-                                                <p class="fw-bolder text-secondary">Total Price: <span class="fw-bolder text-light" >RS:<%= orderData.totalPrice %></span></p>
-                                                <p class="fw-bolder text-secondary">Payment Method: <span class="fw-bolder badge badge-success"><%= orderData.paymentMethod %></span></p>
+                                                <p class="fw-bolder text-secondary">Total Price: <span class="fw-bolder text-light" >RS:<%= orderData?.totalPrice %></span></p>
+                                                <p class="fw-bolder text-secondary">Payment Method: <span class="fw-bolder badge badge-success"><%= orderData?.paymentMethod %></span></p>
                                                  <p class="status-text fw-bolder ">Payment status: 
                                                    
                                                         <span class="fw-bolder badge             
@@ -177,15 +177,15 @@
                                             <div class="address">
                                                 <h4  class="text-primary">Address</h4>
                                                
-                                                    <p class="fw-bolder text-secondary">Name: <span class="fw-bolder text-light"><%= orderData.address.name %></span></p>
-                                                    <p class="fw-bolder text-secondary">Mobile:<span class="fw-bolder text-light"><%= orderData.address.phone %></span></p>
+                                                    <p class="fw-bolder text-secondary">Name: <span class="fw-bolder text-light"><%= orderData?.address?.name %></span></p>
+                                                    <p class="fw-bolder text-secondary">Mobile:<span class="fw-bolder text-light"><%= orderData?.address?.phone %></span></p>
                                                     
-                                                    <p class="fw-bolder text-secondary">Locality:<span class="fw-bolder text-light"><%= orderData.address.locality %></span></p>
-                                                    <p class="fw-bolder text-secondary">House:<span class="fw-bolder text-light"><%= orderData.address.house %></span></p>
-                                                    <p class="fw-bolder text-secondary">City:<span class="fw-bolder text-light"><%= orderData.address.city %></span></p>
-                                                    <p class="fw-bolder text-secondary">Landmark:<span class="fw-bolder text-light"><%= orderData.address.landmark %></span></p>
-                                                    <p class="fw-bolder text-secondary">State:<span  class="fw-bolder text-light"><%= orderData.address.state %></span></p>
-                                                    <p class="fw-bolder text-secondary">Pincode: <span class="fw-bolder text-light"><%= orderData.address.pincode %></span></p>
+                                                    <p class="fw-bolder text-secondary">Locality:<span class="fw-bolder text-light"><%= orderData?.address?.locality %></span></p>
+                                                    <p class="fw-bolder text-secondary">House:<span class="fw-bolder text-light"><%= orderData?.address?.house %></span></p>
+                                                    <p class="fw-bolder text-secondary">City:<span class="fw-bolder text-light"><%= orderData?.address?.city %></span></p>
+                                                    <p class="fw-bolder text-secondary">Landmark:<span class="fw-bolder text-light"><%= orderData?.address?.landmark %></span></p>
+                                                    <p class="fw-bolder text-secondary">State:<span  class="fw-bolder text-light"><%= orderData?.address?.state %></span></p>
+                                                    <p class="fw-bolder text-secondary">Pincode: <span class="fw-bolder text-light"><%= orderData?.address?.pincode %></span></p>
                                                
                                             </div>
                                         </div>
@@ -196,16 +196,16 @@
                                   <div class="card flex-grow-1">
                                       <div class="card-body">                                         
                                           <!-- Order Details -->
-                                          <!-- <% var deliveryDate = new Date(orderData.currentDate); %>
+                                          <!-- <% var deliveryDate = new Date(orderData?.currentDate); %>
                                           <% var today = new Date(); %>
                                           <% deliveryDate.setDate(deliveryDate.getDate() + 7); %> -->
                                           <div class="order-details">
                                               <h4 class="text-primary">User Details</h4>
-                                              <p class="fw-bolder text-secondary">Name: <span class="fw-bolder text-light "><%= orderData.userId.name %></span></p>
-                                              <p class="fw-bolder text-secondary">Email: <span class="fw-bolder text-light"><%= orderData.userId.email %></span></p>
+                                              <p class="fw-bolder text-secondary">Name: <span class="fw-bolder text-light "><%= orderData?.userId?.name %></span></p>
+                                              <p class="fw-bolder text-secondary">Email: <span class="fw-bolder text-light"><%= orderData?.userId?.email %></span></p>
                                             
-                                              <p class="fw-bolder text-secondary">Phone: <span class="fw-bolder text-light" ><%= orderData.userId.phone %></span></p>
-                                              <!-- <p class="fw-bolder text-secondary">Joined Date: <span class="fw-bolder text-success"><%= new Date(orderData.createdAt).toLocaleDateString() %></span></p> -->
+                                              <p class="fw-bolder text-secondary">Phone: <span class="fw-bolder text-light" ><%= orderData?.userId?.phone %></span></p>
+                                              <!-- <p class="fw-bolder text-secondary">Joined Date: <span class="fw-bolder text-success"><%= new Date(orderData?.createdAt).toLocaleDateString() %></span></p> -->
                                               
                                           </div>
                                           <!-- Status text -->
@@ -226,7 +226,7 @@
                                            
                                                      
                                                     
-                                           <% orderData.orderedItems.forEach(item => { %>
+                                           <% orderData?.orderedItems.forEach(item => { %>
                                             <!-- Product Details -->
                                             <div class="product-details">
                                                 <div class="row">
@@ -235,15 +235,15 @@
                                                         <hr>
                                                         <!-- Left side for the image -->
                                                         <div class="col-md-4">
-                                                            <img  src="/uploads/<%= item.image[0] %>" alt="Product Image" class="img-fluid w-75 h-100" style="height: 17em;">
+                                                            <img  src="/uploads/<%= item?.image[0] %>" alt="Product Image" class="img-fluid w-75 h-100" style="height: 17em;">
                                                         </div>
                                                         <!-- Right side for other details -->
                                                         <div class="col-md-4">
                                                             <h4  class="text-primary">Product Details</h4>
                                                             <div class="product">
-                                                                <p class="fw-bolder text-secondary">Product Name: <span class="fw-bolder text-light"><%= item.productName %></span></p>
-                                                                <p class="fw-bolder text-secondary">Quantity: <span class="fw-bolder text-light"><%= item.cartQuantity %></span></p>
-                                                                <p class="fw-bolder text-secondary">Price: <span class="fw-bolder text-light">Rs:<%= item.offerPrice %></span></p>
+                                                                <p class="fw-bolder text-secondary">Product Name: <span class="fw-bolder text-light"><%= item?.productName %></span></p>
+                                                                <p class="fw-bolder text-secondary">Quantity: <span class="fw-bolder text-light"><%= item?.cartQuantity %></span></p>
+                                                                <p class="fw-bolder text-secondary">Price: <span class="fw-bolder text-light">Rs:<%= item?.offerPrice %></span></p>
                                                                 <p class="fw-bolder text-secondary">Order Status: 
                                                                   <span class="fw-bolder badge <%= 
                                                                     item.orderStatus === 'Pending' ? 'badge-info' : 
@@ -263,11 +263,11 @@
                                                                     
                                                                     <span class="badge badge-warning  ml-4" style="font-size: 12px;">Refund Issued ✓</span>
                                                                 <% }%> 
-                                                                 <!-- <%if(orderData.paymentStatus) {%>
+                                                                 <!-- <%if(orderData?.paymentStatus) {%>
                                                                     <span class="fw-bolder badge <%=orderData.paymentStatus=="Pending"?' badge-info':
                                                                 orderData.paymentStatus=="Paid"? 'badge-success':
                                                                 orderData.paymentStatus=="Failed"?' badge-danger':''
-                                                                %>" ><%= orderData.paymentStatus %></span>
+                                                                %>" ><%= orderData?.paymentStatus %></span>
                                                                     <%}%>
                                                                 
                                                                 </p> -->
@@ -280,9 +280,9 @@
                                                          
                                                         
                                                           <div>
-                                                            <% if (item.orderStatus ==='Pending'||item.orderStatus ==='Shipped') { %>
+                                                            <% if (item?.orderStatus ==='Pending'||item?.orderStatus ==='Shipped') { %>
                                                             <p class="text-center text-primary">Change Order Status</p>
-                                                            <select id="orderStatusSelect-<%= item.productId %>" class="form-select border border-light" aria-label="Default select example">
+                                                            <select id="orderStatusSelect-<%= item?.productId %>" class="form-select border border-light" aria-label="Default select example">
                                                               <option selected>SELECT AN OPTION</option>
                                                               <option value="Shipped">Shipped</option>
                                                               <option value="Delivered">Delivered</option>
@@ -290,12 +290,12 @@
                                                              
                                                             </select>
   
-                                                            <button class="btn btn-success btn-sm" onclick="changeOrderStatus('<%=orderData.orderId%>','<%=item.productId%>')">change</button>
+                                                            <button class="btn btn-success btn-sm" onclick="changeOrderStatus('<%=orderData?.orderId%>','<%=item?.productId%>')">change</button>
                                                             <% } %>
                                                           </div>
                                                           
                                                           
-                                                          <% if (item.returnApprove==1) { %>
+                                                          <% if (item?.returnApprove==1) { %>
                                                             <div class="col-lg-3 mt-2">
                                                               <div class="row">
                                                                   <div class="col-lg-12 text-center">
@@ -313,9 +313,9 @@
                                                                   <div
                                                                       class="col-lg-12 d-flex justify-content-center mt-2">
                                                                       <button class="btn btn-danger p-2 mx-1"
-                                                                          onclick="declineReturn('<%= orderData.orderId %>', '<%= item.productId %>','<%= item.Reason%>')">Decline</button>
+                                                                          onclick="declineReturn('<%= orderData?.orderId %>', '<%= item?.productId %>','<%= item?.Reason%>')">Decline</button>
                                                                       <button class="btn btn-info p-2 mx-1"
-                                                                          onclick="approveReturn('<%= orderData.orderId %>', '<%= item.productId %>','<%= item.Reason%>')">Approve</button>
+                                                                          onclick="approveReturn('<%= orderData?.orderId %>', '<%= item?.productId %>','<%= item?.Reason%>')">Approve</button>
 
                                                                   </div>
 
@@ -338,7 +338,7 @@
                             </div>
                         </div>
                     <% } else { %>
-                        <% console.log('No orders found') %>
+                       
                         <p>NO ORDERS FOUND</p>
                         
                     <% } %>

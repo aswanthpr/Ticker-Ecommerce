@@ -453,7 +453,7 @@
                   
                   <% if (relatedData[i].category._id.toString()===productData.category._id.toString()) { %>
                    
-                      <% console.log(relatedData[i]) %>
+                     
                       <!-- Item -->
                       <div class="item ">
                         <!-- Sale -->
@@ -674,7 +674,7 @@
     });
 
     async function addToCart(prodId) {
-      console.log(prodId)
+      
       try {
         const response = await fetch("/addToCart", {
           method: "POST",
@@ -684,7 +684,7 @@
           body: JSON.stringify({ prodId })
         });
         const data = await response.json();
-        console.log(data);
+        
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -730,7 +730,7 @@
     async function addWishlist(productId){
       try {
         
-        console.log(productId+ " product id")
+      
         const response = await fetch('/add-wishlist', {
             method: 'POST',
             headers: {

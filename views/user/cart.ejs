@@ -415,8 +415,7 @@ const fetchFilteredProducts = async () => {
           search: searchQuery,
           
         });
-        console.log(queryParams)
-        console.log("enetered")
+       
         
        window.location.href=`/shop?${queryParams}`;
 
@@ -436,7 +435,7 @@ const fetchFilteredProducts = async () => {
 
 //product remove form cart 
     async function remove(productId) {
-      console.log(productId);
+      
       try {
         const confirmation = await Swal.fire({
           title: "Are you sure?",
@@ -487,7 +486,7 @@ const fetchFilteredProducts = async () => {
     //product quantity increase
     async function increment(cartItemId, mrp, stock, index,grandTotal) {
       try {
-        console.log("one",grandTotal)
+       
         let totalElement = document.getElementById(`total${index}`);
         let quantityInput = document.getElementById(`quantity${index}`)
         let quantity = parseInt(quantityInput.value);
@@ -507,16 +506,16 @@ const fetchFilteredProducts = async () => {
           })
 
         }
-        console.log("two")
+      
 
 
 
         const response = await axios.post("/cart/increment", { cartItemId })
-        console.log(response)
+       
        
         if (response.data.success) {
 
-          console.log(quantity, mrp, index, 'ssdji')
+          
           let totalAmount = mrp * (quantity + 1);
           let itemTotal = document.getElementById(`total${index}`);
           let itemTotalDown = document.getElementById('item-totals-down' + index);
@@ -575,7 +574,7 @@ const fetchFilteredProducts = async () => {
 
     async function decrement(cartItemId, mrp, stock, index,grandTotal) {
 
-     console.log(grandTotal,'ths')
+  
       try {
         let totalElement = document.getElementById(`total${index}`);
       let quantityInput = document.getElementById(`quantity${index}`)
@@ -603,7 +602,7 @@ const fetchFilteredProducts = async () => {
 
         if (response.data.success) {
 
-          console.log(mrp, quantity, index)
+         
           let totalAmount = mrp * (quantity-1);
           let itemTotal = document.getElementById('total' + index);
           let itemTotalDown = document.getElementById('item-totals-down' + index);

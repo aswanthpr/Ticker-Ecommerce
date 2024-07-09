@@ -45,33 +45,36 @@
       <div class="container-fluid d-flex align-items-center justify-content-between">
         <div class="navbar-header">
           <!-- Navbar Header--><a href="/admin/dashboard" class="navbar-brand">
-            <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">TICKER</strong><strong>ADMIN</strong></div>
-            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div></a>
+            <div class="brand-text brand-big visible text-uppercase"><strong
+                class="text-primary">TICKER</strong><strong>ADMIN</strong></div>
+            <div class="brand-text brand-sm"><strong class="text-primary">T</strong><strong>A</strong></div>
+          </a>
           <!-- Sidebar Toggle Btn-->
           <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
         </div>
 
-        <div class="right-menu list-inline no-margin-bottom ">  
+        <div class="right-menu list-inline no-margin-bottom ">
           <form id="searchForm" action="/admin/product">
             <div class="form-group d-flex">
-             
-              <input name="search" id="search" type="search" placeholder="What are you searching for..." class="mr-sm-3 form-control form-control">
-              <button style="width: 90px;" type="submit"  class="btn btn-primary">search</button>
+
+              <input name="search" id="search" type="search" placeholder="What are you searching for..."
+                class="mr-sm-3 form-control form-control">
+              <button style="width: 90px;" type="submit" class="btn btn-primary">search</button>
             </div>
           </form>
         </div>
-        <div class="right-menu list-inline no-margin-bottom">  
-          
-          
-          <!-- Log out               -->
-           
-            <div class="list-inline-item logout">
+        <div class="right-menu list-inline no-margin-bottom">
 
-              
-              <a href="/admin/logout" class="btn btn-dark btn-sm ">Logout<i class="icon-logout"></i></a>
-  
-            </div>
-          
+
+          <!-- Log out               -->
+
+          <div class="list-inline-item logout">
+
+
+            <a href="/admin/logout" class="btn btn-dark btn-sm ">Logout<i class="icon-logout"></i></a>
+
+          </div>
+
         </div>
       </div>
     </nav>
@@ -83,21 +86,23 @@
 
       <!-- Sidebar Navidation Menus-->
       <ul class="list-unstyled">
-        <li ><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
+        <li><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
         <li class="active"><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
         <li><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
         <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
-        <li ><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
+        <li><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
 
         <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
-        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Offer</a>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+              class="icon-windows"></i>Offer</a>
           <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a></li>
-        <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a>
+            </li>
+            <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
           </ul>
         </li>
         <li><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
-       <!--  <li><a href="forms.html"> <i class="icon-layers"></i>Category</a></li>
+        <!--  <li><a href="forms.html"> <i class="icon-layers"></i>Category</a></li>
         <li><a href="forms.html"> <i class="icon icon-picture"></i>Banner</a></li> -->
       </ul>
     </nav>
@@ -108,18 +113,19 @@
         <div class="container-fluid">
           <h2 class="h5 no-margin-bottom">P r o d u c t s</h2>
           <div class="block-body text-center d-flex justify-content-end">
-            <a type="button" href="/admin/add-product" data-target="#myModal" class="btn btn-primary text-white">+ Add New
+            <a type="button" href="/admin/add-product" data-target="#myModal" class="btn btn-primary text-white">+ Add
+              New
               Product</a>
             <!-- Modal-->
             <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
               class="modal fade text-left">
               <div role="document" class="modal-dialog">
                 <div class="modal-content">
-                 <div class="modal-header">
+                  <div class="modal-header">
                     <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
                         aria-hidden="true">×</span></button>
                   </div>
-                  
+
 
                 </div>
               </div>
@@ -142,7 +148,7 @@
               <table class="table table-striped table-hover">
                 <thead>
                   <tr>
-                   
+
                     <th>Image</th>
                     <th>Name</th>
                     <th>Category</th>
@@ -153,256 +159,269 @@
                     <th>Action</th>
                     <th>Edit</th>
                     <th>delete</th>
-                   
+
                   </tr>
                 </thead>
                 <tbody>
-                 
+
                   <% if (productData?.length>0) { %>
-                    <% for( let i = 0; i < productData?.length; i++ ) { %>
-                    
+                    <% for( let i=0; i < productData?.length; i++ ) { %>
+
                       <tr>
-                        
+
                         <td><img src="/uploads/<%=productData[i]?.image[0]%>" width="50px" alt=""></td>
-                      
+
                         <td>
                           <%=productData[i]?.name%>
-                          <!-- <%= productData[i]?.name.length > 20 ? productData[i]?.name.slice(0, 20) + '...' : productData[i]?.name %> -->
+                            <!-- <%= productData[i]?.name.length > 20 ? productData[i]?.name.slice(0, 20) + '...' : productData[i]?.name %> -->
                         </td>
-                        <td><%=productData[i]?.category?.categoryName %></td>
-                        <td><%=productData[i]?.brand %></td>
-                        <td><%=productData[i]?.mrp %></td>
-                        <td><%=productData[i]?.stock%></td>
-                        <td class="<%=productData[i]?.status?'text-success':'text-danger'%>"><%=productData[i]?.status?'Listed':'Unlisted'%></td>
                         <td>
-                          <%if(productData[i].status){  %>
-                          <a onclick="return unlistProduct('<%= productData[i]?._id %>')" type="submit" class="btn btn-outline-danger  btn-sm">Unlist</a>
-                        <%}else{%>
-                          <a onclick="return listProduct('<%= productData[i]?._id %>')" type="submit" class="btn btn-outline-success  btn-sm ">List</a>
-                       <%}%>
-                        </td> 
-                        
+                          <%=productData[i]?.category?.categoryName %>
+                        </td>
+                        <td>
+                          <%=productData[i]?.brand %>
+                        </td>
+                        <td>
+                          <%=productData[i]?.mrp %>
+                        </td>
+                        <td>
+                          <%=productData[i]?.stock%>
+                        </td>
+                        <td class="<%=productData[i]?.status?'text-success':'text-danger'%>">
+                          <%=productData[i]?.status?'Listed':'Unlisted'%>
+                        </td>
+                        <td>
+                          <%if(productData[i].status){ %>
+                            <a onclick="return unlistProduct('<%= productData[i]?._id %>')" type="submit"
+                              class="btn btn-outline-danger  btn-sm">Unlist</a>
+                            <%}else{%>
+                              <a onclick="return listProduct('<%= productData[i]?._id %>')" type="submit"
+                                class="btn btn-outline-success  btn-sm ">List</a>
+                              <%}%>
+                        </td>
+
                         <th>
                           <div class="block-body text-center d-flex ">
-                            <a type="button" href="/admin/edit-product/<%= productData[i]?._id %>" 
+                            <a type="button" href="/admin/edit-product/<%= productData[i]?._id %>"
                               class="btn btn-outline-success icon icon-new-file  btn-sm"></a>
-                           
+
                           </div>
-                          <td>
-                          
-                          <a onclick="deleteProduct('<%= productData[i]?._id %>')"  type="submit" class="btn btn-outline-danger  btn-sm ">delete</a>
-                        
+                        <td>
+
+                          <a onclick="deleteProduct('<%= productData[i]?._id %>')" type="submit"
+                            class="btn btn-outline-danger  btn-sm ">delete</a>
+
                         </td>
                         </th>
-                       
+
                       </tr>
 
 
-                    <% } %>
-                    <% } else { %>
-                      <tr>
-                        <td colspan="4">
-                          <p>No Product found in the database</p>
-                        </td>
-                      </tr>
-                  <% } %>
-                  
+                      <% } %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="4">
+                              <p>No Product found in the database</p>
+                            </td>
+                          </tr>
+                          <% } %>
+
 
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-       
+
       </div>
       <div class="card-footer py-4 ">
         <nav aria-label="...">
-            <ul class="pagination justify-content-center mb-0">
-                <%if(currentPage>1){%>
-                    <li class="page-item ">
-                        <a class="page-link " href="?page=<%= currentPage - 1 %><%= search ? '&search=' + search : '' %>"
-                            tabindex="-1">
-                            &lt; 
-                        </a>
-                    </li>
-                    <%}%>
-                    <%for (let i=1;i<=totalPages;i++){%>
-                    <%if(i==currentPage){%>
-                        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                            <a class="page-link" href="?page=<%=i%>&search=<%= search %>"> <%=i%></a>
-                            
-                            
-                        </li>
-                        <% }else{ %>
-                            
+          <ul class="pagination justify-content-center mb-0">
+            <%if(currentPage>1){%>
+              <li class="page-item ">
+                <a class="page-link " href="?page=<%= currentPage - 1 %><%= search ? '&search=' + search : '' %>"
+                  tabindex="-1">
+                  &lt;
+                </a>
+              </li>
+              <%}%>
+                <%for (let i=1;i<=totalPages;i++){%>
+                  <%if(i==currentPage){%>
+                    <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                      <a class="page-link" href="?page=<%=i%>&search=<%= search %>">
+                        <%=i%>
+                      </a>
 
-                                <li class="page-item <%= currentPage === i ? 'active' : '' %>"  >
-                                    <a class="page-link" href="?page=<%=i%>&search=<%= search %>">
-                                        <%=i%>
-                                    </a>
-                                </li>
-                                <%}%>
-                                <%}%>
-                                    <% if(currentPage < totalPages){%>
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page=<%=totalPages%>&search=<%= search %>">></a>
-                                           
-                                            
-                                        </li>
-                                      <%}%>
-            </ul>
+
+                    </li>
+                    <% }else{ %>
+
+
+                      <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                        <a class="page-link" href="?page=<%=i%>&search=<%= search %>">
+                          <%=i%>
+                        </a>
+                      </li>
+                      <%}%>
+                        <%}%>
+                          <% if(currentPage < totalPages){%>
+                            <li class="page-item">
+                              <a class="page-link" href="?page=<%=totalPages%>&search=<%= search %>">></a>
+
+
+                            </li>
+                            <%}%>
+          </ul>
         </nav>
-    </div>
+      </div>
     </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-  // Function to handle listing and unlisting products
-   
-   const toggleProductStatus = async (productId, action) => {
-    try {
-      const result = await Swal.fire({
-        title: 'Confirmation',
-        text: `Are you sure you want to ${action} this product?`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        toast:true,
-        confirmButtonText: `Yes, ${action} it!`
-      });
+    <script>
+      // Function to handle listing and unlisting products
 
-      if (result.isConfirmed) {
-        const response = await fetch(`/admin/product-${action}/${productId}`, {
-          method: 'PATCH',
-          headers: {
-              "Content-Type": "application/json",
-            },
-        });
+      const toggleProductStatus = async (productId, action) => {
+        try {
+          const result = await Swal.fire({
+            title: 'Confirmation',
+            text: `Are you sure you want to ${action} this product?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            toast: true,
+            confirmButtonText: `Yes, ${action} it!`
+          });
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.message) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: data.message,
-            
+          if (result.isConfirmed) {
+            const response = await fetch(`/admin/product-${action}/${productId}`, {
+              method: 'PATCH',
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              if (data.message) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Success',
+                  text: data.message,
+
                   toast: true,
                   timer: 2000,
                   position: 'top-end',
                   showConfirmButton: false,
-            }).then(() => {
-              window.location.reload(); // Reload the page
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'An error occurred while updating product status',
+                }).then(() => {
+                  window.location.reload(); // Reload the page
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'An error occurred while updating product status',
                   toast: true,
                   timer: 2000,
                   position: 'top-end',
                   showConfirmButton: false,
-            });
+                });
+              }
+            } else {
+              throw new Error('Network response was not ok');
+            }
           }
-        } else {
-          throw new Error('Network response was not ok');
+        } catch (error) {
+          console.error('Error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while updating product status',
+            toast: true,
+            timer: 2000,
+            position: 'top-end',
+            showConfirmButton: false,
+          });
         }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An error occurred while updating product status',
-                  toast: true,
-                  timer: 2000,
-                  position: 'top-end',
-                  showConfirmButton: false,
-      });
-    }
-  };
+      };
 
-  // Function to handle product list action
-  const listProduct = (productId) => {
-    toggleProductStatus(productId, 'list');
-  };
+      // Function to handle product list action
+      const listProduct = (productId) => {
+        toggleProductStatus(productId, 'list');
+      };
 
-  // Function to handle product unlist action
-  const unlistProduct = (productId) => {
-    toggleProductStatus(productId, 'unlist');
-  };
+      // Function to handle product unlist action
+      const unlistProduct = (productId) => {
+        toggleProductStatus(productId, 'unlist');
+      };
 
 
 
-  const deleteProduct = async (productId) => {
-    try {
-      const result = await Swal.fire({
-        title: 'Confirmation',
-        text: `Are you sure you want to delete this product?`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        toast:true,
-        confirmButtonText: `Yes,delete it!`
-      });
+      const deleteProduct = async (productId) => {
+        try {
+          const result = await Swal.fire({
+            title: 'Confirmation',
+            text: `Are you sure you want to delete this product?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            toast: true,
+            confirmButtonText: `Yes,delete it!`
+          });
 
-      if (result.isConfirmed) {
-        const response = await fetch(`/admin/delete-product`, {
-          method: 'DELETE',
-          headers: {
-              "Content-Type": "application/json",
-            },
-            body:JSON.stringify({productId})
-        });
+          if (result.isConfirmed) {
+            const response = await fetch(`/admin/delete-product`, {
+              method: 'DELETE',
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ productId })
+            });
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.message) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: data.message,
+              const data = await response.json();
             
+              if (data.success) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Success',
+                  text: data.message,
                   toast: true,
                   timer: 2000,
                   position: 'top-end',
                   showConfirmButton: false,
-            }).then(() => {
-              window.location.reload(); // Reload the page
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'An error occurred while updating product status',
+                }).then(() => {
+                  window.location.reload(); // Reload the page
+                });
+              } else {
+                Swal.fire({
+                  icon: 'info',
+                  title: data.message,
                   toast: true,
                   timer: 2000,
                   position: 'top-end',
                   showConfirmButton: false,
-            });
+                }).then(() => {
+                  window.location.reload(); // Reload the page
+                });;
+              }
+           
           }
-        } else {
-          throw new Error('Network response was not ok');
+        } catch (error) {
+          console.error('Error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: data.message,
+
+            toast: true,
+            timer: 2000,
+            position: 'top-end',
+            showConfirmButton: false,
+          });
         }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'An error occurred while updating product status',
-                  toast: true,
-                  timer: 2000,
-                  position: 'top-end',
-                  showConfirmButton: false,
-      });
-    }
-  };
-</script>
+      };
+    </script>
     <!-- JavaScript files-->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/admin/vendor/popper.js/umd/popper.min.js"> </script>

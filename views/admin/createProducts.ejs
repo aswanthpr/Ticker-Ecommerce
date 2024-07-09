@@ -521,14 +521,14 @@
 
         // Prevent form submission if not valid
         if (!isValid) {
-          console.log("8888888888888")
+         
           event.preventDefault();
         }
 
         if (isValid) {
           const formData = new FormData(document.getElementById('formData'));
 
-          console.log('FormData:', formData, 'this is formadata');
+        
 
           // croppedFiles.forEach((file, key) => {
           //   console.log(key,file,'console')
@@ -540,8 +540,7 @@
             console.log(key, value);
           }
 
-          console.log(formData)
-          console.log(formData, 'form');
+        
           try {
             const response = await fetch('/admin/add-product', {
               method: 'POST',
@@ -549,9 +548,9 @@
               // body:JSON.stringify(formData)
               body: (formData)
             });
-            console.log(response.status, " this is status")
+           
             const data = await response.json()
-            console.log(data, " this is response", data.message, data.success)
+          
             if (data.success) {
               await Swal.fire({
                 icon: 'success',

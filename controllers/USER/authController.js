@@ -307,7 +307,7 @@ const resendOtp = async (req, res,next) => {
     const userData = await userSchema.findOne({ email: (req.session.email || req.query.email) });
     const Email =req.session.email!==undefined?req.session.email:req.query.email
     const otpData = await regOtp.findOne({ email: Email });
-    console.log(userData,'userdaa ',otpData,'theisotypdattas')
+    
 
 
     if (!(otpData)) {

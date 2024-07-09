@@ -396,7 +396,7 @@ const fetchFilteredProducts = async () => {
     document.getElementById('searchButton').addEventListener('click',fetchFilteredProducts )
     //remove product form wishlist 
     async function remove(productId) {
-      console.log(productId);
+      
       try {
         const confirmation = await Swal.fire({
             toast:true,
@@ -441,7 +441,7 @@ const fetchFilteredProducts = async () => {
 
     //add to cart
     async function addToCart(prodId) {
-      console.log(prodId+"haiiiiiiiii")
+     
       try {
         const response = await fetch("/wishlist/addCart", {
           method: "PUT",
@@ -451,7 +451,7 @@ const fetchFilteredProducts = async () => {
           body: JSON.stringify({ prodId })
         });
         const data = await response.json();
-        console.log(data);
+        
         
 
         if (data.success) {

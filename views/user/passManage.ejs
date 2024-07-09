@@ -273,7 +273,7 @@
 				body:JSON.stringify({password,password1,password2})
 			})
 			const data = await response.json();
-			console.log(data);
+			
 			if(data.success){
 				await Swal.fire({
 					icon:'success',

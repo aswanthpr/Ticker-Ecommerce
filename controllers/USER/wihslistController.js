@@ -4,7 +4,7 @@ const userSchema = require('../../models/userModel');
 const productSchema = require('../../models/productModel')
 //GET WISHLIST======================================
 
-const getWishlist  =async(req,res)=>{
+const getWishlist  =async(req,res,next)=>{
     try {
      
       const userId = req.session.user;
@@ -22,12 +22,12 @@ const getWishlist  =async(req,res)=>{
   
     } catch (error) {
   
-      throw new Error(error.message); 
-  
+      console.log(error.message);
+       next(error)
     }
   } 
   //ADD TO WISHLIST ===============================================
-  const addToWishlist = async(req,res)=>{ 
+  const addToWishlist = async(req,res,next)=>{ 
     try {
         const userId = req.session.user;
         const {productId} = req.body;
@@ -74,12 +74,13 @@ const getWishlist  =async(req,res)=>{
         }
         
     } catch (error) {
-        throw new Error(error.message)
+      console.log(error.message);
+      next(error)
     }
   }
 
   //REMOVE WIHSLIST PRODUCT
-  const removeFromWishlist = async(req,res)=>{
+  const removeFromWishlist = async(req,res,next)=>{
     try {
         const {productId} = req.body;
        
@@ -97,12 +98,13 @@ const getWishlist  =async(req,res)=>{
         }
 
     } catch (error) {
-        throw new Error(error.message);
+      console.log(error.message);
+      next(error)
 
     }
   }
   //WISHLIST TO ADD TO CART
-  const wishlitstToCart = async(req,res)=>{
+  const wishlitstToCart = async(req,res,next)=>{
 
     try {
     const {prodId}=req.body;
@@ -144,7 +146,8 @@ const getWishlist  =async(req,res)=>{
     }
 
     } catch (error) {
-      throw new Error(error.message)
+      console.log(error.message);
+      next(error)
     }
   }
   module.exports={

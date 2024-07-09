@@ -499,7 +499,7 @@ document.getElementById("form").addEventListener('submit', async (e) => {
                 formValues[key] = value;
             }
 
-            console.log(formValues);
+           
 
             try {
         const response = await fetch(`/checkout/editAddress?id=${addressId}`,{
@@ -509,7 +509,7 @@ document.getElementById("form").addEventListener('submit', async (e) => {
             },
             body:JSON.stringify(formValues)
         })
-        console.log("one")
+      
         const data = await response.json();
         if(data.success){
             await Swal.fire({

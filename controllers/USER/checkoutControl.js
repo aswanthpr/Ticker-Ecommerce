@@ -27,11 +27,12 @@ function generateOrderid() {
         });
         return orderId;
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       
     }
 }
 //gettin checkout page =================================================
-const getCheckout = async (req, res) => {
+const getCheckout = async (req, res,next) => {
     try {
 
         const userId = req.session.user;
@@ -122,12 +123,13 @@ const getCheckout = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 };
 //save new address
-const CheckoutAddress = async (req, res) => {
-    try {
+const CheckoutAddress = async (req, res,next) => {
+   
 
         try {
 
@@ -193,20 +195,15 @@ const CheckoutAddress = async (req, res) => {
                 return res.status(400).json({ success: false, message: "created address failed" })
             }
         } catch (error) {
-            res.status(500).json({ success: false, message: 'Internal server Error' })
-            throw new Error(error)
+            console.log(error.message);
+            next(error)
 
         }
-
-
-    } catch (error) {
-        throw new Error(error.message)
-    }
 }
 
 
 //CHECK OUT EDIT ADDRESS 
-const editCheckoutAddress = async (req, res) => {
+const editCheckoutAddress = async (req, res,next) => {
     try {
         const addressId = req.query.id;
         const userId = req.body.user
@@ -223,13 +220,13 @@ const editCheckoutAddress = async (req, res) => {
         res.render("editCheckAdd", { address });
 
     } catch (error) {
-        console.log(error.message)
-        // throw new Error(error)
+        console.log(error.message);
+         next(error)
     }
 }
 
 //save the edit address
-const saveCheckoutEditedAddress = async (req, res) => {
+const saveCheckoutEditedAddress = async (req, res,next) => {
 
     try {
         const addressId = req.query.id
@@ -263,8 +260,8 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
         }
 
     } catch (error) {
-        console.log(error.message)
-        //throw new Error(error.message);
+        console.log(error.message);
+       next(error)
     }
 
 }
@@ -272,7 +269,7 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
 
 //FOR APPLY COUPON
 
-const applyCoupon = async (req, res) => {
+const applyCoupon = async (req, res,next) => {
     try {
         const { couponCode, totalPrice } = req.body;
         const userId = req.session.user;
@@ -318,12 +315,13 @@ const applyCoupon = async (req, res) => {
 
     } catch (error) {
 
-        throw new Error(error.message);
+        console.log(error.message);
+       next(error)
     }
 }
 
 //PALCE ORDER============================================================
-const placeOrder = async (req, res) => {
+const placeOrder = async (req, res,next) => {
     try {
 
         const { addressId, addressIndex, paymentMethod } = req.body;
@@ -534,14 +532,14 @@ const placeOrder = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error)
-
+        console.log(error.message);
+        next(error)
     }
 }
 
 
 //  VERIFY PAYMENT 
-const verifyPayment = async (req, res) => {
+const verifyPayment = async (req, res,next) => {
     try {
         // const userId = req.session.user;
         const { rzy_orderId, rzy_paymentId, orderId, signature } = req.body;
@@ -564,13 +562,14 @@ const verifyPayment = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
 
     }
 }
 // DELETE COUPON 
 
-const deleteCoupon = async (req, res) => {
+const deleteCoupon = async (req,res,next) => {
     try {
 
         delete req.session.couponDiscount;
@@ -579,26 +578,29 @@ const deleteCoupon = async (req, res) => {
         delete req.session.offer;
         res.json({ success: true, message: 'coupon removed successfully', b4CouponPrice: req.session.b4CouponPrice,discuntAmt:req.session.totalDiscount  });
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 
 //orderSuccess======================================== 
 
-const orderSuccess = async (req, res) => {
+const orderSuccess = async (req, res,next) => {
     try {
 
         res.render("orderSuccess")
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+        next(error)
     }
 }
-const paymentFailed = async (req, res) => {
+const paymentFailed = async (req, res,next) => {
     try {
 
         res.render("paymentFailed")
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+        next(error)
     }
 }
 

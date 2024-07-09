@@ -356,7 +356,7 @@
         // const formData =document.getElementById('couponForm');
         const couponCode = document.getElementById('couponCode').value;
         const offer = document.getElementById('offer').value;
-        console.log(offer,'offer')
+      
         const minPrice = document.getElementById('minPrice').value;
         const maxRedeem = document.getElementById('maxRedeem').value;
         const date = document.getElementById('date').value;
@@ -426,14 +426,14 @@
           date, 
         }
  
-        console.log("haii bro", formData)
+       
         try {
           const response = await fetch("/admin/add-coupon", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
           });
-          console.log('heyymannn')
+        
           const data = await response.json();
           if (data.success) {
             Swal.fire({
@@ -553,7 +553,7 @@
           confirmButtonText: "Yes, unlist it!",
         }).then(async (result) => {
           if (result.isConfirmed) {
-            console.log(result,"this")
+           
             try {
               // Make AJAX request to backend
               const response = await fetch(`/admin/status-coupon`, {

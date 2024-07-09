@@ -378,13 +378,13 @@
             const formElement = document.getElementById('form');
             const formData = new FormData(formElement);
              const formValues = {};
-             console.log("one")
+            
             for (const entry of formData.entries()) {
                 const [key, value] = entry;
                 formValues[key] = value;
             }
 
-            console.log(formValues,'ejs il ullath');
+           
 
             try {
         const response = await fetch('/user/addAddress',{
@@ -394,7 +394,7 @@
             },
             body:JSON.stringify(formValues)
         })
-        console.log("one")
+       
         const data = await response.json();
         if(data.success){
             await Swal.fire({
@@ -403,7 +403,7 @@
                 text:data.message,
                 toast:true,
                 timer:1000,
-                showlConfirmButton:false,
+                showConfirmButton:false,
                 position:'top-end'
             }).then(()=>{ 
                 window.location.href="/user/address"
@@ -415,7 +415,7 @@
                 text:data.message,
                 toast:true,
                 timer:1000,
-                showlConfirmButton:false,
+                showConfirmButton:false,
                 position:'top-end'
             }).then(()=>{
                 window.location.href="/user/address"

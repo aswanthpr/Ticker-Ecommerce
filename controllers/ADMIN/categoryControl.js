@@ -5,7 +5,7 @@ const categoryofferSchema = require('../../models/categoryOfferModel')
 
 
 //GET CATEGORY================================================
-const getCategory = async (req, res) => {
+const getCategory = async (req, res,next) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = 6;
@@ -23,12 +23,13 @@ const getCategory = async (req, res) => {
 
   } catch (error) {
 
-    console.log(error.message + " error while get category detailes");
+    console.log(error.message);
+    next(error)
 
   }
 }
 
-const addCategory = async (req, res) => {
+const addCategory = async (req, res,next) => {
   try {
 
     const name = req.body.name.trim().toUpperCase()
@@ -58,36 +59,37 @@ const addCategory = async (req, res) => {
 
   } catch (error) {
 
-    console.log(error.message + " error while add new category detailes")
+    console.log(error.message);
+       next(error)
 
   }
 }
 //UNLIST CATEGORY
-const unlistCategory = async (req, res) => {
+const unlistCategory = async (req, res,next) => {
   try {
     const id = req.params.id;
     console.log(id + " params id unlist");
     await categorySchema.findByIdAndUpdate({ _id: id }, { $set: { status: false } });
     res.status(200).json({ message: "Category unlisted successfully" });
   } catch (error) {
-    console.log(error.message + " error while unlisting category");
-    res.status(500).json({ error: "Internal server error" });
+    console.log(error.message);
+       next(error)
   }
 }
 
-const listCategory = async (req, res) => {
+const listCategory = async (req, res,next) => {
   try {
     const id = req.params.id;
     console.log(id + " params list");
     await categorySchema.findByIdAndUpdate({ _id: id }, { $set: { status: true } });
     res.status(200).json({ message: "Category listed successfully" });
   } catch (error) {
-    console.log(error.message + " error while listing category");
-    res.status(500).json({ error: "Internal server error" });
+    console.log(error.message);
+       next(error)
   }
 }
 
-const editCategory = async (req, res) => {
+const editCategory = async (req, res,next) => {
   try {
     const { categoryId, categoryName } = req.body;
     console.log("Received categoryId:", categoryId);
@@ -107,13 +109,13 @@ const editCategory = async (req, res) => {
       res.json({ success: 'Category successfully updated' });
     }
   } catch (err) {
-    console.error('Error updating category in backend:', err);
-    res.status(500).json({ error: 'Error updating category in backend' });
+    console.log(error.message);
+       next(error)
   }
 };
 
 //  DELETE CATEGORY
-const deleteCategory = async (req, res) => {
+const deleteCategory = async (req, res,nex) => {
   try {
     const categId = req.params.id;
    
@@ -129,12 +131,13 @@ const deleteCategory = async (req, res) => {
     }
 
   } catch (error) {
-    throw new Error(error);
+    console.log(error.message);
+    next(error)
   }
 }
 
 
-const categSearch = async (req, res) => {
+const categSearch = async (req, res,next) => {
   try {
 
     const { search } = req.query
@@ -151,7 +154,8 @@ const categSearch = async (req, res) => {
       res.render("category", { search })
     }
   } catch (error) {
-    throw new Error(error)
+    console.log(error.message);
+       next(error)
   }
 
 

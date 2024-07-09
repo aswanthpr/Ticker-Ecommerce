@@ -172,20 +172,20 @@
                                 <p><%=num++  %></p>
                                 
                               </td>
-                              <td> <%= orderData[i].orderId%></td>
-                              <td class="">  <%= orderData[i].userId.name %></td>
+                              <td> <%= orderData[i]?.orderId%></td>
+                              <td class="">  <%= orderData[i]?.userId?.name %></td>
                               
                              
-                                <td><p><%= orderData[i].userId.email %></p></td>
+                                <td><p><%= orderData[i]?.userId?.email %></p></td>
                               
-                              <td class="text-white"> <%=orderData[i].totalPrice %></td>
+                              <td class="text-white"> <%=orderData[i]?.totalPrice %></td>
                               
-                              <td class="text-white"><%= new Date(orderData[i].createdAt).toLocaleDateString() %></td>
-                              <td class="text-white badge <%= orderData[i].paymentStatus === 'Pending' ? 'badge-danger' : (orderData[i].paymentStatus === 'Paid' ? 'badge-success' : '') %> p-1 mt-3"><%= orderData[i].paymentStatus %></td>
+                              <td class="text-white"><%= new Date(orderData[i]?.createdAt).toLocaleDateString() %></td>
+                              <td class="text-white badge <%= orderData[i]?.paymentStatus === 'Pending' ? 'badge-danger' : (orderData[i]?.paymentStatus === 'Paid' ? 'badge-success' : '') %> p-1 mt-3"><%= orderData[i]?.paymentStatus %></td>
                               
                              
                              
-                          <td><a  class="btn btn-warning btn-sm item-center text-white" href="/admin/orderMgt/orderDetails?orderId=<%=orderData[i].orderId%>">view<i class="fa-solid icon-eyes"></i></a></td>
+                          <td><a  class="btn btn-warning btn-sm item-center text-white" href="/admin/orderMgt/orderDetails?orderId=<%=orderData[i]?.orderId%>">view<i class="fa-solid icon-eyes"></i></a></td>
                         </tr>
                           <% }%>
                       

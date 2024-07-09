@@ -1,10 +1,8 @@
 const couponSchema = require('../../models/couponModel');
 
 
-
-
 //GET COUPON PAGE
-const getCoupon = async (req, res) => {
+const getCoupon = async (req, res,next) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = 10;
@@ -18,14 +16,15 @@ const getCoupon = async (req, res) => {
        
         return res.render('coupon', { couponData, currentPage: page, totalPages });
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
 
     }
 }
 
 
 //COUPON ADD
-const addCoupon = async (req, res) => {
+const addCoupon = async (req, res,next) => {
     try {
        
 
@@ -58,11 +57,12 @@ const addCoupon = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error.message); 
+        console.log(error.message);
+        next(error)
     }
 }
 //LIST UNLIST COUPON
-const couponStatus = async(req,res)=>{
+const couponStatus = async(req,res,next)=>{
     try {
         const {couponId} =req.body;
        
@@ -79,11 +79,12 @@ const couponStatus = async(req,res)=>{
         }
 
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+       next(error)
     }
 }
 //DELETE COUPON
-const deleteCoupon = async(req,res)=>{
+const deleteCoupon = async(req,res,next)=>{
     try {
         const {couponId} =req.query;
       
@@ -95,7 +96,8 @@ const deleteCoupon = async(req,res)=>{
             }
         }
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 }
 module.exports = {

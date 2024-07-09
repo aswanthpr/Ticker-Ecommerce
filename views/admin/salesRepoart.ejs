@@ -210,7 +210,7 @@
                               </small></td>
                             <% element?.userDetails?.forEach(user=> { %>
 
-                              <%console.log(user,"00000000000000000000000000000") %>
+                             
                               <td class="text-center text-white"><small>
                                   <%=user?.name%>
 
@@ -248,7 +248,7 @@
                                 </td>
 
                                 <td class="text-center text-white"><small>
-                                    <%=element?.orderedItems.productName%>
+                                    <%=element?.orderedItems?.productName%>
                                   </small></td>
                                 <td class="text-center text-white"><small>
                                     <%=element?.orderedItems.cartQuantity%>
@@ -354,10 +354,7 @@
           const startDate = splitDate[0];
           const endDate = splitDate[1];
 
-          console.log(selectedDates, "first one");
-
-          console.log(dateStr, "second one", endDate);
-          console.log(startDate, endDate)
+         
          
           if(startDate && endDate!==undefined){
             queryParams = `?selectValue=${selectValue}&startDate=${startDate}&endDate=${endDate}`;

@@ -1,11 +1,11 @@
 const orderSchema = require('../../models/orderModel');
 
 //GET SALES REPOART PAGE
-const getSalesPage = async (req, res) => {
+const getSalesPage = async (req, res,next) => {
     try {
 const { selectValue, startDate,endDate} = req.query;
 
-const filterType = ['all','daily','weekly','monthly','yearly']
+const filterType = ['all','daily','weekly','monthly','yearly'];
 
         let totalPages
         let totalOrder
@@ -17,18 +17,6 @@ const filterType = ['all','daily','weekly','monthly','yearly']
         const limit = 60;
         const skip = (page - 1) * limit;
 
-
-        //filteration
-        // const periodFilter = req.query.filter ?req.query.filter.split(','):[];
-
-        // const filter = {
-        //     createdAt: {
-        //         $gte: yesterday, $lte: today
-        //     },
-        //     "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] }
-        // }
-
-       
 
         if(selectValue =="all" || selectValue==undefined){
             salesData = await orderSchema.aggregate(
@@ -106,21 +94,11 @@ const filterType = ['all','daily','weekly','monthly','yearly']
             //ivide ippozhathe time nu same innalathe time sert cheithu
             const yesterday = new Date(today);
          
-            //The getDate() method returns the day of the month (from 1 to 31) for the specified date according to local time.
-            //The setDate() method sets the day of the month for a specified date according to local time.
+           
             yesterday.setDate(today.getDate() - 1);
            
 
-           // daily sales report
-            // salesData = await orderSchema.aggregate([
-            //     { $unwind: "$orderedItems" },
-            //     { $match: { createdAt: { $gte: yesterday, $lt: today }, "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] } } },
-            //     {
-            //         $sort: { createdAt: -1 }
-            //     },
-
-            // ])
-
+          
 
 
 
@@ -469,7 +447,8 @@ const filterType = ['all','daily','weekly','monthly','yearly']
        
         res.render('salesRepoart', { salesData, totalPages, currentPage: page, limit, totalOrder, totalAmount, totalOfferAmt ,filterType,selectValue});
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+       next(error)
     }
 }
 //FULL SALES DATA 

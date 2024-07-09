@@ -6,7 +6,7 @@ const walletSchema = require('../../models/walletModel');
 const mongoose = require('mongoose');
 
 //GET ORDERS
-const getOrders = async (req, res) => {
+const getOrders = async (req, res,next) => {
     try {
         const { search } = req.query;
         const page = parseInt(req.query.page) || 1;
@@ -52,11 +52,12 @@ const getOrders = async (req, res) => {
 
         res.render('orderMgt', { orderData, currentPage: page, totalPages, search })
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+       next(error)
     }
 }
 //ORDER DETAILS====================================
-const adminOrderDetails = async (req, res) => {
+const adminOrderDetails = async (req, res,next) => {
     try {
         const { orderId } = req.query;
      
@@ -65,12 +66,13 @@ const adminOrderDetails = async (req, res) => {
         res.render("order-details", { orderData });
 
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+        next(error)
     }
 }
 
 //CHANGE ORDER STATUS==============
-const changeOrderStatus = async (req, res) => {
+const changeOrderStatus = async (req, res,next) => {
     try {
         const { orderId, productId, newStatus } = req.body;
        
@@ -116,11 +118,12 @@ const changeOrderStatus = async (req, res) => {
 
         }
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+       next(error)
     }
 }
 //APPROVE  RETURN REQUEST
-const approveReturn = async (req, res) => {
+const approveReturn = async (req, res,next) => {
     try {
         const { orderId, productId, reason } = req.body;
        
@@ -216,13 +219,14 @@ const approveReturn = async (req, res) => {
             return res.json({ success: false, message: 'returne approve failed' })
         }
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+       next(error)
     }
 }
 
 
 //DECLINE RETURN REQUEST 
-const declineReturn = async (req, res) => {
+const declineReturn = async (req, res,next) => {
     try {
         const { orderId, productId, reason } = req.body;
      
@@ -241,7 +245,8 @@ const declineReturn = async (req, res) => {
             return res.json({ success: false, message: 'Return decline Failed' })
         }
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+       next(error)
     }
 }
 //  ORDER SEARCH==============================================

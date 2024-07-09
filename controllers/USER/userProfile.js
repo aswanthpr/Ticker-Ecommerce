@@ -53,7 +53,7 @@ const userProfile = async (req, res) => {
     }
 }
 //POST USER DATA ===================================================
-const chngeUserData = async (req, res) => {
+const chngeUserData = async (req, res, next) => {
     try {
 
         const { name, phone } = req.body;
@@ -87,25 +87,26 @@ const chngeUserData = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "Internal server Error" })
-        throw new Error(error)
+
+        console.log(error.message);
+        next(error)
 
     }
 }
 //GET CHANGE PASS================================================
-const getChangePass = async (req, res) => {
+const getChangePass = async (req, res, next) => {
     try {
         userId = req.session.user
 
         res.render("passManage", { userId });
     } catch (error) {
 
-        res.status(500).json({ success: false, message: 'Internal server error' })
-        throw new Error(error);
+        console.log(error.message);
+        next(error)
     }
 }
 //PATCH  CHANGE PASSWORD==============================================
-const changePass = async (req, res) => {
+const changePass = async (req, res, next) => {
     try {
         const { password, password1, password2 } = req.body;
         userId = req.session.user;
@@ -129,13 +130,13 @@ const changePass = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal server Error' })
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
 
     }
 }
 // GET ADDRESS PAGE====================================================
-const getAddress = async (req, res) => {
+const getAddress = async (req, res, next) => {
     try {
         userId = req.session.user;
 
@@ -150,12 +151,12 @@ const getAddress = async (req, res) => {
         res.render('userAddress', { userData, addressData, userId })
 
     } catch (error) {
-        // res.status(500).json({ success: false, message: 'Internal server Error' })
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //ADD ADDRESS=======================================================
-const getAddAddress = async (req, res) => {
+const getAddAddress = async (req, res, next) => {
     try {
         userId = req.session.user
         const userData = await userSchema.findById(userId)
@@ -164,31 +165,32 @@ const getAddAddress = async (req, res) => {
         res.render('addAddress', { userData, userId })
 
     } catch (error) {
-        console.log(error.message)
-        // res.status(500).json({ success: false, message: 'Internal server Error' })
-        // throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //POST ADDRESS =====================================================
-const postAddAddress = async (req, res) => {
+const postAddAddress = async (req, res, next) => {
     try {
 
         userId = req.session.user;
+        console.log(userId, 'ldfk', req.session.user)
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
         console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
 
-        const checkUser = await addressSchema.findOne({ userId: userId });
-        if (checkUser.addresses.length>=4) {
+        const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) });
+        console.log(checkUser, 'thiss is checkuser');
+        if (checkUser?.addresses?.length >= 4) {
 
-                return res.json({ success: false, message: "user can only store 4 addresses" })
-        } 
-       
+            return res.json({ success: false, message: "user can only store 4 addresses" })
+        }
+
 
         let result;
         let address;
         let saveAddress;
         if (!checkUser) {
-            console.log(checkUser,'ithanu check user')
+
             address = new addressSchema({
                 userId: userId,
                 addresses: [{
@@ -206,26 +208,26 @@ const postAddAddress = async (req, res) => {
             })
             saveAddress = await address.save();
         } else {
-         
-                result = await addressSchema.updateOne(
-                    { userId: userId },
-                    {
-                        $push: {
-                            addresses: {
-                                name: name,
-                                phone: phone,
-                                house: house,
-                                locality: locality,
-                                city: city,
-                                landmark: landmark,
-                                state: state,
-                                pincode: pincode,
-                                addressType: addressType
-                            }
+
+            result = await addressSchema.updateOne(
+                { userId: userId },
+                {
+                    $push: {
+                        addresses: {
+                            name: name,
+                            phone: phone,
+                            house: house,
+                            locality: locality,
+                            city: city,
+                            landmark: landmark,
+                            state: state,
+                            pincode: pincode,
+                            addressType: addressType
                         }
                     }
-                );
-           
+                }
+            );
+
 
 
 
@@ -241,19 +243,20 @@ const postAddAddress = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error.message)
-        // res.status(500).json({ success: false, message: 'Internal server Error' })
-        // throw new Error(error)
+        console.log(error.message);
+        next(error)
 
     }
 }
 //EDIT ADDRESS=============================================
-const getEditAddress = async (req, res) => {
+const getEditAddress = async (req, res, next) => {
     try {
         let address
         userId = req.session.user
         const addressId = req.query.id;
-
+        if (!mongoose.Types.ObjectId.isValid(addressId)) {
+            return res.json({ success: false, message: 'Invalid address ID' });
+        }
         const userData = await userSchema.findOne({ _id: userId })
 
         const addressData = await addressSchema.findOne({ "addresses._id": addressId })
@@ -265,14 +268,15 @@ const getEditAddress = async (req, res) => {
         })
         res.render('editAddress', { userData, address, userId })
     } catch (error) {
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //EDIT ADDRESS ==============================================
-const editAddress = async (req, res) => {
+const editAddress = async (req, res, next) => {
     try {
         const addressId = req.query.addressId;
-        console.log(addressId,'this si editadd id',req.body)
+        console.log(addressId, 'this si editadd id', req.body)
 
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body;
 
@@ -291,19 +295,19 @@ const editAddress = async (req, res) => {
 
             }
         })
-console.log(updateAddress,'this is update address')
+        console.log(updateAddress, 'this is update address')
         if (updateAddress.modifiedCount > 0) {
             res.status(200).json({ success: true, message: 'Address updated successfully' });
         } else {
             res.json({ success: false, message: " Sorry updation failed" });
         }
     } catch (error) {
-        console.log(error.message)
-        // throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //DELETE PRODUCTS=============================================
-const deleteAddress = async (req, res) => {
+const deleteAddress = async (req, res, next) => {
     try {
         addressId = req.body.id
         const userId = req.session.user;
@@ -317,13 +321,13 @@ const deleteAddress = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Internal server Error' })
-        throw new Error(error)
+        console.log(error.message);
+        next(error)
     }
 }
 //GET ORDERS
 
-const getOrders = async (req, res) => {
+const getOrders = async (req, res, next) => {
 
     try {
         const userId = req.session.user;
@@ -340,17 +344,18 @@ const getOrders = async (req, res) => {
         const orderData = await orderSchema.find({ userId: userId }).sort({ createdAt: -1 }).skip(skip).limit(limit);
 
 
-        res.render('orders', { user, orderData, userId, currentPage: page, totalPages, })
+        res.render('orders', { user, orderData, userId, currentPage: page, totalPages, });
 
 
 
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
+        next(error)
     }
 }
 
 // VIEW ORDER DETAILES ==============================
-const orderDetails = async (req, res) => {
+const orderDetails = async (req, res, next) => {
     try {
 
         const userId = req.session.user;
@@ -372,12 +377,13 @@ const orderDetails = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 
 //user cancel order
-const cancelOrder = async (req, res) => {
+const cancelOrder = async (req, res, next) => {
     try {
         const userId = req.session.user;
         const { productId, cancellationReason, orderId } = req.body;
@@ -494,13 +500,14 @@ const cancelOrder = async (req, res) => {
             res.json({ success: false, message: 'Order cancel failed' })
         }
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
 
     }
 }
 
 //RETURN ORDER ==================================
-const returnOrder = async (req, res) => {
+const returnOrder = async (req, res, next) => {
     try {
 
         const { orderId, productId, reason } = req.body;
@@ -533,12 +540,13 @@ const returnOrder = async (req, res) => {
         }
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 
 //RAZORPAY REPAYMENT 
-const retryPayment = async (req, res) => {
+const retryPayment = async (req, res, next) => {
     try {
 
         const { totalCost, orderId } = req.body;
@@ -564,13 +572,14 @@ const retryPayment = async (req, res) => {
 
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
 
     }
 }
 
 //RETRY PAYMENT VERIFY
-const verifyRetryPayment = async (req, res) => {
+const verifyRetryPayment = async (req, res, next) => {
     try {
         const { rpyPaymentId, orderId } = req.body;
 
@@ -582,12 +591,13 @@ const verifyRetryPayment = async (req, res) => {
             return res.json({ success: false, message: 'Payment failed' })
         }
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 
 //GET WALLET 
-const getWallet = async (req, res) => {
+const getWallet = async (req, res, next) => {
     try {
         const userId = req.session.user;
 
@@ -621,11 +631,12 @@ const getWallet = async (req, res) => {
         return res.render('wallet', { walletData, totalPage, currentPage: page });
 
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 //ADD MONEY TO WALLET 
-const addMoney = async (req, res) => {
+const addMoney = async (req, res, next) => {
     try {
         const { amount } = req.body;
         const userId = req.session.user;
@@ -667,12 +678,13 @@ const addMoney = async (req, res) => {
             razorpayOrderId: razorpayOrder._id,
         })
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 
 //RETRY PAYMENT VERIFY
-const verifyAddMoney = async (req, res) => {
+const verifyAddMoney = async (req, res, next) => {
     try {
         const { rzy_paymentId, } = req.body;
         const wallet = req.session.wallet;
@@ -702,11 +714,12 @@ const verifyAddMoney = async (req, res) => {
             return res.json({ success: false, message: 'Wallet not found' })
         }
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 //  GET INVOICE====================
-const getInvoice = async (req, res) => {
+const getInvoice = async (req, res, next) => {
     try {
         const { orderId } = req.query
         const generateId = generateOrderid();
@@ -748,7 +761,8 @@ const getInvoice = async (req, res) => {
 
         res.render('invoice', { invoiceId, orderData, delivered, totalSum });
     } catch (error) {
-        throw new Error(error.message);
+        console.log(error.message);
+        next(error)
     }
 }
 module.exports = {

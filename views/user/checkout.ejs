@@ -546,13 +546,13 @@
       let totalPriceText = totalPriceElement.textContent.trim();
 
       const totalPrice = parseFloat(totalPriceText.replace(/[^0-9]/g, ''));
-      console.log(totalPrice, 'this si coupion total price')
+     
 
       const discout = document.getElementById('discountId')
 
       let totalDiscoText = discout.textContent.trim();
       const totalDiscount = parseFloat(totalDiscoText.replace(/[^0-9]/g, ''));
-      console.log(totalDiscount, 'this si coupion total discount')
+     
       // Get the selected coupon ID               
       const selectElement = document.getElementById('inputSelectOption');
       const selectedCouponId = selectElement.value
@@ -561,14 +561,14 @@
         document.getElementById('couponStatus').textContent = "Please select a coupon.";
         return;
       }
-      console.log(totalPrice, selectedCouponId)
+     
       const response = await fetch("/checkout/apply-coupon", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ couponCode: selectedCouponId, totalPrice })
       })
       const data = await response.json();
-      console.log(data, 'this is apply coupon response')
+    
       if (data.success) {
         await Swal.fire({
           icon: 'success',
@@ -595,7 +595,7 @@
         
 
         const afterCoupon = totalDiscount + data.maximumOfferAmt;
-        console.log(afterCoupon, 'this is afrer coupn', data.maximumOfferAmt,)
+       
         discout.innerHTML = `Total Saved <span class="text-success"  ><small>₹</small>${afterCoupon}</span>`
 
       } else {
@@ -635,7 +635,7 @@
             
 
               // const afterCoupon = totalDiscount + data.maximumOfferAmt;
-              // console.log(afterCoupon, 'this is afrer coupn', data.maximumOfferAmt,)
+              
               discout.innerHTML = `Total Saved <span class="text-success"  ><small>₹</small>${data.discuntAmt}</span>`
 
 
@@ -714,7 +714,7 @@
           }
           const result = await response.json();
 
-          console.log(result)
+         
           if (result.success) {
             await Swal.fire({
               icon: "success",
@@ -747,13 +747,12 @@
         if (paymentMethod == "Razorpay") {
 
           const respose = await axios.post('/placeOrder', { addressId: addressId, addressIndex: addressIndex, paymentMethod: paymentMethod })
-          console.log("ithen the thengayanith")
+          
           const { message, key_id, orderId, amount, razorpayOrderId } = respose.data
-          console.log(respose.data, 'ith data');
-          console.log(amount, 'amount');
+         
 
           if (respose.data.success) {
-            // console.log(redata, 'ith data');
+          
             const options = {
               "key": key_id,
               "amount": amount,
@@ -1031,13 +1030,13 @@
         const formElement = document.getElementById('form');
         const formData = new FormData(formElement);
         const formValues = {};
-        console.log("one")
+       
         for (const entry of formData.entries()) {
           const [key, value] = entry;
           formValues[key] = value;
         }
 
-        console.log(formValues);
+       
 
         try {
           const response = await fetch('/checkout/addAddress', {
@@ -1047,7 +1046,7 @@
             },
             body:JSON.stringify(formValues)
           })
-          console.log("one")
+          
           const data = await response.json();
           if (data.success) {
             await Swal.fire({
