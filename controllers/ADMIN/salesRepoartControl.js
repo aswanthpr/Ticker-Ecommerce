@@ -286,6 +286,14 @@ const filterType = ['all','daily','weekly','monthly','yearly']
                 { $unwind: "$orderedItems" },
                 { $match: { createdAt: { $gte: firstDayOfMonth, $lte: lastDayOfMonth }, "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] } } },
                 {
+                    $lookup: {
+                        from: "users",
+                        localField: "userId",
+                        foreignField: "_id",
+                        as: "userDetails"
+                    }
+                },
+                {
                     $sort: { createdAt: -1 }
                 },
 
@@ -336,6 +344,14 @@ const filterType = ['all','daily','weekly','monthly','yearly']
              salesData = await orderSchema.aggregate([
                 { $unwind: "$orderedItems" },
                 { $match: { createdAt: { $gte: firstDayOfYear, $lte: lastDayOfYear }, "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] } } },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "userId",
+                        foreignField: "_id",
+                        as: "userDetails"
+                    }
+                },
                 {
                     $sort: { createdAt: -1 }
                 },
@@ -392,6 +408,14 @@ const filterType = ['all','daily','weekly','monthly','yearly']
              salesData = await orderSchema.aggregate([
                 { $unwind: "$orderedItems" },
                 { $match: { createdAt: { $gte: start, $lte: end }, "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] } } },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "userId",
+                        foreignField: "_id",
+                        as: "userDetails"
+                    }
+                },
                 {
                     $sort: { createdAt: -1 }
                 },

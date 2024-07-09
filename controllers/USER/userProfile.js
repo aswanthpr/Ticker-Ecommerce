@@ -177,7 +177,11 @@ const postAddAddress = async (req, res) => {
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
 
         const checkUser = await addressSchema.findOne({ userId: userId });
+        if (checkUser.addresses.length>=4) {
 
+                return res.json({ success: false, message: "user can only store 4 addresses" })
+        } 
+       
 
         let result;
         let address;
@@ -200,13 +204,7 @@ const postAddAddress = async (req, res) => {
             })
             saveAddress = await address.save();
         } else {
-            if (checkUser.addresses) {
-                const addressCount = checkUser.addresses.length;
-
-                if (addressCount >= 4) {
-                    return res.json({ success: false, message: "user can only store 4 addresses" })
-                }
-            } else {
+         
                 result = await addressSchema.updateOne(
                     { userId: userId },
                     {
@@ -225,7 +223,7 @@ const postAddAddress = async (req, res) => {
                         }
                     }
                 );
-            }
+           
 
 
 

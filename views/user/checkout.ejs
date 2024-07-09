@@ -259,7 +259,7 @@
 
             <div class="row">
 
-           
+
 
 
               <div class="col-sm-7">
@@ -346,12 +346,17 @@
                         <input type="text" name="cartId" id="cartId" hidden value="<%=cartProduct[i]._id%>">
 
                         <% } %>
-                        <p class="text-dark font-weight-bold" id="discountId">Total Saved <span class="text-success"  ><small>₹</small><%=totalDiscount %></span></p>
-                        <p id="discont" hidden><%=totalDiscount %></p>
+                          <p class="text-dark font-weight-bold" id="discountId">Total Saved <span
+                              class="text-success"><small>₹</small>
+                              <%=totalDiscount %>
+                            </span></p>
+                          <p id="discont" hidden>
+                            <%=totalDiscount %>
+                          </p>
                           <p class="font-weight-bold">Subtotal <span><small>₹</small>
                               <%=subTotal %>
                             </span></p>
-                          
+
 
                           <% if (subTotal<2500) { %>
                             <p class="text-danger">Delivery Charge <span><small>₹</small>99</span></p>
@@ -534,21 +539,21 @@
 
   <script>
     document.getElementById('applyCouponButton').addEventListener('click', async function () {
-     
-     
-     // Get the total price
-     const totalPriceElement = document.getElementById('totalPrice');
+
+
+      // Get the total price
+      const totalPriceElement = document.getElementById('totalPrice');
       let totalPriceText = totalPriceElement.textContent.trim();
 
       const totalPrice = parseFloat(totalPriceText.replace(/[^0-9]/g, ''));
       console.log(totalPrice, 'this si coupion total price')
 
       const discout = document.getElementById('discountId')
-     
+
       let totalDiscoText = discout.textContent.trim();
       const totalDiscount = parseFloat(totalDiscoText.replace(/[^0-9]/g, ''));
       console.log(totalDiscount, 'this si coupion total discount')
-      // Get the selected coupon ID
+      // Get the selected coupon ID               
       const selectElement = document.getElementById('inputSelectOption');
       const selectedCouponId = selectElement.value
       // Check if a coupon is selected
@@ -576,22 +581,22 @@
 
         const selectElement = document.getElementById('inputSelectOption');
         const applyCouponButton = document.getElementById('applyCouponButton');
-        selectElement.style.display="none"
+        selectElement.style.display = "none"
         applyCouponButton.style.display = 'none';
         document.getElementById('couponStatus').innerHTML = `<span class="text-success ml-5" style="font-size:18px;">Coupon applied ✓</span>
                 <span class="fw-bold text-danger " id="removeCoupon" style="cursor:pointer; color:red; font-size: 26px;margin-right:4px;margin-top:0px">&times;</span></div> `;
-       
+
         const totalText = document.getElementById('totalPrice');
 
-        totalText.innerHTML=`<span id="totalPrice" class="all-total font-weight-bold">
+        totalText.innerHTML = `<span id="totalPrice" class="all-total font-weight-bold">
                                     <small>₹</small>
                                     ${data.totalAmount}
                                   </span>`
-                document.getElementById('removeCoupon').addEventListener('click', removeCoupon);
+        
 
-                const afterCoupon =totalDiscount+data.maximumOfferAmt;
-console.log(afterCoupon,'this is afrer coupn',data.maximumOfferAmt,)
-discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${afterCoupon}</span>`
+        const afterCoupon = totalDiscount + data.maximumOfferAmt;
+        console.log(afterCoupon, 'this is afrer coupn', data.maximumOfferAmt,)
+        discout.innerHTML = `Total Saved <span class="text-success"  ><small>₹</small>${afterCoupon}</span>`
 
       } else {
         await Swal.fire({
@@ -604,7 +609,7 @@ discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${
 
         })
       }
-
+     
       async function removeCoupon() {
         await fetch('/checkout/remove-coupon', {
           method: 'GET'
@@ -622,21 +627,23 @@ discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${
               selectElement.value = '';
               const totalText = document.getElementById('totalPrice');
 
-        totalText.innerHTML=`<span class="all-total font-weight-bold" id="totalPrice">
+              totalText.innerHTML = `<span class="all-total font-weight-bold" id="totalPrice">
                                     <small>₹</small>
                                     ${data.b4CouponPrice}
                                   </span>`
 
-                                  document.getElementById('removeCoupon').addEventListener('click', removeCoupon);
+            
 
-const afterCoupon =totalDiscount+data.maximumOfferAmt;
-console.log(afterCoupon,'this is afrer coupn',data.maximumOfferAmt,)
-discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${afterCoupon}</span>`
-     
+              // const afterCoupon = totalDiscount + data.maximumOfferAmt;
+              // console.log(afterCoupon, 'this is afrer coupn', data.maximumOfferAmt,)
+              discout.innerHTML = `Total Saved <span class="text-success"  ><small>₹</small>${data.discuntAmt}</span>`
 
-}
+
+            }
           });
       }
+
+      document.getElementById('removeCoupon').addEventListener('click', removeCoupon);
 
     })
 
@@ -644,7 +651,7 @@ discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${
     async function placeOrder() {
       // const cartId =document.getElementById("cartId").value;
       const totalPrice = document.getElementById("totalPrice").innerHTML;
-      console.log(totalPrice + "ljflj")
+      
 
       //check address is selected
       const selectedAddress = document.querySelector('input[name="addressCheck"]:checked');
@@ -686,7 +693,7 @@ discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${
 
       try {
         if (paymentMethod == "COD") {
-        
+
           const response = await fetch("/placeOrder", {
             method: "POST",
             headers: {
@@ -736,11 +743,11 @@ discout.innerHTML=`Total Saved <span class="text-success"  ><small>₹</small>${
           }
         }
 
-      
+
         if (paymentMethod == "Razorpay") {
-        
+
           const respose = await axios.post('/placeOrder', { addressId: addressId, addressIndex: addressIndex, paymentMethod: paymentMethod })
-console.log("ithen the thengayanith")
+          console.log("ithen the thengayanith")
           const { message, key_id, orderId, amount, razorpayOrderId } = respose.data
           console.log(respose.data, 'ith data');
           console.log(amount, 'amount');
@@ -777,13 +784,13 @@ console.log("ithen the thengayanith")
               }
             };
             var paymentGateway = new Razorpay(options);
-           
-             paymentGateway.open();
+
+            paymentGateway.open();
             paymentGateway.on('payment.failed', function (response) {
-              
+
               setTimeout(() => {
                 // paymentGateway.close();
-                              window.location.href = "/payment-failed"
+                window.location.href = "/payment-failed"
               }, 2000)
 
             });
@@ -1036,9 +1043,9 @@ console.log("ithen the thengayanith")
           const response = await fetch('/checkout/addAddress', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type':'application/json'
             },
-            body: JSON.stringify(formValues)
+            body:JSON.stringify(formValues)
           })
           console.log("one")
           const data = await response.json();

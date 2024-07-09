@@ -24,9 +24,9 @@ passport.serializeUser((user,done)=>{
     done(null,user.id)
 })
 
-passport.deserializeUser((id,done)=>{
+passport.deserializeUser(async(id,done)=>{
 
-    userSchema.findById(id).then((user)=>{
+   await userSchema.findById(id).then((user)=>{
         done(null,user);
     })
 
@@ -60,7 +60,7 @@ passport.deserializeUser((id,done)=>{
             
            }
             if(userExist&& userExist.isVerified===true) {
-                req.session.user = userExist._id;
+                // req.session.user = userExist._id;
                
                done(null,userExist) 
                 

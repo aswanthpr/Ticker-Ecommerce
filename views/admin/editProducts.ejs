@@ -249,12 +249,12 @@
                       <select name="category" id="category" class="form-control mb-3 mb-3">
 
                         <% category.forEach(element=> { %>
-                          
-                        
-                          <option  <%if(element.categoryName===products.category.categoryName ){%> 
-                           selected <%} %> ><%= element.categoryName %>
+
+
+                          <option <%if(element.categoryName===products.category.categoryName ){%>
+                            selected <%} %> ><%= element.categoryName %>
                           </option>
-                          
+
                           <% }) %>
 
                       </select>
@@ -506,43 +506,43 @@
                   // Store the cropped file in the Map
                   croppedFiles.set(currentInput.name, file);
                   closeModal();
-                 
+
                 }, 'image/jpeg');
               }
             }
 
-           async function closeModal() {
+            async function closeModal() {
               document.getElementById('cropperModal').style.display = 'none';
               if (cropper) {
                 cropper.destroy();
                 cropper = null;
-console.log('ithu nadakkuo')
-               await saveImage();
+                console.log('ithu nadakkuo')
+                await saveImage();
               }
             }
 
             async function saveImage() {
               const productId = window.location.pathname.split('/').pop();
               const formData = new FormData();
-              
+
               croppedFiles.forEach((file, key) => {
                 console.log(key, file, 'console')
                 formData.append(key, file);
               });
-              
+
               try {
                 const response = await fetch(`/admin/save-edit-image/${productId}`, {
                   method: "POST",
-                  
-                  body:(formData)
+
+                  body: (formData)
                 })
-console.log(response,'thu response')
+                console.log(response, 'thu response')
                 if (response.ok) {
                   const result = await response.json();
-                  if(result.success){
+                  if (result.success) {
                     window.location.reload()
                   }
-                  
+
                   console.log('Image saved successfully', result);
                   // Handle success (e.g., show a success message, redirect, etc.)
                 } else {
@@ -578,10 +578,10 @@ console.log(response,'thu response')
               let isValid = true;
 
               // Name validation
-              if (!/^[a-zA-Z][a-zA-Z\s]*$/.test(nameInput.value.trim()) || nameInput.value.trim().length < 5) {
-                document.getElementById('nameMessage').textContent = 'Name must start with at least 4 letters';
+              if (!/^[A-Za-z][A-Za-z\d ]{4,29}$/.test(nameInput.value.trim()) || nameInput.value.trim().length < 5) {
+                document.getElementById('nameMessage').textContent = 'cannot start with  Numbers, total length of the name is between 5 and 30 characters, special characters not allowded';
                 isValid = false;
-                console.log("one")
+
               } else {
                 document.getElementById('nameMessage').textContent = '';
               }
@@ -661,91 +661,91 @@ console.log(response,'thu response')
                   confirmButtonText: 'Yes, Update Product!'
                 })
                 if (confirmation.isConfirmed) {
-                   const editForm =document.getElementById('formData')
-                  const nameInput = document.getElementById('name')?.value||""
-              const subtitleInput = document.getElementById('subtitle')?.value||""
-              const brandInput = document.getElementById('brand')?.value||""
-              const colorInput = document.getElementById('color')?.value||""
-              const stockInput = document.getElementById('stock')?.value||""
-              const mrpInput = document.getElementById('mrp')?.value||""
-              const genderSelect= document.getElementById('gender')?.value||"";
-              const categorySelect = document.getElementById('category')?.value||"";
+                  const editForm = document.getElementById('formData')
+                  const nameInput = document.getElementById('name')?.value || ""
+                  const subtitleInput = document.getElementById('subtitle')?.value || ""
+                  const brandInput = document.getElementById('brand')?.value || ""
+                  const colorInput = document.getElementById('color')?.value || ""
+                  const stockInput = document.getElementById('stock')?.value || ""
+                  const mrpInput = document.getElementById('mrp')?.value || ""
+                  const genderSelect = document.getElementById('gender')?.value || "";
+                  const categorySelect = document.getElementById('category')?.value || "";
 
 
-              console.log(mrpInput,stockInput,nameInput)
+                  console.log(mrpInput, stockInput, nameInput)
 
-              const editData={
-                name:nameInput,
-                subtitle:subtitleInput,
-                brand:brandInput,
-                color:colorInput,
-                stock:stockInput,
-                mrp:mrpInput,
-                gender:genderSelect,
-                category:categorySelect,
-              }
-              
-                  
-                const productId = window.location.pathname.split('/').pop();
-                
-              //   for (let [key, value] of editForm.entries()) {
-              //   console.log(key, value);
-              //   // formData.append(key,value)
-              // }
+                  const editData = {
+                    name: nameInput,
+                    subtitle: subtitleInput,
+                    brand: brandInput,
+                    color: colorInput,
+                    stock: stockInput,
+                    mrp: mrpInput,
+                    gender: genderSelect,
+                    category: categorySelect,
+                  }
 
-                try {
-                  const response = await fetch(`/admin/edit-product/${productId}`, {
-                    method: 'PUT',
-                  headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify(editData)
-                  });
 
-                  const data = await response.json();
-console.log(data,'this is data mone')
-                  if (response.ok) {
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'product edited successfully',
-                      teximaget: data.message,
-                      position: 'top-end',
-                      timer: 1000,
-                      showConfirmButton: false,
-                      toast: true,
-                    }).then(() => {
-                      window.location.href = "/admin/product";
+                  const productId = window.location.pathname.split('/').pop();
+
+                  //   for (let [key, value] of editForm.entries()) {
+                  //   console.log(key, value);
+                  //   // formData.append(key,value)
+                  // }
+
+                  try {
+                    const response = await fetch(`/admin/edit-product/${productId}`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(editData)
                     });
-                  } else {
+
+                    const data = await response.json();
+                    console.log(data, 'this is data mone')
+                    if (response.ok) {
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'product edited successfully',
+                        teximaget: data.message,
+                        position: 'top-end',
+                        timer: 1000,
+                        showConfirmButton: false,
+                        toast: true,
+                      }).then(() => {
+                        window.location.href = "/admin/product";
+                      });
+                    } else {
+                      Swal.fire({
+                        icon: 'error',
+
+                        teximaget: data.message,
+                        position: 'top-end',
+                        timer: 1000,
+                        showConfirmButton: false,
+                        toast: true,
+                      })
+                    }
+                  } catch (error) {
                     Swal.fire({
                       icon: 'error',
-
-                      teximaget: data.message,
+                      title: 'Oops...',
+                      text: error.message || 'Something went wrong!',
                       position: 'top-end',
                       timer: 1000,
                       showConfirmButton: false,
                       toast: true,
-                    })
+                    });
                   }
-                } catch (error) {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: error.message || 'Something went wrong!',
-                    position: 'top-end',
-                    timer: 1000,
-                    showConfirmButton: false,
-                    toast: true,
-                  });
-                }
 
                 }
-              
+
               }
             }
 
           </script>
 
 
-          
+
 
           <script>
             async function deleteImage(imageId, imageIndex) {

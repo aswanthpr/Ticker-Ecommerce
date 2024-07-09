@@ -135,7 +135,11 @@ const CheckoutAddress = async (req, res) => {
             const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
 
             const checkUser = await addressSchema.findOne({ userId: userId })
+            if (checkUser.addresses.length>=4) {
 
+                return res.json({ success: false, message: "user can only store 4 addresses" })
+              } 
+       
 
             let result
             let address
@@ -158,10 +162,11 @@ const CheckoutAddress = async (req, res) => {
                 })
                 saveAddress = await address.save();
             } else {
+                
                 result = await addressSchema.updateOne(
                     { userId: userId },
                     {
-                        $push: {
+                        $push: { 
                             addresses: {
                                 name: name,
                                 phone: phone,
@@ -176,6 +181,7 @@ const CheckoutAddress = async (req, res) => {
                         }
                     }
                 );
+          
             }
 
 
@@ -246,10 +252,10 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
                     'addresses.$.pincode': pincode,
                     'addresses.$.addressType': addressType,
                 }
-            }, { new: true }
+            }
         )
 
-        if (updateCheckoutAddress) {
+        if (updateCheckoutAddress.modifiedCount > 0) {
             console.log(updateCheckoutAddress,'thsi is in edit address checkout')
             res.json({ success: true, message: 'Address updated successfully' })
         } else {

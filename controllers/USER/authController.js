@@ -361,12 +361,12 @@ const postLogin = async (req, res) => {
         if (userData.isBlocked === false) {
 
           if (userData.isVerified === false) {
-            res.render("login", { message: ' User is not verifid ' })
+            return res.render("login", { message: ' User is not verifid ' })
 
           }
 
           if (userData.isAdmin === true) {
-            res.render("login", { message: 'Admin is not alloweded' })
+            return res.render("login", { message: 'Admin is not alloweded' })
           }
 
 
@@ -374,20 +374,20 @@ const postLogin = async (req, res) => {
           req.session.user = userData._id   
 
 
-          res.redirect("/");
+          return res.redirect("/");
         } else {
-          res.render("login", { message: "This user is blocked" });
+          return res.render("login", { message: "This user is blocked" });
          
         }
 
       } else {
 
-        res.render("login", { message2: "password is incorrect" });
+        return res.render("login", { message2: "password is incorrect" });
         
 
       }
     } else {
-      res.render("login", { message: " email is incorrect" })
+      return res.render("login", { message: " email is incorrect" })
     }
 
 
@@ -566,6 +566,7 @@ if(req.user){
   const checkUser = await userSchema.findOne({email:req.user.email})
 
   if(checkUser){
+    console.log('111111111111111111111111', checkUser._id)
     req.session.user = checkUser._id;
     res.redirect('/'); 
 
