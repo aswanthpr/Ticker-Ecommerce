@@ -136,7 +136,7 @@ const getViewProduct = async (req, res,next) => {
       $and: [
         { _id: { $ne: prodId }, },
         { status: true },
-        { category: productData?.category }
+        { category: productData?.category?.categoryName }
       ]
     }).populate('category').limit(7);
 
