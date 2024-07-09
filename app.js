@@ -7,7 +7,7 @@ const dotenv=require('dotenv'); dotenv.config();
 const passport  = require("passport");
 const compression = require('compression');
 
- const {catch404,catch500, err500} = require("./middleware/errorHandler")
+ const {errorMiddleware} = require("./middleware/errorHandler")
 
    
 
@@ -49,10 +49,12 @@ app.use("/", userRouter);
 app.use("/",adminRouter);
 
 
-// Handle errors
-app.use(err500);
+// Use centralized error handling middleware
+
+app.use(errorMiddleware);
+
 app.all('*', function(req, res,next){
-  res.render('err404')
+  res.status(404).render('err404')
 });
 
 

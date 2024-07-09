@@ -175,6 +175,7 @@ const postAddAddress = async (req, res) => {
 
         userId = req.session.user;
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
+        console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
 
         const checkUser = await addressSchema.findOne({ userId: userId });
         if (checkUser.addresses.length>=4) {
@@ -187,6 +188,7 @@ const postAddAddress = async (req, res) => {
         let address;
         let saveAddress;
         if (!checkUser) {
+            console.log(checkUser,'ithanu check user')
             address = new addressSchema({
                 userId: userId,
                 addresses: [{

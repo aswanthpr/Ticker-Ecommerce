@@ -72,7 +72,7 @@ const sendOtpMail = async (name, email, Otp) => {
     });
   } catch (error) {
     throw new Error(error.message)
-    
+     
   }
 };
 
@@ -95,7 +95,7 @@ function generateOtp() {
 
 //GET SIGNUP=============================================================
 
-const getSignup = async (req, res) => {
+const getSignup = async (req, res,next) => {
   try {
     const referral = req.query.referral;
 
@@ -104,32 +104,33 @@ const getSignup = async (req, res) => {
     res.render("signup", { referral });
 
   } catch (error) {
-
-    throw new Error(error.message)
+    next(error)
+    console.log(error.message)
+    
 
   }
 };
 
 //POST SIGNUP==========================================================
 
-const postSignup = async (req, res) => {
+const postSignup = async (req, res, next) => {
 
   try {
 
     const { name, phone, email, password, referral, confirmPassword } = req.body;
 
     //checking is it existing referral
-
+    console.log(name, phone, email, password, referral, confirmPassword)
     const existingReferral = await userSchema.findOne({ referral: referral });
 
     //checking user exist or not
 
     const existingUser = await userSchema.findOne({ $or: [{ email }, { phone }] });
 
-
+    console.log(existingUser, 'exixsting user')
     if (existingUser) {
 
-      return res.render('/signup',{ message: "user already exist with this email or phone number" })
+      return res.render('signup', { message: "user already exist with this email or phone number" })
 
 
     } else {
@@ -138,8 +139,6 @@ const postSignup = async (req, res) => {
 
         //password hashing using bcrypt
         const hashPassword = await bcrypt.hash(password, 10);
-
-        const hashConfirmPassword = await bcrypt.hash(confirmPassword, 10);
 
         req.session.name = name
         req.session.email = email
@@ -150,17 +149,21 @@ const postSignup = async (req, res) => {
 
         const randomOtp = generateOtp();
 
-      
 
-        const otpSend = await sendOtpMail(name, email, randomOtp)
 
-        const newOtp = new regOtp({
+        await sendOtpMail(name, email, randomOtp)
 
-          email: email,
-          otp: randomOtp,
-        });
-
-         await newOtp.save();
+        const existingOtp = await regOtp.findOne({ email: email });
+        if (existingOtp) {
+          existingOtp.otp = randomOtp;
+          await existingOtp.save();
+        } else {
+          const newOtp = new regOtp({
+            email: email,
+            otp: randomOtp,
+          });
+          await newOtp.save();
+        }
 
         return res.redirect(`/verify-otp?email=${email}`)
 
@@ -172,15 +175,15 @@ const postSignup = async (req, res) => {
     }
 
   } catch (error) {
-
-    throw new Error(error.message)
+    next(error)
+    console.log(error.message)
   }
 };
 
 
 
 //GET VERIFY OTP=========================================================
-const getOtpVerify = async (req, res) => {
+const getOtpVerify = async (req, res,next) => {
   try {
 
 
@@ -188,12 +191,13 @@ const getOtpVerify = async (req, res) => {
 
   } catch (error) {
 
-    throw new Error(error.message)
+    next(error)
+    console.log(error.message)
   }
 };
 
 //POST VERIFY OTP===================================================
-const postOtpVerify = async (req, res) => {
+const postOtpVerify = async (req, res,next) => {
   try {
 
     const { otp } = req.body;
@@ -201,11 +205,12 @@ const postOtpVerify = async (req, res) => {
     const Email = req.session.email
     const Phone = req.session.phone
     const Password = req.session.password
-    const Referred = req.session.referredBy
+    const Referred = req.session.referredBy ?req.session.referredBy :null
+    console.log(Referred,'thsi is reffereaby')
 
 
     const otpData = await regOtp.findOne({ email: Email });
-
+    console.log(otpData,'this is ot')
    
 
     if (otpData) {
@@ -226,10 +231,10 @@ const postOtpVerify = async (req, res) => {
         });
 
         const userData = await user.save();
-
+console.log('11111111111111111111111111')
         const userDB = await userSchema.findOne({ referral:Referred});
        
-        if (userDB) {
+        if (userDB&&userData.referredBy==Referred) {
           const walletDB = await walletSchema.findOneAndUpdate({ userId: userDB._id },
             {
               $inc: { balance: 100 },
@@ -244,9 +249,8 @@ const postOtpVerify = async (req, res) => {
             },
             { upsert: true });
 
-          
+            
 
-          
             const userCrdit = await walletSchema.findOneAndUpdate(
               { userId:userData._id },
               {
@@ -261,12 +265,15 @@ const postOtpVerify = async (req, res) => {
                 }
               },
               { upsert: true });
-
-           
-          
         }
+        
+        // const userMatch = await userSchema.findOne({email: Email, referredBy:Referred});
+        // console.log(userMatch,'cheching uermathc')
+        // if(userMatch){
+          
 
-
+        // }
+        console.log('33333333333333333333333333')
         // const token = generateJwtToken(user._id)
         req.session.user = userData._id
         req.session.email = Email
@@ -284,7 +291,8 @@ const postOtpVerify = async (req, res) => {
 
 
   } catch (error) {
-    throw new Error(error.message)
+    next(error)
+   console.log(error.message)
   }
 };
 
@@ -292,12 +300,14 @@ const postOtpVerify = async (req, res) => {
 
 //RESEND OTP=================================================================
 
-const resendOtp = async (req, res) => {
+const resendOtp = async (req, res,next) => {
 
   try {
     
-    const userData = await userSchema.findOne({ email: req.session.email || req.query.email });
-    const otpData = await regOtp.findOne({ email: req.session.email || req.query.email });
+    const userData = await userSchema.findOne({ email: (req.session.email || req.query.email) });
+    const Email =req.session.email!==undefined?req.session.email:req.query.email
+    const otpData = await regOtp.findOne({ email: Email });
+    console.log(userData,'userdaa ',otpData,'theisotypdattas')
 
 
     if (!(otpData)) {
@@ -307,12 +317,19 @@ const resendOtp = async (req, res) => {
 
       await sendOtpMail(" User", req.query.email || req.session.email, randomOtp)
 
-      const newOtp = new regOtp({
-        email: userData.email,
-        otp: randomOtp,
-      });
+      const existingOtp = await regOtp.findOne({ email: userData.email });
+      if (existingOtp) {
+        existingOtp.otp = randomOtp;
+        await existingOtp.save();
+      } else {
+        const newOtp = new regOtp({
+          email: userData.email,
+          otp: randomOtp,
+        });
+        await newOtp.save();
+      }
 
-      await newOtp.save();
+      
       res.json({ success: true, message: "OTP generated successfully" })
 
     } else {
@@ -321,15 +338,15 @@ const resendOtp = async (req, res) => {
     }
   } catch (error) {
 
-    res.status(500).json({ success: false, message: "Internal server error" })
-    throw new Error(error.message)
+    next(error)
+    console.log(error.message)
   }
 
 
 }
 
 //GET LOIGN===============================================================
-const getLogin = async (req, res) => {
+const getLogin = async (req, res,next) => {
   try {
     const userData = await userSchema.find({ isVerified: false }) 
     if (userData) {
@@ -340,78 +357,76 @@ const getLogin = async (req, res) => {
     res.render("login");
 
   } catch (error) {
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 };
 
 //POST LOGIN===============================================================
-const postLogin = async (req, res) => {
+const postLogin = async (req, res,next) => {
   try {
     const { email, password } = req.body;
 
     const userData = await userSchema.findOne({ email: email });
 
+   
+    console.log('userData:', userData);
 
-    if (userData.email === email) {
+    if (userData?.email === email) {
+    
+      if (userData.password) {
+        const passMatch = await bcrypt.compare(password, userData.password);
 
-      const passMatch = await bcrypt.compare(password, userData.password);
+        if (passMatch) {
+          if (userData.isBlocked === false) {
+            if (userData.isVerified === false) {
+              return res.render("login", { message: 'User is not verified' });
+            }
 
-      if (passMatch) {
+            if (userData.isAdmin === true) {
+              return res.render("login", { message: 'Admin is not allowed' });
+            }
 
-        if (userData.isBlocked === false) {
+            req.session.email = userData.email;
+            req.session.user = userData._id;
 
-          if (userData.isVerified === false) {
-            return res.render("login", { message: ' User is not verifid ' })
-
+            return res.redirect("/");
+          } else {
+            return res.render("login", { message: "This user is blocked" });
           }
-
-          if (userData.isAdmin === true) {
-            return res.render("login", { message: 'Admin is not alloweded' })
-          }
-
-
-          req.session.email = userData.email
-          req.session.user = userData._id   
-
-
-          return res.redirect("/");
         } else {
-          return res.render("login", { message: "This user is blocked" });
-         
+          return res.render("login", { message2: "Password is incorrect" });
         }
-
       } else {
-
-        return res.render("login", { message2: "password is incorrect" });
-        
-
+     
+        console.error('Error: userData.password is undefined');
+        return res.render("login", { message2: "Password is incorrect" });
       }
     } else {
-      return res.render("login", { message: " email is incorrect" })
+      return res.render("login", { message: "Email is incorrect" });
     }
-
-
-
   } catch (error) {
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 };
 
 // GET FORGET PASSWORD===================================================
-const getForgetpass = async (req, res) => {
+const getForgetpass = async (req, res,next) => {
   try {
 
     res.render("forgetPass");
 
   } catch (error) {
 
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
 
   }
 };
 
 //POST FORGETPASSWORD======================================================
-const postForgetpass = async (req, res) => {
+const postForgetpass = async (req, res,next) => {
   try {
 
     const email = req.body.email;
@@ -425,13 +440,17 @@ const postForgetpass = async (req, res) => {
      
 
       await sendOtpMail(userData.name, userData.email, randomOtp);
-      const newOtp = new regOtp({
-        email: userData.email,
-        otp: randomOtp,
-
-      });
-      await newOtp.save()
-
+      const existingOtp = await regOtp.findOne({ email: userData.email });
+      if (existingOtp) {
+        existingOtp.otp = randomOtp;
+        await existingOtp.save();
+      } else {
+        const newOtp = new regOtp({
+          email: userData.email,
+          otp: randomOtp,
+        });
+        await newOtp.save();
+      }
       res.redirect(`/forgetPass/otp?email=${email}`)
 
       //res.json({ message: "OTP send to your email please check your mail" });
@@ -440,25 +459,27 @@ const postForgetpass = async (req, res) => {
       res.json({ message: "this email not exist" });
     }
   } catch (error) {
-    throw new Error(error)
+    next(error)
+   console.log(error.message)
   }
 };
 
 
 //GET FORGET OTP=======================================================
-const getForgetOtp = async (req, res) => {
+const getForgetOtp = async (req, res,next) => {
   try {
 
     res.render("forgetPass-otp");
 
   } catch (error) {
 
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 };
 
 //POST FORGET OTP===================================================
-const postForgetOtp = async (req, res) => {
+const postForgetOtp = async (req, res,next) => {
   try {
     const email = req.query.email
     const { otp } = req.body;
@@ -497,24 +518,26 @@ const postForgetOtp = async (req, res) => {
 
 
   } catch (error) {
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 };
 //GET CHANGE PASSWORD====================================================
 
 
-const getChangePass = async (req, res) => {
+const getChangePass = async (req, res,next) => {
   try {
 
 
     res.render("changePass")
   } catch (error) {
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 }
 //CHANGE PASS POST   ============================================================
 
-const postChangePass = async (req, res) => {
+const postChangePass = async (req, res,next) => {
   try {
 
     const { password, confirmPassword } = req.body
@@ -536,12 +559,13 @@ const postChangePass = async (req, res) => {
       res.redirect(`/change-pass?id=${id}`)
     }
   } catch (error) {
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 }
 
 //LOGOUT  ============================================================
-const userLogout = async (req, res) => {
+const userLogout = async (req, res,next) => {
   try {
     req.session.destroy(() => {
 
@@ -551,12 +575,13 @@ const userLogout = async (req, res) => {
 
 
   } catch (error) {
-    throw new Error(error)
+    next(error)
+    console.log(error.message)
   }
 
 }
 //==================================================================
-const googleAuth = async (req, res) => {
+const googleAuth = async (req, res,next) => {
 
   try {
     
@@ -579,7 +604,8 @@ if(req.user){
 }
 
   } catch (error) {
-throw new Error(error.message)
+    next(error)
+    console.log(error.message)
   }
 
 }

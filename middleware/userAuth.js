@@ -27,7 +27,7 @@ const userCheck = async(req,res,next)=>{
         }else{
         const user = await userSchema.findById(req.session.user);
     
-        if(user.isBlocked ===true){
+        if(user?.isBlocked ===true){
 
             res.redirect('/logout')
             

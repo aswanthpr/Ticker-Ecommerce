@@ -30,6 +30,12 @@
                       <div class="header-text mb-1">
                           <p class="pt-3 fs-2 fw-semibold text-center">Verify OTP</p>
                       </div>
+                      <div class="input-ground mb-2 pt-3">
+                        <%if (typeof message !=="undefined" ){%>
+                            <h6 style="color: red;font-size: 15px; ">
+                                <%= message %>
+                            </h6>
+                            <%}%>
                       <form id="otpForm" action="" method="post">
                         <div class="input-ground mb-3 pt-3">
                             <input type="text" name="otp" id="otp" class="form-control form-control-lg bg-light fs-6"
