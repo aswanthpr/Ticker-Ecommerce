@@ -127,15 +127,15 @@ const getViewProduct = async (req, res, next) => {
   try {
     const userId = req.session?.user;
     const prodId = req.query.id;
-    console.log(userId, '1111111111111111111111111', prodId)
+  
     const productData = await productSchema.findOne({ _id: prodId }).populate('category')
 
-    console.log(productData, '222222222222222222222222222222')
+   
 
     const cartData = await cartSchema.findOne({ userId: userId });
     const cartCount = cartData ? cartData?.products.length : 0;
 
-    console.log('33333333333333333333333333')
+   
     const relatedData = await productSchema.find({
       $and: [
         { _id: { $ne: prodId }, },
@@ -166,7 +166,7 @@ const addToCart = async (req, res, next) => {
     const userData = await userSchema.findById(userId);
 
 
-
+S
 
     if (!userData) {
       return res.json({ success: false, message: "User need to Login " })
