@@ -1037,17 +1037,17 @@
         }
 
        
-
+        console.log('this is form data',formValues)
         try {
           const response = await fetch('/checkout/addAddress', {
-            method: 'POST',
-            headers: {
-              'Content-Type':'application/json'
-            },
-            body:JSON.stringify(formValues)
-          })
-          
+        method: 'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(formValues) 
+      });
+       
+        
           const data = await response.json();
+          console.log(data,'htissiasdigh')
           if (data.success) {
             await Swal.fire({
               icon: 'success',

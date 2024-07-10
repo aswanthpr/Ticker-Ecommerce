@@ -133,38 +133,20 @@ const CheckoutAddress = async (req, res,next) => {
 
         try {
 
-            userId = req.session.user;
+           const userId = req.session.user;
             const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
-
-            const checkUser = await addressSchema.findOne({ userId: userId })
-            if (checkUser.addresses.length>=4) {
+            console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
+            const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) })
+            if (checkUser?.addresses?.length>=4) {
 
                 return res.json({ success: false, message: "user can only store 4 addresses" })
               } 
        
 
             let result
-            let address
+            // let address
             let saveAddress
-            if (!checkUser) {
-                address = new addressSchema({
-                    userId: userId,
-                    addresses: [{
-                        name: name,
-                        phone: phone,
-                        house: house,
-                        locality: locality,
-                        city: city,
-                        landmark: landmark,
-                        state: state,
-                        pincode: pincode,
-                        addressType: addressType
-
-                    }]
-                })
-                saveAddress = await address.save();
-            } else {
-                
+            if (checkUser) {
                 result = await addressSchema.updateOne(
                     { userId: userId },
                     {
@@ -183,16 +165,37 @@ const CheckoutAddress = async (req, res,next) => {
                         }
                     }
                 );
-          
+                console.log("1111111111111111",result)
+            } else {
+                
+               
+
+                const  address = new addressSchema({
+                    userId: userId,
+                    addresses: [{
+                        name: name,
+                        phone: phone,
+                        house: house,
+                        locality: locality,
+                        city: city,
+                        landmark: landmark,
+                        state: state,
+                        pincode: pincode,
+                        addressType: addressType
+
+                    }]
+                })
+                saveAddress = await address.save();
+          console.log("000000000000000000",address)
             }
 
 
 
 
             if (saveAddress || result) {
-                return res.status(200).json({ success: true, message: 'Address Created successfully' })
+                return res.json({ success: true, message: 'Address Created successfully' })
             } else {
-                return res.status(400).json({ success: false, message: "created address failed" })
+                return res.json({ success: false, message: "created address failed" })
             }
         } catch (error) {
             console.log(error.message);
@@ -280,14 +283,14 @@ const applyCoupon = async (req, res,next) => {
             return res.json({ success: false, message: 'coupon is not found' });
 
         }
-        if (totalPrice < couponData.minPrice) {
+        if (totalPrice < couponData?.minPrice) {
             return res.json({ success: false, message: 'You are not eligible for this  coupon' })
         }
 
         const offerDiscount = (couponData.offer) / 100;
         const offerAmount = (offerDiscount * totalPrice);
 
-        const maximumOfferAmt = (couponData.maxRedeemable < offerAmount) ? couponData.maxRedeemable : offerAmount;
+        const maximumOfferAmt = (couponData?.maxRedeemable < offerAmount) ? couponData?.maxRedeemable : offerAmount;
 
         const totalAmount = Math.round(totalPrice - maximumOfferAmt);
 

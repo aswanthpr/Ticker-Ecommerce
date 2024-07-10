@@ -127,20 +127,25 @@ const getViewProduct = async (req, res,next) => {
   try {
     const userId = req.session.user;
     const prodId = req.query.id;
+    console.log(userId,'1111111111111111111111111',prodId)
     const productData = await productSchema.findOne({ _id: prodId }).populate('category')
+   
+   console.log(productData,'222222222222222222222222222222')
+   
     const cartData = await cartSchema.findOne({ userId: userId });
     const cartCount = cartData ? cartData.products.length : 0;
 
-
+console.log('33333333333333333333333333')
     const relatedData = await productSchema.find({
       $and: [
         { _id: { $ne: prodId }, },
         { status: true },
-        { category: productData?.category?.categoryName }
+        { category: productData?.category?._id }
       ]
     }).populate('category').limit(7);
 
 
+console.log(relatedData,'thsi is relaed data')
     res.render("productDetail", { productData, relatedData, userId, cartCount })
   } catch (error) {
     console.log(error.message);

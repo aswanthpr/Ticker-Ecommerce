@@ -174,9 +174,9 @@ const postAddAddress = async (req, res, next) => {
     try {
 
         userId = req.session.user;
-        console.log(userId, 'ldfk', req.session.user)
+      
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
-        console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
+        
 
         const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) });
         console.log(checkUser, 'thiss is checkuser');
@@ -187,11 +187,11 @@ const postAddAddress = async (req, res, next) => {
 
 
         let result;
-        let address;
+      
         let saveAddress;
         if (!checkUser) {
 
-            address = new addressSchema({
+          const  address = new addressSchema({
                 userId: userId,
                 addresses: [{
                     name: name,

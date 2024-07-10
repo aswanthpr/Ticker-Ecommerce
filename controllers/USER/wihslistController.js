@@ -30,6 +30,7 @@ const getWishlist  =async(req,res,next)=>{
   const addToWishlist = async(req,res,next)=>{ 
     try {
         const userId = req.session.user;
+        
         const {productId} = req.body;
        
         const wishlistData = await  wishlistSchema.findOne({userId:userId})
