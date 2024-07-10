@@ -255,7 +255,7 @@ const getEditAddress = async (req, res, next) => {
         userId = req.session.user
         const addressId = req.query.id;
         if (!mongoose.Types.ObjectId.isValid(addressId)) {
-            return res.json({ success: false, message: 'Invalid address ID' });
+            return res.render("/user/address")
         }
         const userData = await userSchema.findOne({ _id: userId })
 
@@ -360,6 +360,7 @@ const orderDetails = async (req, res, next) => {
 
         const userId = req.session.user;
         const orderId = req.query.orderId;
+        
 
         const userData = await userSchema.findOne({ _id: userId });
 
@@ -725,7 +726,9 @@ const getInvoice = async (req, res, next) => {
         const generateId = generateOrderid();
         const invoiceId = "INV" + generateId;
 
-
+        if (!mongoose.Types.ObjectId.isValid(orderId)) {
+            return res.redirect('/user/order')
+        }
         const orderData = await orderSchema.findOne(
 
             { _id: new mongoose.Types.ObjectId(orderId) },

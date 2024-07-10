@@ -146,12 +146,12 @@ const getDashboard = async (req, res,next) => {
 
         const salesData = await orderSchema.find( { createdAt: { $gte: startDate, $lt:endDate }, "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] } } )
 
-    //    const  salesData = await orderSchema.aggregate([
+    //    const  salesDat = await orderSchema.aggregate([
     //         { $unwind: "$orderedItems" },
     //         { $match: { createdAt: { $gte: startDate, $lte: endDate }, "orderedItems.orderStatus": { $nin: ['Cancelled', 'Returned'] } } },
            
     //     ]);
-       
+    console.log(salesData,'this is sales data b')
 
         let xValues = [];
         let yValues = [];
@@ -167,11 +167,13 @@ const getDashboard = async (req, res,next) => {
                 const currentPeriodDate = new Date(startDate);
                 currentPeriodDate.setDate(startDate.getDate() + i)
                 xValues.push(currentPeriodDate.getDate());
-                const totalAmount = salesData.filter(order => {
-                    new Date(order.createdAt).getDate() === currentPeriodDate.getDate()
-                    yValues.push(order.totalPrice);
+               
 
-                })
+                const totalAmount = salesData
+            .filter(order => new Date(order.createdAt).getDate() === currentPeriodDate.getDate())
+            .reduce((total, order) => total + order.totalPrice, 0);
+
+        yValues.push(totalAmount);
             }
         } else if (timePeriod ==='Last-year') {
             for (let i = 0; i < 12; i++) {

@@ -60,6 +60,7 @@ const getOrders = async (req, res,next) => {
 const adminOrderDetails = async (req, res,next) => {
     try {
         const { orderId } = req.query;
+        
      
         const orderData = await orderSchema.findOne({ orderId: orderId }).populate("userId")
        

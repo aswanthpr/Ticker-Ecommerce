@@ -21,8 +21,8 @@ ad_router.get("/admin/dashboard",auth.ifNoAdmin,adminControl.getDashboard);
 
 //USER DETAILES=================================================
 ad_router.get("/admin/user",auth.ifNoAdmin,adminControl.getUsers);
-ad_router.patch("/admin/user-block/:id",adminControl.blockUser);
-ad_router.patch("/admin/user-unblock/:id",adminControl.unblockUser);
+ad_router.patch("/admin/user-block/:id",auth.ifNoAdmin,adminControl.blockUser);
+ad_router.patch("/admin/user-unblock/:id",auth.ifNoAdmin,adminControl.unblockUser);
 ad_router.get("/admin/userSearch",auth.ifNoAdmin,adminControl.userSearch);
 
 
@@ -30,29 +30,29 @@ ad_router.get("/admin/userSearch",auth.ifNoAdmin,adminControl.userSearch);
 ad_router.get("/admin/product",auth.ifNoAdmin,productControl.getProduct);
 ad_router.get("/admin/add-product",auth.ifNoAdmin,productControl.getCreateProduct)
 ad_router.post("/admin/add-product",upload.any(),productControl.createProduct);
-ad_router.patch('/admin/product-list/:id',productControl.productList);
-ad_router.patch('/admin/product-unlist/:id',productControl.productUnlist); 
+ad_router.patch('/admin/product-list/:id',auth.ifNoAdmin,productControl.productList);
+ad_router.patch('/admin/product-unlist/:id',auth.ifNoAdmin,productControl.productUnlist); 
 ad_router.get('/admin/edit-product/:id',auth.ifNoAdmin,productControl.getEditProduct);
-ad_router.put('/admin/edit-product/:prodId', productControl.editProduct);
+ad_router.put('/admin/edit-product/:prodId',auth.ifNoAdmin, productControl.editProduct);
 ad_router.post('/admin/save-edit-image/:prodId',upload.any(), productControl.uploadImage);
-ad_router.delete('/admin/edit-product/deleteImage',productControl.deleteImage);
+ad_router.delete('/admin/edit-product/deleteImage',auth.ifNoAdmin,productControl.deleteImage);
 ad_router.delete("/admin/delete-product",auth.ifNoAdmin,productControl.deleteProduct);
 ad_router.get("/admin/productSearch",auth.ifNoAdmin,productControl.productSearch);
 //CATEGORY DETAILES==============================================
 ad_router.get("/admin/category",auth.ifNoAdmin,categoryControl.getCategory);
-ad_router.post("/admin/add-category",categoryControl.addCategory);
-ad_router.put('/admin/unlist-category/:id', categoryControl.unlistCategory);
-ad_router.put('/admin/list-category/:id',categoryControl.listCategory);
-ad_router.put("/admin/edit-category",categoryControl.editCategory);
+ad_router.post("/admin/add-category",auth.ifNoAdmin,categoryControl.addCategory);
+ad_router.put('/admin/unlist-category/:id',auth.ifNoAdmin, categoryControl.unlistCategory);
+ad_router.put('/admin/list-category/:id',auth.ifNoAdmin,categoryControl.listCategory);
+ad_router.put("/admin/edit-category",auth.ifNoAdmin,categoryControl.editCategory);
 ad_router.get("/admin/delete-category/:id",auth.ifNoAdmin,categoryControl.deleteCategory);
 ad_router.get("/admin/categorySearch",auth.ifNoAdmin,categoryControl.categSearch);
 
 //ADMIN ORDER CONTROLLER 
 ad_router.get("/admin/orderMgt",auth.ifNoAdmin,orderControll.getOrders);
 ad_router.get("/admin/orderMgt/orderDetails",auth.ifNoAdmin,orderControll.adminOrderDetails);
-ad_router.put("/admin/order/change-order-status",orderControll.changeOrderStatus);
-ad_router.post("/admin/order/decline-return",orderControll.declineReturn);
-ad_router.post("/admin/order/approve-return",orderControll.approveReturn);
+ad_router.put("/admin/order/change-order-status",auth.ifNoAdmin,orderControll.changeOrderStatus);
+ad_router.post("/admin/order/decline-return",auth.ifNoAdmin,orderControll.declineReturn);
+ad_router.post("/admin/order/approve-return",auth.ifNoAdmin,orderControll.approveReturn);
 
 //ADMIN COUPONS CONTROLLER
 ad_router.get("/admin/couponMangement",auth.ifNoAdmin,couponControll.getCoupon);

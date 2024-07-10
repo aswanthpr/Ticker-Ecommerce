@@ -73,6 +73,11 @@ const editCategoryOffer = async (req, res, next) => {
         const { offerId, offer, categoryName, validity } = req.body;
 
         const categoryData = await categorySchema.findOne({ categoryName: categoryName })
+        const offerExist = await categOfferSchema.findOne({categoryId:new mongoose.Types.ObjectId(categoryData._id)});
+        if(offerExist){
+           
+           return res.json({success:false,message:"This category have another offer"});
+        }
         const offerData = await categOfferSchema.findByIdAndUpdate(offerId, { $set: { categoryId: categoryData._id, offer: offer, validity: validity } })
         if (!offerData) {
             return res.json({ success: false, message: ' Catgory offer edit Failed' })
@@ -165,7 +170,6 @@ const addProductOffer = async (req, res,next) => {
             return res.json({ success: false, message: 'product not found' });
 
         } else if (productData && offerProduct) {
-            const offerProduct = await prodOfferSchema.findOne({ productId: productData._id });
 
 
             return res.json({ success: false, message: ' An offer existing in the same product' });
@@ -193,6 +197,12 @@ const editProductOffer = async (req, res,next) => {
         const { offerId, offer, validity, productName } = req.body;
 
         const productData = await productSchema.findOne({ name: productName })
+        const productExist = await prodOfferSchema.findOne({productId:productData._id})
+        console.log(productExist,'ithanu existing product')
+        if(productExist){
+            return res.json({success:false,message:'another offer exist with the same product'})
+        }
+        
 
         const offerData = await prodOfferSchema.findByIdAndUpdate(offerId, { $set: { productId: productData._id, offer: offer, validity: validity } })
 

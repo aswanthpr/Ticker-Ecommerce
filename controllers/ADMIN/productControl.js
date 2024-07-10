@@ -141,6 +141,9 @@ const productUnlist = async (req, res,next) => {
 const getEditProduct = async (req, res,next) => {
     try {
         const id = req.params.id;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.redirect('/admin/product')
+        }
         const proData = await productSchema.find({ _id: id }).populate('category')
         const category = await categorySchema.find({})
 

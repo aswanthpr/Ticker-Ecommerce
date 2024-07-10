@@ -41,7 +41,7 @@
           canvasImageHeight
         );
       }
-      pdf.save('download.pdf');
+      pdf.save(`download${new Date().toLocaleDateString()}.pdf`);
     });
   });
 
