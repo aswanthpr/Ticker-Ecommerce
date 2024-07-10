@@ -148,7 +148,7 @@ const getViewProduct = async (req, res, next) => {
     }).limit(7);
 
 
-    console.log(relatedData, 'thsi is relaed data')
+  
     res.render("productDetail", { productData, relatedData, userId, cartCount })
   } catch (error) {
     console.log(error.message);

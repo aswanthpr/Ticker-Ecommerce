@@ -628,7 +628,7 @@ const getWallet = async (req, res, next) => {
             { $limit: limit }
         ];
         const walletData = await walletSchema.aggregate(walletAggregate).exec();
-        console.log(walletData,'walletdata')
+  
 
         return res.render('wallet', { walletData, totalPage, currentPage: page });
 
