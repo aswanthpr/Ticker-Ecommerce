@@ -128,11 +128,11 @@ const getViewProduct = async (req, res,next) => {
     const userId = req.session.user;
     const prodId = req.query.id;
     
-    const productData = await productSchema.findOne({ _id: prodId })
+    const productData = await productSchema.findOne({ _id: new mongoose.Types.ObjectId(prodId) }).populate({path:'category',model:'category'})
    
 
    
-    const cartData = await cartSchema.findOne({ userId: userId });
+    const cartData = await cartSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) });
     const cartCount = cartData ? cartData.products.length : 0;
 
 
@@ -140,9 +140,9 @@ const getViewProduct = async (req, res,next) => {
       $and: [
         { _id: { $ne: prodId }, },
         { status: true },
-        { category: productData?.category }
+        { category: new mongoose.Types.ObjectId(productData?.category?._id) }
       ]
-    }).populate('category').limit(7);
+    }).limit(7);
 
 
 console.log(relatedData,'thsi is relaed data')

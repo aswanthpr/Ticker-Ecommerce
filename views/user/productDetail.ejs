@@ -740,7 +740,7 @@
         });
         const data = await response.json();
         if(data.success){
-          Swal.fire({
+          await Swal.fire({
             icon: "success",
           text:data.message,
           toast: true,
@@ -749,7 +749,7 @@
           showConfirmButton: false,
           })
         }else{
-          Swal.fire({
+        await  Swal.fire({
             icon: "error",     
           text: data.message,
           toast: true,
@@ -762,7 +762,7 @@
         console.log(error.message)
         Swal.fire({
           icon: "error",
-          title:error.message,
+          title:"something went wrong",
           toast: true,
           position: 'top-end',
           timer: 1000,
