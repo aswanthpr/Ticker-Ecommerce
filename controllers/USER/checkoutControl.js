@@ -137,10 +137,7 @@ const CheckoutAddress = async (req, res,next) => {
             const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
             console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
             const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) })
-            if (checkUser?.addresses?.length>=4) {
-
-                return res.json({ success: false, message: "user can only store 4 addresses" })
-              } 
+            
        
 
             let result
@@ -165,7 +162,7 @@ const CheckoutAddress = async (req, res,next) => {
                         }
                     }
                 );
-                console.log("1111111111111111",result)
+                
             } else {
                 
                
@@ -186,7 +183,7 @@ const CheckoutAddress = async (req, res,next) => {
                     }]
                 })
                 saveAddress = await address.save();
-          console.log("000000000000000000",address)
+          
             }
 
 

@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 
 
 
-const getHome = async (req, res, next) => {
+const getHome = async (req, res,next) => {
   try {
     const user = req.session.user;
 
@@ -62,7 +62,7 @@ const getHome = async (req, res, next) => {
 
     for (let i = 0; i < productOffers.length; ++i) {
       const productOffer = productOffers[i];
-
+     
 
       const categoryName = productOffer?.productId?.category?.categoryName;
 
@@ -116,39 +116,36 @@ const getHome = async (req, res, next) => {
 
 
     res.render("home", { productData, user, cartCount });
-  } catch (error) {
+  } catch (error) {  
     console.log(error.message);
     next(error)
   }
 };
 
 //VIEW PRODUCT DETAILES ==========================================================
-const getViewProduct = async (req, res, next) => {
+const getViewProduct = async (req, res,next) => {
   try {
-    const userId = req.session?.user;
+    const userId = req.session.user;
     const prodId = req.query.id;
-  
-    const productData = await productSchema.findOne({ _id: prodId }).populate('category')
-
+    
+    const productData = await productSchema.findOne({ _id: prodId })
    
 
+   
     const cartData = await cartSchema.findOne({ userId: userId });
-    const cartCount = cartData ? cartData?.products.length : 0;
+    const cartCount = cartData ? cartData.products.length : 0;
 
-   
+
     const relatedData = await productSchema.find({
       $and: [
         { _id: { $ne: prodId }, },
         { status: true },
-        { category: productData?.category?._id }
+        { category: productData?.category }
       ]
-    }).populate({
-      path: 'category',
-      model: 'category'
-    }).limit(7);
+    }).populate('category').limit(7);
 
 
-  
+console.log(relatedData,'thsi is relaed data')
     res.render("productDetail", { productData, relatedData, userId, cartCount })
   } catch (error) {
     console.log(error.message);
@@ -159,14 +156,14 @@ const getViewProduct = async (req, res, next) => {
 }
 
 //ADD TO CART================================================
-const addToCart = async (req, res, next) => {
+const addToCart = async (req, res,next) => {
   try {
     const userId = req.session.user;
     const { prodId } = req.body;
     const userData = await userSchema.findById(userId);
 
 
-S
+
 
     if (!userData) {
       return res.json({ success: false, message: "User need to Login " })
@@ -220,7 +217,7 @@ S
 }
 
 //  ALL PRODUCTS ==============================================
-const getAllProduct = async (req, res, next) => {
+const getAllProduct = async (req, res,next) => {
   try {
 
     const userId = req.session.user;
@@ -297,7 +294,7 @@ const getAllProduct = async (req, res, next) => {
     res.render("shop", { productData, categories, userId, genders, cartCount, totalPages, currentPage: page, selectedCategories: categoryFilter, selectedGenders: genderFilter, minPrice, maxPrice, sortBy, search: searchQuery });
   } catch (error) {
     console.log(error.message);
-    next(error)
+       next(error)
   }
 }
 
