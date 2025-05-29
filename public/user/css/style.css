@@ -311,8 +311,8 @@ section {
 }
 .home-slide {
 	position: relative;
-	padding: 200px 0;
-	padding-bottom: 100px;
+	padding: 120px 0;
+	padding-bottom: 10px;
 	min-height: inherit !important;
 }
 .home-slide .owl-dots {

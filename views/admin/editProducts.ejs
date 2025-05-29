@@ -27,14 +27,24 @@
   <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-  <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
-  <script src="https://unpkg.com/cropperjs"></script>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 
   <style>
-    .cropper-container {
+   .cropper-container {
       width: 100%;
+      height: auto;
       max-height: 400px;
       margin-bottom: 10px;
+       max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 6px;
+  
     }
 
     .modal-content {
@@ -43,7 +53,17 @@
       width: 80%;
       max-width: 600px;
       background-color: #363636;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
     }
+#cropperModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
   </style>
 
 </head>
@@ -386,34 +406,6 @@
                             <% } %>
                     </div>
 
-
-
-
-
-                    <!-- Modal for cropping -->
-                    <!-- <div class="modal fade" id="imageCropModal" tabindex="-1" role="dialog"
-                    aria-labelledby="imageCropModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-md" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="imageCropModalLabel">Crop Image</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div style="max-width: 100%; max-height: 100%; overflow: hidden;">
-                            <img id="cropperImage" src="#" alt="Image to Crop" style="width: 100%;">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                          <button type="button" class="btn btn-primary" id="cropImageButton">Crop</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
-
                     <div class="row">
 
                       <div class="col-sm-9">
@@ -443,7 +435,7 @@
           </div>
           <!-- Modal for cropping -->
 
-          <div id="cropperModal" class="modal ">
+          <!-- <div id="cropperModal" class="modal ">
             <div class="modal-content">
               <div class="cropper-container">
                 <img id="cropperImage" src="" alt="Image for cropping" />
@@ -451,75 +443,139 @@
               <button onclick="cropImage()">Crop</button>
               <button onclick="closeModal()">Cancel</button>
             </div>
+          </div> -->
+          <div id="cropperModal" class="modal ">
+        <div class="modal-content">
+          <div class="cropper-container">
+            <img id="cropperImage" src="" alt="Image for cropping" class="" />
           </div>
-
-
-
-
-
-
+          <button onclick="cropImage()">Crop</button>
+          <button onclick="closeModal()">Cancel</button>
+        </div>
+      </div>
           <script>
-            let cropper;
-            let currentInput;
-            let croppedFiles = new Map(); // To store the cropped files
+                let cropper;
+      let currentInput;
+      let croppedFiles = new Map(); // To store the cropped files
 
-            function previewImage(event) {
-              const input = event.target;
-              const file = input.files[0];
-              currentInput = input; // Save the reference to the current input
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                  const cropperImage = document.getElementById('cropperImage');
-                  cropperImage.src = e.target.result;
-                  document.getElementById('cropperModal').style.display = 'block';
-                  if (cropper) {
-                    cropper.destroy();
-                  }
-                  cropper = new Cropper(cropperImage, {
-                    // aspectRatio: 3 / 4, // Portrait aspect ratio
-                    // viewMode: 1,
-                    aspectRatio: 1,
-                    viewMode: 1
-                  });
-                };
-                reader.readAsDataURL(file);
-              }
+      function previewImage(event) {
+        const input = event.target;
+        const file = input.files[0];
+        currentInput = input; // Save the reference to the current input
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const cropperImage = document.getElementById('cropperImage');
+            cropperImage.src = e.target.result;
+            document.getElementById('cropperModal').style.display = 'block';
+            if (cropper) {
+              cropper.destroy();
             }
+            cropper = new Cropper(cropperImage, {
+              // aspectRatio: 3 / 4, // Portrait aspect ratio
+              // viewMode: 1,
+              aspectRatio: 1,
+              viewMode: 1
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+      }
 
-            function cropImage() {
-              if (cropper) {
-                cropper.getCroppedCanvas({
-                  width: 150, // desired width
-                  height: 150, // desired height
-                }).toBlob(function (blob) {
-                  const croppedImageSrc = URL.createObjectURL(blob);
-                  const imagePreview = currentInput.previousElementSibling;
-                  if (imagePreview && imagePreview.tagName === 'IMG') {
-                    imagePreview.src = croppedImageSrc;
-                  }
-                  // Replace the file input with the cropped image blob
-                  const dataTransfer = new DataTransfer();
-                  const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
-                  dataTransfer.items.add(file);
-                  currentInput.files = dataTransfer.files;
-                  // Store the cropped file in the Map
-                  croppedFiles.set(currentInput.name, file);
-                  closeModal();
-
-                }, 'image/jpeg');
-              }
+      function cropImage() {
+        if (cropper) {
+          cropper.getCroppedCanvas({
+            width: 150, // desired width
+            height: 150, // desired height
+          }).toBlob(function (blob) {
+            const croppedImageSrc = URL.createObjectURL(blob);
+            const imagePreview = currentInput.previousElementSibling;
+            if (imagePreview && imagePreview.tagName === 'IMG') {
+              imagePreview.src = croppedImageSrc;
             }
+            // Replace the file input with the cropped image blob
+            const dataTransfer = new DataTransfer();
+            const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
+            dataTransfer.items.add(file);
+            currentInput.files = dataTransfer.files;
+            // Store the cropped file in the Map
+            croppedFiles.set(currentInput.name, file);
+            closeModal();
+          }, 'image/jpeg');
+        }
+      }
 
-            async function closeModal() {
-              document.getElementById('cropperModal').style.display = 'none';
-              if (cropper) {
-                cropper.destroy();
-                cropper = null;
+      function closeModal() {
+        document.getElementById('cropperModal').style.display = 'none';
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
+      }
+
+
+
+            // let cropper;
+            // let currentInput;
+            // let croppedFiles = new Map(); // To store the cropped files
+
+            // function previewImage(event) {
+            //   const input = event.target;
+            //   const file = input.files[0];
+            //   currentInput = input; // Save the reference to the current input
+            //   if (file) {
+            //     const reader = new FileReader();
+            //     reader.onload = function (e) {
+            //       const cropperImage = document.getElementById('cropperImage');
+            //       cropperImage.src = e.target.result;
+            //       document.getElementById('cropperModal').style.display = 'block';
+            //       if (cropper) {
+            //         cropper.destroy();
+            //       }
+            //       cropper = new Cropper(cropperImage, {
+            //         // aspectRatio: 3 / 4, // Portrait aspect ratio
+            //         // viewMode: 1,
+            //         aspectRatio: 1,
+            //         viewMode: 1
+            //       });
+            //     };
+            //     reader.readAsDataURL(file);
+            //   }
+            // }
+
+            // function cropImage() {
+            //   if (cropper) {
+            //     cropper.getCroppedCanvas({
+            //       width: 150, // desired width
+            //       height: 150, // desired height
+            //     }).toBlob(function (blob) {
+            //       const croppedImageSrc = URL.createObjectURL(blob);
+            //       const imagePreview = currentInput.previousElementSibling;
+            //       if (imagePreview && imagePreview.tagName === 'IMG') {
+            //         imagePreview.src = croppedImageSrc;
+            //       }
+            //       // Replace the file input with the cropped image blob
+            //       const dataTransfer = new DataTransfer();
+            //       const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
+            //       dataTransfer.items.add(file);
+            //       currentInput.files = dataTransfer.files;
+            //       // Store the cropped file in the Map
+            //       croppedFiles.set(currentInput.name, file);
+            //       closeModal();
+
+            //     }, 'image/jpeg');
+            //   }
+            // }
+
+            // async function closeModal() {
+            //   document.getElementById('cropperModal').style.display = 'none';
+            //   if (cropper) {
+            //     cropper.destroy();
+            //     cropper = null;
                
-                await saveImage();
-              }
-            }
+            //     await saveImage();
+            //   }
+            // }
 
             async function saveImage() {
               const productId = window.location.pathname.split('/').pop();

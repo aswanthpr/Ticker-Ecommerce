@@ -84,7 +84,7 @@ const createProduct = async (req, res,next) => {
                 color: color
             });
 
-            const savedProduct = await newProduct.save();
+            await newProduct.save();
            
             return res.json({ success: true, message:"Product successfully inserted" });
 

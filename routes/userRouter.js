@@ -53,8 +53,8 @@ router.get('/shop',homeControl.getAllProduct);
 //USER PROFILE=====================================================
 router.get("/user/profile",auth.userCheck,profileControll.userProfile);
 router.put("/user/profile",profileControll.chngeUserData);
-
-router.get('/user/address',auth.userCheck,profileControll.getAddress);
+ 
+router.get('/user/address',auth.userCheck,profileControll?.getAddress);
 router.get('/user/changePass',auth.userCheck,profileControll.getChangePass); 
 router.patch('/user/changePass',auth.userCheck,profileControll.changePass);
 router.get('/user/addAddress',auth.userCheck,profileControll.getAddAddress);

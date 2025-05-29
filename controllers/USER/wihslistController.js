@@ -78,8 +78,8 @@ const getWishlist  =async(req,res,next)=>{
       console.log(error.message);
       next(error)
     }
-  }
-
+  } 
+ 
   //REMOVE WIHSLIST PRODUCT
   const removeFromWishlist = async(req,res,next)=>{
     try {

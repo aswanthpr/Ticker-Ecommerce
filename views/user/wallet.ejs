@@ -112,7 +112,7 @@
                             <div class="col-md-6 d-flex flex-column align-items-stretch">
                                 <div class="card flex-grow-1">
                                     <div class="card-body">
-                                        <p class="text-dark fw-bolder ">BALANCE:<span class="text-success fw-bolder  "> &#8377;<%= walletData[0] ? walletData[0]?.balance : 0 %></span>
+                                        <p class="text-dark fw-bolder ">BALANCE:<span class="text-success fw-bolder  "> &#8377;<%= walletData[0] ? walletData[0]?.balance?.toFixed(1) : 0 %></span>
 
                                         </p>
                                     </div>
@@ -183,9 +183,9 @@
                                                 <tr>
                                                     <td class="text-center fw-bolder"><%=new Date(walletData[i]?.history?.createTime).toLocaleString("en-US") %></td>
                                                     <% if (walletData[i].history.transactionType=="Credit") { %>
-                                                        <td class="text-center fw-bolder text-success ">+<%=walletData[i]?.history?.amount%></td>
+                                                        <td class="text-center fw-bolder text-success ">+<%=walletData[i]?.history?.amount?.toFixed(1)%></td>
                                                     <% }else{%>
-                                                        <td class="text-center fw-bolder text-danger">-<%=walletData[i]?.history?.amount%></td>
+                                                        <td class="text-center fw-bolder text-danger">-<%=walletData[i]?.history?.amount?.toFixed(1)%></td>
                                                         <%} %>
                                                    
                                                     <td class="text-center fw-bolder "><%=walletData[i]?.history?.discription%></td>
@@ -207,7 +207,7 @@
                                
                             </div> -->
                             
-                            <nav aria-label="Page navigation example">
+                            <nav aria-label="Page navigation example" class="ml-4">
                               
                                 <ul class="pagination">
                                   <% if (currentPage>1) { %>
