@@ -1,9 +1,5 @@
 const session = require('express-session');
 const morgan = require('morgan');
-const logger = require('morgan');
-
-
-
 
 //cache controll
 
@@ -33,7 +29,7 @@ module.exports.sessionConfig =session({
 
 //morgan middleware||logger middleware
 
-module.exports.morganConfig =logger('dev');
+module.exports.morganConfig =morgan('dev');
 
 //helmet for  helps secure your Express app by setting various HTTP headers. 
 //It includes protections against some well-known web vulnerabilities by default.

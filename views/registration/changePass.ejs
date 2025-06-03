@@ -150,31 +150,6 @@
             this.classList.toggle('fa-eye-slash');
         });
     });
-
-
-
-
-document.addEventListener('DOMContentLoaded', (event) => {
-        // Password Field
-        const togglePassword1 = document.querySelector('#togglePassword1');
-        const password = document.querySelector('#password');
-
-        togglePassword1.addEventListener('click', function () {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        // Confirm Password Field
-        const togglePassword2 = document.querySelector('#togglePassword2');
-        const confirmPassword = document.querySelector('#confirmPassword');
-
-        togglePassword2.addEventListener('click', function () {
-            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            confirmPassword.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-    });
     </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>

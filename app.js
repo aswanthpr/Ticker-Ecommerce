@@ -2,7 +2,7 @@
 const express = require('express');
 const path =require("path");
 const session = require('express-session');
-const logger = require("morgan");
+const cookieParser = require('cookie-parser')
 const dotenv=require('dotenv'); dotenv.config();
 const passport  = require("passport");
 const compression = require('compression');
@@ -37,7 +37,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(passport.initialize());
 app.use(passport.session())
- 
+ app.use(cookieParser())
 
 //getting routed from the routes folder
 

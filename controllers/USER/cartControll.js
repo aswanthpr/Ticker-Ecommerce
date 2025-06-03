@@ -7,7 +7,7 @@ const addressSchema = require("../../models/addressModel");
 
 const getCart = async (req, res,next) => {
     try {
-        const userId = req.session.user;
+        const userId = req.session.user??req.cookies.user
 
         const cartProduct = await cartSchema.aggregate([
             { $match: { userId: new mongoose.Types.ObjectId(userId) } },
@@ -50,7 +50,7 @@ const cartRemove = async (req, res,next) => {
     try {
         const { productId } = req.body;
 
-        const userId = req.session.user;
+        const userId = req.session.user??req.cookies.user;
 
         const cartData = await cartSchema.findOne({ userId: userId }).populate({ path: "products.productId", model: "product" });
 
@@ -94,7 +94,7 @@ const cartRemove = async (req, res,next) => {
 //increase Cart quantity
 const incrementQty = async (req, res,next) => {
     try {
-        const userId = req.session.user;
+        const userId = req.session.user??req.cookies.user
         const { cartItemId } = req.body
         const cartItem = await cartSchema.findOne({ userId: new mongoose.Types.ObjectId(userId), "products._id": new mongoose.Types.ObjectId(cartItemId) })
         if (!cartItem) {
@@ -137,7 +137,7 @@ const incrementQty = async (req, res,next) => {
 // decrement cart quantity   
 const decrementQty = async (req, res,next) => {
     try {
-        const userId = req.session.user;
+        const userId =req.session.user??req.cookies.user;
         const { cartItemId } = req.body;
 
 
@@ -175,7 +175,7 @@ const decrementQty = async (req, res,next) => {
 //CART CONDITION CHECKING
 const cartCondition = async (req, res,next) => {
     try {
-        const userId = req.session.user;
+        const userId = req.session.user??req.cookies.user;
 
 
 

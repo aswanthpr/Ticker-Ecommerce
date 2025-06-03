@@ -6,10 +6,8 @@ const addressSchema = require("../../models/addressModel");
 const userSchema = require("../../models/userModel");
 const couponSchema = require("../../models/couponModel");
 const mongoose = require("mongoose");
-
 const orderidGenerate = require("otp-generator");
 const Razorpay = require('razorpay');
-
 const dotEnv = require('dotenv'); dotEnv.config();
 
 //RAZORPAY  INSTANCE  =================================================
@@ -28,14 +26,14 @@ function generateOrderid() {
         return orderId;
     } catch (error) {
         console.log(error.message);
-       
+
     }
 }
 //gettin checkout page =================================================
-const getCheckout = async (req, res,next) => {
+const getCheckout = async (req, res, next) => {
     try {
 
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user;
 
         let cartProduct = await cartSchema.aggregate([
             { $match: { userId: new mongoose.Types.ObjectId(userId) } },
@@ -63,7 +61,7 @@ const getCheckout = async (req, res,next) => {
 
 
         let subTotal = 0;
-        let mrpTotal =0;
+        let mrpTotal = 0;
         let offerPriceTotal = 0;
 
         for (let i = 0; i < cartProduct.length; i++) {
@@ -76,9 +74,9 @@ const getCheckout = async (req, res,next) => {
             for (let j = 0; j < productDetails.length; j++) {
                 const quantity = products.quantity;
                 const productStock = productDetails[j].stock;
-                
-                mrpTotal += productDetails[j].mrp*cartProduct[i].products.quantity;
-                offerPriceTotal+=  productDetails[j].offerPrice*cartProduct[i].products.quantity;
+
+                mrpTotal += productDetails[j].mrp * cartProduct[i].products.quantity;
+                offerPriceTotal += productDetails[j].offerPrice * cartProduct[i].products.quantity;
                 // Check if quantity is more than product stock
                 if (quantity > productStock) {
                     return res.json({ success: false, message: "Insufficient Quantity, Reduce cart Quantity" });
@@ -108,7 +106,7 @@ const getCheckout = async (req, res,next) => {
                 validity: { $gt: new Date() }
             }
         )
-        const totalDiscount =mrpTotal - offerPriceTotal;
+        const totalDiscount = mrpTotal - offerPriceTotal;
         req.session.totalDiscount = totalDiscount;
         res.render("checkout", {
             success: true, message: 'Proceed to checkout',
@@ -128,82 +126,71 @@ const getCheckout = async (req, res,next) => {
     }
 };
 //save new address
-const CheckoutAddress = async (req, res,next) => {
-   
+const CheckoutAddress = async (req, res, next) => {
+    try {
 
-        try {
+        const userId =req.session.user??req.cookies.user
+        const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
+        console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
+        const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) })
 
-           const userId = req.session.user;
-            const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
-            console.log(name, phone, house, locality, landmark, city, state, pincode, addressType)
-            const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) })
-            
-       
 
-            let result
-            // let address
-            let saveAddress
-            if (checkUser) {
-                result = await addressSchema.updateOne(
-                    { userId: userId },
-                    {
-                        $push: { 
-                            addresses: {
-                                name: name,
-                                phone: phone,
-                                house: house,
-                                locality: locality,
-                                city: city,
-                                landmark: landmark,
-                                state: state,
-                                pincode: pincode,
-                                addressType: addressType
-                            }
+
+        let result
+        // let address
+        let saveAddress
+        if (checkUser) {
+            result = await addressSchema.updateOne(
+                { userId: userId },
+                {
+                    $push: {
+                        addresses: {
+                            name: name,
+                            phone: phone,
+                            house: house,
+                            locality: locality,
+                            city: city,
+                            landmark: landmark,
+                            state: state,
+                            pincode: pincode,
+                            addressType: addressType
                         }
                     }
-                );
-                
-            } else {
-                
-               
+                }
+            );
 
-                const  address = new addressSchema({
-                    userId: userId,
-                    addresses: [{
-                        name: name,
-                        phone: phone,
-                        house: house,
-                        locality: locality,
-                        city: city,
-                        landmark: landmark,
-                        state: state,
-                        pincode: pincode,
-                        addressType: addressType
+        } else {
+            const address = new addressSchema({
+                userId: userId,
+                addresses: [{
+                    name: name,
+                    phone: phone,
+                    house: house,
+                    locality: locality,
+                    city: city,
+                    landmark: landmark,
+                    state: state,
+                    pincode: pincode,
+                    addressType: addressType
 
-                    }]
-                })
-                saveAddress = await address.save();
-          
-            }
-
-
-
-
-            if (saveAddress || result) {
-                return res.json({ success: true, message: 'Address Created successfully' })
-            } else {
-                return res.json({ success: false, message: "created address failed" })
-            }
-        } catch (error) {
-            console.log(error.message);
-            next(error)
+                }]
+            })
+            saveAddress = await address.save();
 
         }
+        if (saveAddress || result) {
+            return res.json({ success: true, message: 'Address Created successfully' })
+        } else {
+            return res.json({ success: false, message: "created address failed" })
+        }
+    } catch (error) {
+        console.log(error.message);
+        next(error)
+
+    }
 }
-
-
 //CHECK OUT EDIT ADDRESS 
-const editCheckoutAddress = async (req, res,next) => {
+const editCheckoutAddress = async (req, res, next) => {
     try {
         const addressId = req.query.id;
         const userId = req.body.user
@@ -221,19 +208,19 @@ const editCheckoutAddress = async (req, res,next) => {
 
     } catch (error) {
         console.log(error.message);
-         next(error)
+        next(error)
     }
 }
 
 //save the edit address
-const saveCheckoutEditedAddress = async (req, res,next) => {
+const saveCheckoutEditedAddress = async (req, res, next) => {
 
     try {
         const addressId = req.query.id
-console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
+        console.log(req.query, 'thsi s isquery ', req.body, 'thsi si body')
 
         const { name, phone, house, locality, landmark, state, city, pincode, addressType } = req.body;
-     
+
 
 
         const updateCheckoutAddress = await addressSchema.updateOne({ "addresses._id": addressId },
@@ -253,7 +240,7 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
         )
 
         if (updateCheckoutAddress.modifiedCount > 0) {
-            console.log(updateCheckoutAddress,'thsi is in edit address checkout')
+            console.log(updateCheckoutAddress, 'thsi is in edit address checkout')
             res.json({ success: true, message: 'Address updated successfully' })
         } else {
             res.json({ success: false, message: "Sorry updation failed" })
@@ -261,7 +248,7 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
 
     } catch (error) {
         console.log(error.message);
-       next(error)
+        next(error)
     }
 
 }
@@ -269,10 +256,10 @@ console.log(req.query,'thsi s isquery ',req.body,'thsi si body')
 
 //FOR APPLY COUPON
 
-const applyCoupon = async (req, res,next) => {
+const applyCoupon = async (req, res, next) => {
     try {
         const { couponCode, totalPrice } = req.body;
-        const userId = req.session.user;
+        const userId = req.session.user??req.cookies.user
         const uId = userId.toString()
 
         const couponData = await couponSchema.findOne({ couponCode: couponCode });
@@ -306,7 +293,7 @@ const applyCoupon = async (req, res,next) => {
 
         if (req.session.couponDiscount !== 0 && req.session.couponCode !== 0) {
 
-            return res.json({ success: true, message: 'Coupon is applied', totalAmount,maximumOfferAmt,totalDiscout })
+            return res.json({ success: true, message: 'Coupon is applied', totalAmount, maximumOfferAmt, totalDiscout })
         } else {
             return res.json({ success: false, message: ' Failed to  apply Coupon' })
         }
@@ -316,16 +303,16 @@ const applyCoupon = async (req, res,next) => {
     } catch (error) {
 
         console.log(error.message);
-       next(error)
+        next(error)
     }
 }
 
 //PALCE ORDER============================================================
-const placeOrder = async (req, res,next) => {
+const placeOrder = async (req, res, next) => {
     try {
 
         const { addressId, addressIndex, paymentMethod } = req.body;
-        const userId = req.session.user;
+        const userId = req.session.user??req.cookies.user;
 
         const addressData = await addressSchema.findOne({ userId: userId, "addresses._id": addressId });
 
@@ -340,13 +327,11 @@ const placeOrder = async (req, res,next) => {
         });
 
 
+
         const items = [];
-        let totalCost = cartData.totalCost;
+        let totalCost = cartData?.totalCost;
         const newOrderId = generateOrderid();
-        let quantity = cartData.quantity;
-        if (!cartData) {
-            return res.status(404).json({ success: false, message: "Sorry...,Cart Data Not found. Please" })
-        }
+        let quantity = cartData?.quantity;
 
         cartData.products.forEach(item => {
 
@@ -381,21 +366,15 @@ const placeOrder = async (req, res,next) => {
 
 
 
-        if (paymentMethod == "COD" && (totalCost > 3000)) {
+        if (paymentMethod == "COD" && (totalCost > 2500)) {
 
-            return res.json({ success: false, message: 'please choose another payment for above 3000' })
+            return res.json({ success: false, message: 'please choose another payment for above 2500' })
         }
 
         const orderAddress = addressData.addresses[addressIndex];
 
-        cartData.products.forEach(async (product) => {
+        cartData.products.forEach((product) => {
             const price = product.productId.offerPrice ? product.productId.offerPrice : product.productId.mrp;
-
-
-
-
-
-
 
             const newItem = {
 
@@ -434,7 +413,7 @@ const placeOrder = async (req, res,next) => {
         });
 
         if ((req.session?.couponDiscount && req.session?.couponDiscount !== 0)) {
-            const userId = req.session.user;
+            const userId =req.session.user??req.cookies.user;
             const uId = userId.toString()
             const couponCode = req.session.couponCode;
 
@@ -469,7 +448,10 @@ const placeOrder = async (req, res,next) => {
 
 
         if (savedOrder) {
-            for (const product of cartData.products) {
+            // cartData?.products.forEach(async (product) => {
+
+console.log(cartData?.products)
+                for (const product of cartData?.products) {
 
                 const prodId = product.productId._id;
                 const stock = product.productId.stock;
@@ -486,6 +468,7 @@ const placeOrder = async (req, res,next) => {
                 }
 
             }
+        // )
 
             if (req.session.couponDiscount || req.session.couponCode || req.session.offerAmount || req.session.offer) {
                 delete req.session.couponDiscount;
@@ -498,27 +481,31 @@ const placeOrder = async (req, res,next) => {
             return res.json({ success: false, message: 'order failed' })
 
         }
-
+console.log('111111111111111111232323')
         //cashon delivary
         if (paymentMethod == "COD") {
 
 
-            const deleteCart = await cartSchema.findOneAndDelete({ userId: new mongoose.Types.ObjectId(userId) });
+            await cartSchema.findOneAndDelete({ userId: new mongoose.Types.ObjectId(userId) });
 
             return res.json({ success: true, message: "order successfull" })
         }
         //razorpay
-        if (paymentMethod == "Razorpay") {
-
-
+        if (paymentMethod === "Razorpay") {
+console.log(paymentMethod,'paymentMethod')
             const options = {
                 amount: totalAmount * 100,
                 currency: "INR",
                 receipt: orderId,
                 payment_capture: "1",
             };
-            await cartSchema.findOneAndDelete({ userId: new mongoose.Types.ObjectId(userId) });
-            const razorpayOrder = RzyInstance.orders.create(options)
+            
+            const razorpayOrder =await RzyInstance.orders.create(options)
+            // .then((data)=>console.log(data,'data'))
+            // .catch((error)=>console.log(error,'error'))
+           
+             console.log(razorpayOrder,'razorpay',process.env.RAZORPAY_KEY_ID,orderId,razorpayOrder?.id);
+
             return res.json({
                 success: true,
                 message: "Order Success, Ready for payment",
@@ -526,7 +513,7 @@ const placeOrder = async (req, res,next) => {
                 orderId: orderId,
                 currency: "INR",
                 amount: totalAmount * 100,
-                razorpayOrderId: razorpayOrder._id,
+                razorpayOrderId: razorpayOrder?.id,
             });
 
         }
@@ -539,22 +526,22 @@ const placeOrder = async (req, res,next) => {
 
 
 //  VERIFY PAYMENT 
-const verifyPayment = async (req, res,next) => {
+const verifyPayment = async (req, res, next) => {
     try {
         // const userId = req.session.user;
         const { rzy_orderId, rzy_paymentId, orderId, signature } = req.body;
-
-
+        const userId = req.session.user??req.cookies.user;
+       console.log( rzy_orderId, rzy_paymentId, orderId, signature)
         let orderData = await orderSchema.findOneAndUpdate({ _id: orderId }, { $set: { paymentStatus: "Paid", rpyPaymentId: rzy_paymentId } })
 
-
+        await cartSchema.findOneAndDelete({ userId: new mongoose.Types.ObjectId(userId) });
         if (orderData) {
-
-            return res.json({ success: true, message: "Payment Verified ,Order successfull" })
+           
+            return res.json({ success: true, message: "order successfull" })
         } else {
 
             const orderData = await orderSchema.updateMany({ _id: orderId }, { $set: { paymentStatus: "Failed" } })
-
+         
 
             return res.json({ success: false, message: "Payment  Failed" })
         }
@@ -569,14 +556,14 @@ const verifyPayment = async (req, res,next) => {
 }
 // DELETE COUPON 
 
-const deleteCoupon = async (req,res,next) => {
+const deleteCoupon = async (req, res, next) => {
     try {
 
         delete req.session.couponDiscount;
         delete req.session.couponCode;
         delete req.session.offerAmount;
         delete req.session.offer;
-        res.json({ success: true, message: 'coupon removed successfully', b4CouponPrice: req.session.b4CouponPrice,discuntAmt:req.session.totalDiscount  });
+        res.json({ success: true, message: 'coupon removed successfully', b4CouponPrice: req.session.b4CouponPrice, discuntAmt: req.session.totalDiscount });
     } catch (error) {
         console.log(error.message);
         next(error)
@@ -585,7 +572,7 @@ const deleteCoupon = async (req,res,next) => {
 
 //orderSuccess======================================== 
 
-const orderSuccess = async (req, res,next) => {
+const orderSuccess = async (req, res, next) => {
     try {
 
         res.render("orderSuccess")
@@ -594,7 +581,7 @@ const orderSuccess = async (req, res,next) => {
         next(error)
     }
 }
-const paymentFailed = async (req, res,next) => {
+const paymentFailed = async (req, res, next) => {
     try {
 
         res.render("paymentFailed")

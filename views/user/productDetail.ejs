@@ -217,21 +217,21 @@
 
                   <ul class="slides">
                     <li id="zoom" class="one" style="width: 600px;height: 600px;"> <img id="one1"
-                        class="img-responsive zoomr" src="/uploads/<%=productData?.image[0] %>" alt=""> </li>
+                        class="img-responsive zoomr" src="<%=productData?.image[0] %>" alt=""> </li>
                     <li id="zoom1" class="one" style="width: 600px;height: 600px;"> <img id="one2"
-                        class="img-responsive zoomr" src="/uploads/<%=productData?.image[1] %>" alt=""> </li>
+                        class="img-responsive zoomr" src="<%=productData?.image[1] %>" alt=""> </li>
                     <li id="zoom2" class="one" style="width: 600px;height: 600px;"> <img id="one3"
-                        class="img-responsive zoomr" src="/uploads/<%=productData?.image[2] %>" alt=""> </li>
+                        class="img-responsive zoomr" src="<%=productData?.image[2] %>" alt=""> </li>
                     <li id="zoom3" class="one" style="width: 600px;height: 600px;"> <img id="one4"
-                        class="img-responsive zoomr" src="/uploads/<%=productData?.image[3] %>" alt=""> </li>
+                        class="img-responsive zoomr" src="<%=productData?.image[3] %>" alt=""> </li>
                   </ul>
                 </div>
                 <div id="shop-thumb" class="flexslider">
                   <ul class="slides">
-                    <li> <img class="img-responsive" src="/uploads/<%=productData?.image[0] %>" alt=""> </li>
-                    <li> <img class="img-responsive" src="/uploads/<%=productData?.image[1] %>" alt=""> </li>
-                    <li> <img class="img-responsive" src="/uploads/<%=productData?.image[2] %>" alt=""> </li>
-                    <li> <img class="img-responsive" src="/uploads/<%=productData?.image[3] %>" alt=""> </li>
+                    <% for( let index = 0; index < 4; index++ ) { %>
+                      <li> <img class="img-responsive" src="<%=productData?.image[index] %>" alt=""> </li>
+                    
+                    <% } %>
                   </ul>
                 </div>
               </div>
@@ -461,8 +461,8 @@
                         <!-- Item img -->
                         <a href="/product?id=<%=relatedData[i]._id%>">
                         <div class="item-img">
-                           <img class="img-1" src="/uploads/<%= relatedData[i].image[0]%>" alt=""> 
-                           <img class="img-2" src="/uploads/<%= relatedData[i].image[1]%>" alt="">
+                           <img class="img-1" src="<%= relatedData[i].image[0]%>" alt=""> 
+                           <img class="img-2" src="<%= relatedData[i].image[1]%>" alt="">
                           <!-- Overlay -->
                           <div class="overlay">
                             <div class="position-bottom">
@@ -738,6 +738,29 @@
             },
             body: JSON.stringify({ productId })
         });
+        const contentType = response.headers.get("content-type");
+
+    if (!response.ok) {
+      // Attempt to parse error message if possible
+      let errorMessage = "Something went wrong";
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        errorMessage = errorData?.message || errorMessage;
+      } else {
+        // Fallback for non-JSON error (e.g. redirect)
+        errorMessage = `Request failed with status ${response.status}`;
+      }
+
+      await Swal.fire({
+        icon: "error",
+        text: errorMessage,
+        toast: true,
+        position: 'top-end',
+        timer: 1000,
+        showConfirmButton: false,
+      });
+      throw new Error(errorMessage);
+    }
         const data = await response.json();
         if(data.success){
           await Swal.fire({
@@ -762,7 +785,7 @@
         console.log(error.message)
         Swal.fire({
           icon: "error",
-          title:"something went wrong",
+          title: "Please, Login!",
           toast: true,
           position: 'top-end',
           timer: 1000,

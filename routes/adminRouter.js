@@ -1,3 +1,4 @@
+'use strict'
 const express =require("express");
 const upload = require("../middleware/multer");
 const ad_router = express.Router();

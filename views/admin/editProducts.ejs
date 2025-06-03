@@ -395,7 +395,7 @@
                         <% for (let i=0; i < products.image.length; i++) { %>
                           <div class="mt-2 position-relative" id="existingImage<%=i%>">
                             <img id="existingPreview" class="preview-image" style="width: 150px; height: 150px;"
-                              src="/uploads/<%= products.image[i] %>">
+                              src="<%= products.image[i] %>">
                             <button type="button" class="close-button"
                               onclick="deleteImage('<%=products.image[i]%>','<%=i%>')"
                               style="position:relative; top: 5px; margin-right: 1px; right: 40px; top: 60px; background:red; border: none; outline: none; color: white;">
@@ -454,128 +454,68 @@
         </div>
       </div>
           <script>
-                let cropper;
-      let currentInput;
-      let croppedFiles = new Map(); // To store the cropped files
 
-      function previewImage(event) {
-        const input = event.target;
-        const file = input.files[0];
-        currentInput = input; // Save the reference to the current input
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const cropperImage = document.getElementById('cropperImage');
-            cropperImage.src = e.target.result;
-            document.getElementById('cropperModal').style.display = 'block';
-            if (cropper) {
-              cropper.destroy();
+            let cropper;
+            let currentInput;
+            let croppedFiles = new Map(); // To store the cropped files
+
+            function previewImage(event) {
+              const input = event.target;
+              const file = input.files[0];
+              currentInput = input; // Save the reference to the current input
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                  const cropperImage = document.getElementById('cropperImage');
+                  cropperImage.src = e.target.result;
+                  document.getElementById('cropperModal').style.display = 'block';
+                  if (cropper) {
+                    cropper.destroy();
+                  }
+                  cropper = new Cropper(cropperImage, {
+                    // aspectRatio: 3 / 4, // Portrait aspect ratio
+                    // viewMode: 1,
+                    aspectRatio: 1,
+                    viewMode: 1
+                  });
+                };
+                reader.readAsDataURL(file);
+              }
             }
-            cropper = new Cropper(cropperImage, {
-              // aspectRatio: 3 / 4, // Portrait aspect ratio
-              // viewMode: 1,
-              aspectRatio: 1,
-              viewMode: 1
-            });
-          };
-          reader.readAsDataURL(file);
-        }
-      }
 
-      function cropImage() {
-        if (cropper) {
-          cropper.getCroppedCanvas({
-            width: 150, // desired width
-            height: 150, // desired height
-          }).toBlob(function (blob) {
-            const croppedImageSrc = URL.createObjectURL(blob);
-            const imagePreview = currentInput.previousElementSibling;
-            if (imagePreview && imagePreview.tagName === 'IMG') {
-              imagePreview.src = croppedImageSrc;
+            function cropImage() {
+              if (cropper) {
+                cropper.getCroppedCanvas({
+                  width: 150, // desired width
+                  height: 150, // desired height
+                }).toBlob(function (blob) {
+                  const croppedImageSrc = URL.createObjectURL(blob);
+                  const imagePreview = currentInput.previousElementSibling;
+                  if (imagePreview && imagePreview.tagName === 'IMG') {
+                    imagePreview.src = croppedImageSrc;
+                  }
+                  // Replace the file input with the cropped image blob
+                  const dataTransfer = new DataTransfer();
+                  const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
+                  dataTransfer.items.add(file);
+                  currentInput.files = dataTransfer.files;
+                  // Store the cropped file in the Map
+                  croppedFiles.set(currentInput.name, file);
+                  closeModal();
+
+                }, 'image/jpeg',0.95);
+              }
             }
-            // Replace the file input with the cropped image blob
-            const dataTransfer = new DataTransfer();
-            const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
-            dataTransfer.items.add(file);
-            currentInput.files = dataTransfer.files;
-            // Store the cropped file in the Map
-            croppedFiles.set(currentInput.name, file);
-            closeModal();
-          }, 'image/jpeg');
-        }
-      }
 
-      function closeModal() {
-        document.getElementById('cropperModal').style.display = 'none';
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-      }
-
-
-
-            // let cropper;
-            // let currentInput;
-            // let croppedFiles = new Map(); // To store the cropped files
-
-            // function previewImage(event) {
-            //   const input = event.target;
-            //   const file = input.files[0];
-            //   currentInput = input; // Save the reference to the current input
-            //   if (file) {
-            //     const reader = new FileReader();
-            //     reader.onload = function (e) {
-            //       const cropperImage = document.getElementById('cropperImage');
-            //       cropperImage.src = e.target.result;
-            //       document.getElementById('cropperModal').style.display = 'block';
-            //       if (cropper) {
-            //         cropper.destroy();
-            //       }
-            //       cropper = new Cropper(cropperImage, {
-            //         // aspectRatio: 3 / 4, // Portrait aspect ratio
-            //         // viewMode: 1,
-            //         aspectRatio: 1,
-            //         viewMode: 1
-            //       });
-            //     };
-            //     reader.readAsDataURL(file);
-            //   }
-            // }
-
-            // function cropImage() {
-            //   if (cropper) {
-            //     cropper.getCroppedCanvas({
-            //       width: 150, // desired width
-            //       height: 150, // desired height
-            //     }).toBlob(function (blob) {
-            //       const croppedImageSrc = URL.createObjectURL(blob);
-            //       const imagePreview = currentInput.previousElementSibling;
-            //       if (imagePreview && imagePreview.tagName === 'IMG') {
-            //         imagePreview.src = croppedImageSrc;
-            //       }
-            //       // Replace the file input with the cropped image blob
-            //       const dataTransfer = new DataTransfer();
-            //       const file = new File([blob], `croppedImage${Date.now()}.jpg`, { type: "image/jpeg" });
-            //       dataTransfer.items.add(file);
-            //       currentInput.files = dataTransfer.files;
-            //       // Store the cropped file in the Map
-            //       croppedFiles.set(currentInput.name, file);
-            //       closeModal();
-
-            //     }, 'image/jpeg');
-            //   }
-            // }
-
-            // async function closeModal() {
-            //   document.getElementById('cropperModal').style.display = 'none';
-            //   if (cropper) {
-            //     cropper.destroy();
-            //     cropper = null;
+            async function closeModal() {
+              document.getElementById('cropperModal').style.display = 'none';
+              if (cropper) {
+                cropper.destroy();
+                cropper = null;
                
-            //     await saveImage();
-            //   }
-            // }
+                await saveImage();
+              }
+            }
 
             async function saveImage() {
               const productId = window.location.pathname.split('/').pop();
@@ -587,12 +527,13 @@
               });
 
               try {
+                
+                console.log(productId,'this is the producgt id ',formData)
+              
                 const response = await fetch(`/admin/save-edit-image/${productId}`, {
                   method: "POST",
-
                   body: (formData)
                 })
-               
                 if (response.ok) {
                   const result = await response.json();
                   if (result.success) {

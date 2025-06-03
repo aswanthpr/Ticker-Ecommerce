@@ -9,8 +9,6 @@ const mongoose = require('mongoose');
 const { json } = require("express");
 const Razorpay = require('razorpay');
 const dotEnv = require('dotenv'); dotEnv.config();
-
-
 const idGenerate = require("otp-generator");
 
 //order id generating function=========================================
@@ -26,22 +24,19 @@ function generateOrderid() {
         throw new Error(error)
     }
 }
-
 //RAZORPAY INSTANCE
 
 const rpyInstance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-
-
 //GLOBAL VARIABLE
 let userId
 
 //GET USER PROFILE ================================================
 const userProfile = async (req, res) => {
     try {
-        userId = req.session.user;
+        userId = req.session.user ?? req.cookies.user
 
         const userData = await userSchema.findById(userId);
 
@@ -58,7 +53,7 @@ const chngeUserData = async (req, res, next) => {
 
         const { name, phone } = req.body;
 
-        userId = req.session.user;
+        userId = req.session.user ?? req.cookies.user;
 
         const userData = await userSchema.findOne({ _id: userId })
         if (userData) {
@@ -83,9 +78,6 @@ const chngeUserData = async (req, res, next) => {
 
             return res.status(404).json({ success: false, message: "updation failed" })
         };
-
-
-
     } catch (error) {
 
         console.log(error.message);
@@ -96,7 +88,7 @@ const chngeUserData = async (req, res, next) => {
 //GET CHANGE PASS================================================
 const getChangePass = async (req, res, next) => {
     try {
-        userId = req.session.user
+        userId = req.session.user ?? req.cookies.user
 
         res.render("passManage", { userId });
     } catch (error) {
@@ -109,7 +101,7 @@ const getChangePass = async (req, res, next) => {
 const changePass = async (req, res, next) => {
     try {
         const { password, password1, password2 } = req.body;
-        userId = req.session.user;
+        userId = req.session.user ?? req.cookies.user
 
         const userData = await userSchema.findById(userId);
 
@@ -120,7 +112,6 @@ const changePass = async (req, res, next) => {
             return res.status(400).json({ success: false, message: "New password is not matching" })
 
         }
-
         const hashPass1 = await bcrypt.hash(password1, 10);
         const passUpdated = await userSchema.findByIdAndUpdate(userId, { $set: { password: hashPass1 } })
         if (passUpdated) {
@@ -138,7 +129,7 @@ const changePass = async (req, res, next) => {
 // GET ADDRESS PAGE====================================================
 const getAddress = async (req, res, next) => {
     try {
-        userId = req.session.user;
+        userId = req.session.user ?? req.cookies.user;
 
         const userData = await userSchema.findById(userId)
         let addressData = await addressSchema.findOne({ userId: userId });
@@ -158,10 +149,8 @@ const getAddress = async (req, res, next) => {
 //ADD ADDRESS=======================================================
 const getAddAddress = async (req, res, next) => {
     try {
-        userId = req.session.user
+        userId = req.session.user ?? req.cookies.user
         const userData = await userSchema.findById(userId)
-
-
         res.render('addAddress', { userData, userId })
 
     } catch (error) {
@@ -173,10 +162,10 @@ const getAddAddress = async (req, res, next) => {
 const postAddAddress = async (req, res, next) => {
     try {
 
-        userId = req.session.user;
-      
+        userId = req.session.user ?? req.cookies.user
+
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
-        
+
 
         const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) });
         console.log(checkUser, 'thiss is checkuser');
@@ -184,14 +173,12 @@ const postAddAddress = async (req, res, next) => {
 
             return res.json({ success: false, message: "user can only store 4 addresses" })
         }
-
-
         let result;
-      
+
         let saveAddress;
         if (!checkUser) {
 
-          const  address = new addressSchema({
+            const address = new addressSchema({
                 userId: userId,
                 addresses: [{
                     name: name,
@@ -227,21 +214,12 @@ const postAddAddress = async (req, res, next) => {
                     }
                 }
             );
-
-
-
-
-
             if (saveAddress || result) {
                 return res.status(200).json({ success: true, message: 'Address Created successfully' })
             } else {
                 return res.status(400).json({ success: false, message: "created address failed" })
             }
         }
-
-
-
-
     } catch (error) {
         console.log(error.message);
         next(error)
@@ -252,7 +230,7 @@ const postAddAddress = async (req, res, next) => {
 const getEditAddress = async (req, res, next) => {
     try {
         let address
-        userId = req.session.user
+        userId = req.session.user ?? req.cookies.user
         const addressId = req.query.id;
         if (!mongoose.Types.ObjectId.isValid(addressId)) {
             return res.render("/user/address")
@@ -310,7 +288,7 @@ const editAddress = async (req, res, next) => {
 const deleteAddress = async (req, res, next) => {
     try {
         addressId = req.body.id
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user
 
         const delAddress = await addressSchema.updateOne({ userId: userId }, { $pull: { addresses: { _id: addressId } } })
 
@@ -330,7 +308,7 @@ const deleteAddress = async (req, res, next) => {
 const getOrders = async (req, res, next) => {
 
     try {
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user;
         const user = await userSchema.findOne({ _id: userId })
         if (!user) {
             redirect("/logout")
@@ -358,9 +336,9 @@ const getOrders = async (req, res, next) => {
 const orderDetails = async (req, res, next) => {
     try {
 
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user
         const orderId = req.query.orderId;
-        
+
 
         const userData = await userSchema.findOne({ _id: userId });
 
@@ -386,7 +364,7 @@ const orderDetails = async (req, res, next) => {
 //user cancel order
 const cancelOrder = async (req, res, next) => {
     try {
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user
         const { productId, cancellationReason, orderId } = req.body;
 
         const updateOrder = await orderSchema.findOneAndUpdate(
@@ -405,8 +383,6 @@ const cancelOrder = async (req, res, next) => {
 
         );
 
-
-
         if (!updateOrder) {
             return res.json({ success: false, message: 'Order not found or update failed' });
         }
@@ -414,8 +390,6 @@ const cancelOrder = async (req, res, next) => {
         const cancelledProduct = updateOrder.orderedItems.find(item => item.productId.toString() === productId);
 
         const cancelledQuantity = parseInt(cancelledProduct.cartQuantity)
-
-
         if (!cancelledProduct) {
 
             return res.json({ success: false, message: 'Cancelled product not found in order' });
@@ -445,12 +419,6 @@ const cancelOrder = async (req, res, next) => {
             } else {
                 refundAmount = productPrice;
             }
-
-
-
-
-
-
             if (walletData) {
 
                 const newWallet = await walletSchema.updateOne({ userId: new mongoose.Types.ObjectId(userId) },
@@ -463,7 +431,6 @@ const cancelOrder = async (req, res, next) => {
                     const orderData = await orderSchema.updateOne({ orderId: orderId }, { $set: { paymentStatus: "Refunded" } })
 
                 }
-
             } else {
                 const saveWallet = new walletSchema(
                     {
@@ -476,25 +443,17 @@ const cancelOrder = async (req, res, next) => {
                             discription: "Cancelled product Amount Credited",
                         }]
                     },
-
                 )
                 const newWalletSaved = await saveWallet.save()
                 if (newWalletSaved) {
                     const orderData = await orderSchema.updateMany({ orderId: orderId }, { $set: { paymentStatus: "Refunded" } })
 
                 }
-
             }
-
-
         }
-
 
         //product stock updating
         const stockUpdate = await productSchema.updateOne({ _id: productId }, { $inc: { stock: cancelledQuantity } }, { new: true })
-
-
-
         if (stockUpdate.modifiedCount > 0) {
             res.json({ success: true, message: 'Order cancelled' })
         } else {
@@ -526,13 +485,9 @@ const returnOrder = async (req, res, next) => {
                 }
             },
             {
-
                 new: true
             }
         )
-
-
-
         if (orders.modifiedCount > 0) {
             res.json({ success: true, message: "Return Requested" });
         } else {
@@ -600,7 +555,7 @@ const verifyRetryPayment = async (req, res, next) => {
 //GET WALLET 
 const getWallet = async (req, res, next) => {
     try {
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user;
 
         const page = parseInt(req.query.page) || 1;
         const limit = 6;
@@ -628,7 +583,7 @@ const getWallet = async (req, res, next) => {
             { $limit: limit }
         ];
         const walletData = await walletSchema.aggregate(walletAggregate).exec();
-  
+
 
         return res.render('wallet', { walletData, totalPage, currentPage: page });
 
@@ -641,7 +596,7 @@ const getWallet = async (req, res, next) => {
 const addMoney = async (req, res, next) => {
     try {
         const { amount } = req.body;
-        const userId = req.session.user;
+        const userId = req.session.user ?? req.cookies.user;
 
         const walletData = {
             userId: userId,
@@ -684,7 +639,6 @@ const addMoney = async (req, res, next) => {
         next(error)
     }
 }
-
 //RETRY PAYMENT VERIFY
 const verifyAddMoney = async (req, res, next) => {
     try {
@@ -749,8 +703,6 @@ const getInvoice = async (req, res, next) => {
             }
         ]);
 
-
-
         let totalSum = 0;
 
         const CalcAmt = delivered.forEach(item => {
@@ -760,9 +712,6 @@ const getInvoice = async (req, res, next) => {
 
             })
         })
-
-
-
         res.render('invoice', { invoiceId, orderData, delivered, totalSum });
     } catch (error) {
         console.log(error.message);
@@ -772,31 +721,22 @@ const getInvoice = async (req, res, next) => {
 module.exports = {
     userProfile,
     chngeUserData,
-
     getAddress,
     deleteAddress,
-
     getChangePass,
     changePass,
-
     getAddAddress,
     postAddAddress,
     getEditAddress,
     editAddress,
-
     getOrders,
     orderDetails,
     cancelOrder,
     returnOrder,
-
-
     verifyRetryPayment,
     retryPayment,
-
     getWallet,
     addMoney,
     verifyAddMoney,
-
     getInvoice,
-
 }

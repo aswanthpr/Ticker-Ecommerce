@@ -3,7 +3,7 @@ const userSchema =require("../models/userModel")
 const ifUser = async (req, res, next) => {
     try {
 
-      if(req.session?.user){
+      if(req.cookies?.user){
    
         res.redirect("/")
   
@@ -22,11 +22,11 @@ const ifUser = async (req, res, next) => {
 
 const userCheck = async(req,res,next)=>{
     try {
-        if(req.session.user==null || req.session?.user =="undifined"){
+        if(req.cookies.user==null || req.cookies?.user =="undifined"){
 
             res.redirect("/")
         }else{
-        const user = await userSchema.findById(req.session.user);
+        const user = await userSchema.findById(req.cookies.user);
     
         if(user?.isBlocked ===true){
 

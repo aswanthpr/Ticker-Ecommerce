@@ -54,31 +54,31 @@
 
           <h2 class="text-center fw-semibold mb-3">Login Now</h2>
 
-          <% if (typeof message !== "undefined") { %>
-            <div class="text-danger text-center mb-2" style="font-size: 15px;"><%= message %></div>
-          <% } %>
-
+          
           <form action="" method="post" id="loginForm">
-
+            
             <!-- Email -->
             <div class="mb-3">
               <label class="form-label fw-semibold">Email</label>
               <input type="email" name="email" id="email" class="form-control bg-light" placeholder="Enter your email">
               <small class="text-danger" id="emailMessage"></small>
+              <% if (typeof message !== "undefined") { %>
+                <div class="text-danger text-start mb-2" style="font-size: 15px;"><%= message %></div>
+              <% } %>
             </div>
 
             <!-- Password -->
             <div class="mb-3">
               <label class="form-label fw-semibold">Password</label>
 
-              <% if (typeof message2 !== "undefined") { %>
-                <div class="text-danger mb-1" style="font-size: 15px;"><%= message2 %></div>
-              <% } %>
-
+              
               <div class="password-wrapper">
                 <input type="password" name="password" id="pass" class="form-control bg-light" placeholder="Enter password">
                 <span id="togglePassword" class="fas fa-eye toggle-password"></span>
               </div>
+              <% if (typeof message2 !== "undefined") { %>
+                <div class="text-danger mb-1" style="font-size: 15px;"><%= message2 %></div>
+              <% } %>
               <small class="text-danger" id="passMessage"></small>
             </div>
 

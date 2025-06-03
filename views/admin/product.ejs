@@ -168,8 +168,8 @@
                     <% for( let i=0; i < productData?.length; i++ ) { %>
 
                       <tr>
-
-                        <td><img src="/uploads/<%=productData[i]?.image[0]%>" width="50px" alt=""></td>
+<%= console.log(productData[i]?.image[0]) %>
+                        <td><img src="<%=productData[i]?.image[0]%>" width="50px" alt=""></td>
 
                         <td>
                           <%=productData[i]?.name%>

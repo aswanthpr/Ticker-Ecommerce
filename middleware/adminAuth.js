@@ -1,7 +1,8 @@
 //IF ADMIN LOGIN=====================================
 const ifAdmin= async (req, res, next) => {
     try {
-        if (req.session.admin) {
+        const adminCookie = req.cookies.admin;
+        if (adminCookie) {
            
         res.redirect("/admin/dashboard")
         } else {
@@ -16,7 +17,9 @@ const ifAdmin= async (req, res, next) => {
 //IF ADMIN LOGOUT==================================
 const ifNoAdmin = (req, res, next) => {
     try {
-        if (req.session.admin==null || req.session.admin =="undifined") {
+        const adminCookie = req.cookies.admin;
+
+        if (adminCookie==null || adminCookie =="undifined") {
            
             res.redirect("/admin/login");
             

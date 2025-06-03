@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 
 const getHome = async (req, res,next) => {
   try {
-    const user = req.session.user;
+    const user =req.session.user??req.cookies.user
 
     const productOffers = await productOfferSchema.find().populate({ path: "productId", model: "product", populate: { path: "category", model: "category" } });
 
@@ -125,7 +125,7 @@ const getHome = async (req, res,next) => {
 //VIEW PRODUCT DETAILES ==========================================================
 const getViewProduct = async (req, res,next) => {
   try {
-    const userId = req.session.user;
+    const userId =req.session.user??req.cookies.user;
     const prodId = req.query.id;
     
     const productData = await productSchema.findOne({ _id: new mongoose.Types.ObjectId(prodId) }).populate({path:'category',model:'category'})
@@ -158,7 +158,7 @@ console.log(relatedData,'thsi is relaed data')
 //ADD TO CART================================================
 const addToCart = async (req, res,next) => {
   try {
-    const userId = req.session.user;
+    const userId = req.session.user??req.cookies.user;
     const { prodId } = req.body;
     const userData = await userSchema.findById(userId);
 
@@ -220,20 +220,20 @@ const addToCart = async (req, res,next) => {
 const getAllProduct = async (req, res,next) => {
   try {
 
-    const userId = req.session.user;
+    const userId = req.session?.user??req.cookies.user;
 
     //pagination parameters
-    const page = req.query.page || 1;
+    const page = req.query?.page || 1;
     const limit = 8;
     const skip = (page - 1) * limit;
 
     //Query parameters
 
-    const searchQuery = req.query.search || "";
+    const searchQuery = req.query?.search || "";
     const categoryFilter = req.query?.category ? req.query?.category.split(',') : [];
-    const genderFilter = req.query.gender ? req.query.gender.split(',') : [];
-    const minPrice = parseInt(req.query.minPrice) || 0;
-    const maxPrice = parseInt(req.query.maxPrice) || Infinity;
+    const genderFilter = req.query?.gender ? req.query?.gender.split(',') : [];
+    const minPrice = parseInt(req.query?.minPrice) || 0;
+    const maxPrice = parseInt(req.query?.maxPrice) || Infinity;
     const sortBy = req.query.sortBy || "aA-zZ";
 
     //constructing thee filter object 
@@ -266,10 +266,10 @@ const getAllProduct = async (req, res,next) => {
 
     }
     else if (sortBy === "High to low") {
-      sortOption = { mrp: -1 };
+      sortOption = { offerPrice: -1 };
 
     } else if (sortBy === "Low to high") {
-      sortOption = { mrp: 1 }
+      sortOption = { offerPrice: 1 }
     }
     else {
       sortOption = { updatedAt: 1 };
