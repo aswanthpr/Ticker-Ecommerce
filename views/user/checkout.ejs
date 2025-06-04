@@ -230,8 +230,8 @@
                           <% for( let i=0; i < couponData.length; i++ ) { %>
 
                             <% if (couponData[i]) { %>
-                              <option value="<%=couponData[i]._id%>">
-                                <%=couponData[i].couponCode%> - ₹ <%=couponData[i]?.maxRedeemable%>
+                              <option >
+                                <%=couponData[i].couponCode%>
                               </option>
                               <% } %>
                                 <% } %>
@@ -430,7 +430,7 @@
 
         const selectElement = document.getElementById('inputSelectOption');
         selectElement.style.display = "none"
-        couponBtn.style.display = 'none';
+        document.getElementById('applyCouponButton').style.display = 'none';
         document.getElementById('couponStatus').innerHTML = `<span class="text-success ml-5" style="font-size:18px;">Coupon applied ✓</span>
                 <span class="fw-bold text-danger " id="removeCoupon" style="cursor:pointer; color:red; font-size: 26px;margin-right:4px;margin-top:0px">&times;</span></div> `;
 
@@ -467,7 +467,7 @@
           if (data.success) {
             document.getElementById('couponStatus').innerText = '';
 
-            couponBtn.style.display = 'block';
+            document.getElementById('applyCouponButton').style.display = 'block';
 
             const selectElement = document.getElementById('inputSelectOption');
             const removeButton = document.getElementById('removeButton');
@@ -604,14 +604,14 @@
 
             })
           });
-console.log(response,'this si the response')
+
           if (!response.ok) {
             console.log('not ok')
             throw new Error("Network response was not ok")
           }
           const result = await response.json();
 
-console.log(result,'thsi is the result ')
+
           if (result.success) {
             await Swal.fire({
               icon: "success",
@@ -647,7 +647,7 @@ console.log(result,'thsi is the result ')
 
           const { message, key_id, orderId, amount, razorpayOrderId } = response?.data
 
-console.log(message, key_id, orderId, amount, razorpayOrderId,response,'123123123123')
+
           if (response?.data?.success) {
             console.log(key_id, 'if response success ', amount, message)
             const options = {

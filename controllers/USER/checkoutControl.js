@@ -255,14 +255,15 @@ const saveCheckoutEditedAddress = async (req, res, next) => {
 
 
 //FOR APPLY COUPON
-
+ 
 const applyCoupon = async (req, res, next) => {
-    try {
+    try { 
         const { couponCode, totalPrice } = req.body;
         const userId = req.session.user??req.cookies.user
         const uId = userId.toString()
 
         const couponData = await couponSchema.findOne({ couponCode: couponCode });
+        console.log(couponData, couponCode, totalPrice)
         if (!couponData) {
             return res.json({ success: false, message: 'coupon is not found' });
 
@@ -492,7 +493,7 @@ console.log('111111111111111111232323')
         }
         //razorpay
         if (paymentMethod === "Razorpay") {
-console.log(paymentMethod,'paymentMethod')
+
             const options = {
                 amount: totalAmount * 100,
                 currency: "INR",
@@ -501,8 +502,7 @@ console.log(paymentMethod,'paymentMethod')
             };
             
             const razorpayOrder =await RzyInstance.orders.create(options)
-            // .then((data)=>console.log(data,'data'))
-            // .catch((error)=>console.log(error,'error'))
+
            
              console.log(razorpayOrder,'razorpay',process.env.RAZORPAY_KEY_ID,orderId,razorpayOrder?.id);
 

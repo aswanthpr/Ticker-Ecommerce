@@ -165,11 +165,11 @@ const postAddAddress = async (req, res, next) => {
         userId = req.session.user ?? req.cookies.user
 
         const { name, phone, house, locality, landmark, city, state, pincode, addressType } = req.body
-
+ 
 
         const checkUser = await addressSchema.findOne({ userId: new mongoose.Types.ObjectId(userId) });
         console.log(checkUser, 'thiss is checkuser');
-        if (checkUser?.addresses?.length >= 4) {
+        if (checkUser!=null && checkUser?.addresses?.length >= 4) {
 
             return res.json({ success: false, message: "user can only store 4 addresses" })
         }

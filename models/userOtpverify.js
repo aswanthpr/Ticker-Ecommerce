@@ -18,6 +18,6 @@ const regOtp = new mongoose.Schema({
 
 }, { timestamps: true });
 
-regOtp.index({ createdAt: 1 }, { expireAfterSeconds: 100 });
+regOtp.index({ createdAt: 1 }, { expireAfterSeconds: 120 });
 
 module.exports = mongoose.model("regOtp", regOtp);
