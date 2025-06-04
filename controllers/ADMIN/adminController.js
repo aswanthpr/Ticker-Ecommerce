@@ -30,37 +30,30 @@ const postAdminLogin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        const adminData = await userSchema.findOne({ email: email })
+        const adminData = await userSchema.findOne({ email })
 
+        if (!adminData || adminData?.isAdmin !== true) {
+           return res.render("adminLogin", { message: "Email is incorrect " })
 
-        if (adminData && adminData.isAdmin === true) {
-
-
-            const passMatch = await bcrypt.compare(password, adminData.password)
-
-
-            if (!passMatch) {
-
-                res.render("adminLogin", { message1: "password is incorrect" })
-
-
-            } else {
-
-                // const token = generateJwtToken(adminData._id)
-                // res.cookie("token", token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
-                req.session.admin = adminData._id
-                res.cookie("admin", adminData?._id.toString(), {
-                    httpOnly: true,
-                    maxAge: 24 * 60 * 60 * 1000, // 1 day
-                });
-
-                res.redirect("/admin/dashboard")
-            }
-        } else {
-            res.render("adminLogin", { message: "Email is incorrect " })
-
- 
         }
+
+        const passMatch = await bcrypt.compare(password, adminData.password)
+
+
+        if (!passMatch) {
+            return res.render("adminLogin", {
+                message1: "Incorrect password",
+                email
+            });
+        }
+       
+        req.session.admin = adminData._id
+        res.cookie("admin", adminData?._id.toString(), {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+        });
+
+        return res.redirect("/admin/dashboard")
 
     } catch (error) {
         console.log(error.message);
@@ -369,8 +362,8 @@ const unblockUser = async (req, res, next) => {
 const adminLogout = async (req, res, next) => {
     try {
         req.session.destroy()
- res.clearCookie('admin');
-            res.redirect("/admin/login");
+        res.clearCookie('admin');
+        res.redirect("/admin/login");
 
 
     } catch (error) {
