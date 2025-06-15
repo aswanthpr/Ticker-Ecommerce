@@ -229,17 +229,17 @@ const approveReturn = async (req, res,next) => {
 //DECLINE RETURN REQUEST 
 const declineReturn = async (req, res,next) => {
     try {
-        const { orderId, productId, reason } = req.body;
+        const { orderId, productId } = req.body;
      
         const returnDecline = await orderSchema.findOneAndUpdate(
             {
                 orderId: orderId,
-                "orderedItems.productId": new mongoose.Types.ObjectId(productId)
+                "orderedItems.productId": new mongoose.Types.ObjectId(typeof productId==="string"?productId:String(productId))
             },
             { $set: { 'orderedItems.$.returnApprove': 3 } },
             { new: true }
         );
-       
+       console.log(returnDecline,'return decl')
         if (returnDecline) {
             return res.json({ success: true, message: 'Return declined' })
         } else {

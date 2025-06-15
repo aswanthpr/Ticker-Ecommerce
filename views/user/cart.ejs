@@ -7,11 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="M_Adnan">
+  <meta name="author" content="ticker">
   <title>Ticker</title>
 
   <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-  <link rel="stylesheet" type="text/css" href="/user/rs-plugin/css/settings.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="/user/rs-plugin/settings.css" media="screen" />
 
   <!-- Bootstrap Core CSS -->
   <link href="/user/css/bootstrap.min.css" rel="stylesheet">
@@ -86,7 +86,7 @@
         <div class="container-full d-flex justify-content-between ">
 
           <!-- Logo -->
-          <div class="logo"> <a href="/"><img class="img-responsive w-25" src="/image/download.png" alt=""></a> </div>
+          <div class="logo"> <a href="/"><img class="img-responsive w-25 h-10" src="/image/logo.png" alt=""></a> </div>
 
 
           <div class=" mr-5 pr-5">
@@ -110,23 +110,15 @@
                   <ul>
                     <li class="active"><a href="/">Home</a></li>
                     <li><a href="/shop">Shop</a></li>
-                    <!-- <li><a href="/shop/men">Men</a></li>
-                    <li><a href="/shop/women">Women</a></li> -->
-
                   </ul>
                 </nav>
-
               </div>
-
             </div>
           </nav>
-
-
         </div>
       </div>
       <div class="clearfix"></div>
     </header>
-
 
     <!-- Content -->
     <div id="content">
@@ -152,7 +144,6 @@
               <br>
               <a href="/shop" class="btn btn-primary border">Continue Shop</a>
             </div>
-
           </div>
           <%}else{%>
             <!-- PAGES INNER -->
@@ -172,12 +163,10 @@
                       </tr>
                     </thead>
                     <tbody>
-
-
-
-
                       <% for(let i=0 ; i<cartProduct.length ; i++){ %>
-                        <tr>
+
+                        <tr id="cart-row-<%= cartProduct[i].products.productId %>">
+
                           <th class="text-left"> <!-- Media Image -->
                             <a class="item-img"> <img class="media-object w-75"
                                 src="<%= cartProduct[i].productDetails[0].image[0] %>" alt=""> </a>
@@ -190,7 +179,7 @@
                               <p></p>
                             </div>
                           </th>
-                          <td>
+                          <td id="product-price">
                             <% if (cartProduct[i].productDetails[0].offerPrice) { %>
                               <span class="price"><small>₹</small>
                                 <%=cartProduct[i].productDetails[0].offerPrice %>
@@ -200,7 +189,6 @@
                                   <%=cartProduct[i].productDetails[0].mrp %>
                                 </span>
                                 <%} %>
-
                           </td>
                           <td>
                             <div class="quantity">
@@ -211,30 +199,19 @@
                                 value="<%=cartProduct[i].products.quantity%>">
                               <div class="quantity-nav">
                                 <div class="quantity-button quantity-up" id="up-button"
-                                  onclick="increment('<%=cartProduct[i].products._id%>','<%=cartProduct[i].productDetails[0].offerPrice? cartProduct[i].productDetails[0].offerPrice : cartProduct[i].productDetails[0].mrp%>','<%=cartProduct[i].productDetails[0].stock%>','<%=i%>','<%=total%>')">
+                                  onclick="increment('<%=cartProduct[i].products._id%>','<%=cartProduct[i].productDetails[0].offerPrice? cartProduct[i].productDetails[0].offerPrice : cartProduct[i].productDetails[0].mrp%>','<%=cartProduct[i].productDetails[0].stock%>','<%=i%>','<%= cartProduct[i].products.productId %>')">
                                   <i id="upp" class="fa fa-caret-up" ::before></i>
-
-
                                 </div>
                                 <% if (cartProduct[i].productDetails[0].stock>0) { %>
                                   <div class="quantity-button quantity-down" id="down-button"
-                                    onclick="decrement('<%=cartProduct[i].products._id%>','<%=cartProduct[i].productDetails[0].offerPrice? cartProduct[i].productDetails[0].offerPrice : cartProduct[i].productDetails[0].mrp%>','<%=cartProduct[i].productDetails[0].stock%>','<%=i%>','<%=total%>')">
+                                    onclick="decrement('<%=cartProduct[i].products._id%>','<%=cartProduct[i].productDetails[0].offerPrice? cartProduct[i].productDetails[0].offerPrice : cartProduct[i].productDetails[0].mrp%>','<%=cartProduct[i].productDetails[0].stock%>','<%=i%>','<%= cartProduct[i].products.productId %>')">
                                     <i class="fa fa-caret-down" ::before></i>
-
-
                                   </div>
                                   <% } else if (cartProduct[i].productDetails[0].stock===0){ %>
                                     <span class="d-block mt-2 text-danger">out of stock &#128542;</span>
-
                                     <% } %>
-
-
-
                               </div>
-
-
                             </div>
-
                             <%if(cartProduct[i].productDetails[0].stock<=5){%>
                               <strong class="d-block mt-2   text-danger fw-bold">stock:
                                 <%=cartProduct[i].productDetails[0].stock%>
@@ -253,16 +230,11 @@
                           </td>
                         </tr>
                         <% } %>
-
-
-
                     </tbody>
-
                   </table>
                 </div>
               </div>
             </section>
-
 
             <!-- PAGES INNER -->
             <section class="padding-top-10 padding-bottom-100 light-gray-bg shopping-cart small-cart d-flex">
@@ -274,11 +246,6 @@
 
                     <!-- DISCOUNT CODE -->
                     <div class="col-sm-7">
-                      <!-- <h6>Discound Code</h6>
-              <form>
-                <input type="text" value="" placeholder="ENTER YOUR CODE IF YOU HAVE ONE">
-                <button type="submit" class="btn btn-small btn-dark">APPLY CODE</button>
-              </form> -->
                       <div class="coupn-btn"> <a href="/shop" class="btn ">continue shopping</a> </div>
                     </div>
                     <!-- <a href="#." class="btn ">Clearcart</a>  -->
@@ -290,31 +257,31 @@
 
                           <% for(let i=0 ; i<cartProduct.length ; i++){ %>
 
-                            <p>
-                              <%=cartProduct[i].productDetails[0].name %> <span class="text-primary bold"
-                                  id="item-totals-down<%=i %>">₹
+                            <p id="item-summary-<%= cartProduct[i].products.productId %>">
+                              <%=cartProduct[i].productDetails[0].name %>
+                                <span id="item-total-<%= cartProduct[i].products.productId %>"
+                                  class="text-primary bold">₹
                                   <%= (cartProduct[i].productDetails[0].offerPrice?
                                     cartProduct[i].productDetails[0].offerPrice : cartProduct[i].productDetails[0].mrp)
                                     * cartProduct[i].products.quantity %>
                                 </span>
                             </p>
-                            <!-- <p>Shirts Skinny <span>$199 </span></p> -->
+
                             <% total=cartProduct[i].totalCost %>
                               <%}%>
+                                <div id="delivery-msg">
+                                  <p id="delivery-text"
+                                    class="<%= totalCost < 2500 ? 'text-danger' : 'text-success' %> text-center font-weight-light">
+                                    <%= totalCost < 2500 ? 'Free delivery available above RS:2500'
+                                      : 'Free delivery available' %>
+                                  </p>
+                                </div>
+                                <!-- SUB TOTAL -->
+                                <p id="totalCost" class="all-total">TOTAL COST: <span><small>₹</small>
 
-                                <% if (totalCost<2500) { %>
-                                  <p class="text-danger text-center font-weight-light"> Free delivary available above
-                                    RS:2500</p>
+                                    <%=total %>
 
-                                  <% }else{%>
-                                    <p class="text-success text-center font-weight-light"> Free delivary available </p>
-                                    <% }%>
-                                      <!-- SUB TOTAL -->
-                                      <p id="totalCost" class="all-total">TOTAL COST: <span><small>₹</small>
-
-                                          <%=total %>
-
-                                        </span></p>
+                                  </span></p>
                         </div>
                         <a id="proceedBtn" class="btn btn-primary margin-top-20 text-white px-3 w-100 w-md-auto">
                           Proceed to checkout
@@ -326,10 +293,7 @@
                 </div>
               </div>
             </section>
-
             <%} %>
-
-
     </div>
 
     <!-- FOOTER -->
@@ -338,7 +302,7 @@
         <div class="row">
           <!-- ABOUT Location -->
           <div class="col-md-4">
-            <div class="about-footer"> <img class="margin-bottom-30 w-25" src="/image/images.png" alt="">
+            <div class="about-footer"> <img class="margin-bottom-30 w-25 h-25" src="/image/logo.png" alt="">
               <p><i class="icon-pointer"></i> Street No. 12, Newyork 12, <br>
                 MD - 123, USA.</p>
               <p><i class="icon-call-end"></i> 1.800.123.456789 <br>
@@ -387,9 +351,9 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <p>© 2018 BoShop All right reserved. <a href="https://webicode.com/">webicode</a></p>
+              <p>© TickerShops All right reserved. <a href="https://webicode.com/">webicode</a></p>
             </div>
-            <div class="col-md-6 text-right"> <img src="images/card-icon.png" alt=""> </div>
+            <div class="col-md-6 text-right"> <img src="" alt=""> </div>
           </div>
         </div>
       </div>
@@ -403,6 +367,7 @@
   <script src="/user/js/jquery.magnific-popup.min.js"></script>
   <script src="/user/js/owl.carousel.min.js"></script>
   <script src="/user/js/main.js"></script>
+  <script src="/user/js/toast.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.js"></script>
@@ -430,11 +395,34 @@
 
     // Call the fetchFilteredProducts function whenever filter btn clicks 
     document.getElementById('searchButton').addEventListener('click', fetchFilteredProducts)
+    function recalculateCartTotal() {
+      let total = 0;
 
+      // All remaining product total spans in cart table
+      document.querySelectorAll(".item-total span").forEach(el => {
+        const priceText = el.textContent.replace(/[₹\s]/g, '');
+        const amount = parseFloat(priceText);
+        if (!isNaN(amount)) total += amount;
+      });
 
+      // Update total cost
+      const totalCostEl = document.querySelector("#totalCost span");
+      if (totalCostEl) {
+        totalCostEl.innerHTML = `<small>₹</small> ${total.toFixed(2)}`;
+      }
 
-
-
+      // Update delivery message
+      const deliveryMsg = document.getElementById("delivery-text");
+      if (deliveryMsg) {
+        if (total < 2500) {
+          deliveryMsg.textContent = "Free delivery available above RS:2500";
+          deliveryMsg.className = "text-danger text-center font-weight-light";
+        } else {
+          deliveryMsg.textContent = "Free delivery available";
+          deliveryMsg.className = "text-success text-center font-weight-light";
+        }
+      }
+    }
 
 
     //product remove form cart 
@@ -454,206 +442,179 @@
         if (confirmation.isConfirmed) {
           const response = await axios.delete('/cart/remove', { data: { productId } })
           if (response.data.success) {
-            await Swal.fire({
-              toast: true,
-              position: 'top-end',
+            const row = document.getElementById(`cart-row-${productId}`);
+            if (row) {
+              row.remove();
+            }
+
+            const summary = document.getElementById(`item-summary-${productId}`);
+            if (summary) summary.remove();
+
+            // Recalculate the total
+            recalculateCartTotal();
+
+            await showToast({
               icon: 'success',
-              text: response.data.message,
-              showConfirmButton: false,
-              timer: 1000,
-              timerProgressBar: true,
-            }).then(() => {
-              window.location.reload()
+              title: response.data.message,
             })
 
+
           } else {
-            await Swal.fire({
-              toast: true,
-              position: 'top-end',
+            await showToast({
               icon: 'error',
-              text: response.data.message,
-              showConfirmButton: false,
-              timer: 1000,
-              timerProgressBar: true,
+              title: response.data.message,
             });
           }
         }
 
       } catch (error) {
-        console.log(error.message);
+        console.log("Remove Error:", error.message);
       }
     }
 
 
+    function recalculateCartTotal() {
+      let total = 0;
 
+      // All remaining product total spans in cart table
+      document.querySelectorAll(".item-total span").forEach(el => {
+        const priceText = el.textContent.replace(/[₹\s]/g, '');
+        const amount = parseFloat(priceText);
+        if (!isNaN(amount)) total += amount;
+      });
 
-    //product quantity increase
-    async function increment(cartItemId, mrp, stock, index, grandTotal) {
+      // Update total cost
+      const totalCostEl = document.querySelector("#totalCost span");
+      if (totalCostEl) {
+        totalCostEl.innerHTML = `<small>₹</small> ${total.toFixed(2)}`;
+      }
+
+      // Update delivery message
+      const deliveryMsg = document.getElementById("delivery-text");
+      if (deliveryMsg) {
+        if (total < 2500) {
+          deliveryMsg.textContent = "Free delivery available above RS:2500";
+          deliveryMsg.className = "text-danger text-center font-weight-light";
+        } else {
+          deliveryMsg.textContent = "Free delivery available";
+          deliveryMsg.className = "text-success text-center font-weight-light";
+        }
+      }
+    }
+    let isIncrementing = false;
+    let isDecrementing = false;
+
+    async function increment(cartItemId, mrp, stock, index, productId) {
+      // Validate productId is passed from onclick
+      if (isIncrementing) return; // prevent multiple clicks
+      isIncrementing = true;
       try {
-
-        let totalElement = document.getElementById(`total${index}`);
-        let quantityInput = document.getElementById(`quantity${index}`)
+        let quantityInput = document.getElementById(`quantity${index}`);
         let quantity = parseInt(quantityInput.value);
 
         if (quantity >= stock) {
-          await Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: "info",
-            title: ".....Oops",
-            text: "Maximum quantity reached",
-            timer: 1500,
-            showConfirmButton: false,
-
-          }).then(() => {
-            window.location.reload()
-          })
-
+          await Swal.fire({ icon: "info", title: "Oops", text: "Maximum quantity reached", timer: 1500, toast: true, showConfirmButton: false });
+          return;
         }
 
-
-
-
-        const response = await axios.post("/cart/increment", { cartItemId })
-
+        const response = await axios.patch("/cart/increment", { cartItemId });
 
         if (response.data.success) {
+          const totalAmount = mrp * (quantity + 1);
+          document.getElementById(`quantity${index}`).value = quantity + 1;
 
+          // Update individual row total
+          document.getElementById(`total${index}`).innerHTML = `<span class='price'><small>₹</small>${totalAmount}</span>`;
 
-          let totalAmount = mrp * (quantity + 1);
-          let itemTotal = document.getElementById(`total${index}`);
-          let itemTotalDown = document.getElementById('item-totals-down' + index);
-          let totalCost = document.getElementById('totalCost');
+          // Update grand total item amount
+          const totalSpan = document.getElementById(`item-total-${productId}`);
+          if (totalSpan) totalSpan.innerHTML = `₹${totalAmount}`;
 
-
-
-
-          itemTotal.innerHTML = `<span class='price' ><small>₹</small>${totalAmount}</span>`;
-          itemTotalDown.innerHTML = `<span class='text-primary' ><small>₹</small>${totalAmount}</span>`;
-
-          window.location.reload();
-        }
-        if (!response) {
-          await Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: "Failed",
-            timer: 1500,
-            showConfirmButton: false,
-
-            text: response.data.message || "unable to increase quantity"
-          })
-
-        }
-
-        if (response.data.success == false) {
-          await Swal.fire({
-            icon: "error",
-            toast: true,
-            position: 'top-end',
-            title: 'Failed',
-            showConfirmButton: false,
-            timer: 1500,
-            text: response.data.message || "unable to increase quantity"
-          })
-
-
+          // Recalculate totalCost and delivery message
+          recalculateCartTotal();
         }
 
       } catch (error) {
-
-        console.log(error.message)
-        await Swal.fire({
-          icon: "error",
-          title: 'Error',
-          text: "Something Went Wrong",
-          toast: true,
-          position: 'top-end',
-          timer: 1500,
-          showConfirmButton: false,
-        })
+        console.log(error.message);
+        Swal.fire({ icon: "error", title: "Error", text: "Something went wrong", toast: true, timer: 1500 });
+      } finally {
+        isIncrementing = false;
       }
     }
 
-    async function decrement(cartItemId, mrp, stock, index, grandTotal) {
-
-
+    async function decrement(cartItemId, mrp, stock, index, productId) {
       try {
-        let totalElement = document.getElementById(`total${index}`);
-        let quantityInput = document.getElementById(`quantity${index}`)
+        if (isDecrementing) return; // prevent multiple clicks
+        isDecrementing = true;
+        const quantityInput = document.getElementById(`quantity${index}`);
         let quantity = parseInt(quantityInput.value);
-
 
         if (quantity <= 1) {
           await Swal.fire({
             icon: 'info',
-            title: '...Oops',
+            title: 'Oops...',
             text: 'Minimum quantity reached',
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
             timer: 1500
-
-          })
-
-
-
+          });
+          return; // Stop execution
         }
 
-        const response = await axios.post("/cart/decrement", { cartItemId })
-
+        const response = await axios.patch("/cart/decrement", { cartItemId });
 
         if (response.data.success) {
+          const newQuantity = quantity - 1;
+          const totalAmount = mrp * newQuantity;
 
+          // Update quantity input field
+          quantityInput.value = newQuantity;
 
-          let totalAmount = mrp * (quantity - 1);
-          let itemTotal = document.getElementById('total' + index);
-          let itemTotalDown = document.getElementById('item-totals-down' + index);
-          let totalCost = document.getElementById('totalCost');
+          // Update per-item total in cart table
+          const itemTotal = document.getElementById(`total${index}`);
+          if (itemTotal)
+            itemTotal.innerHTML = `<span class='price'><small>₹</small>${totalAmount}</span>`;
 
-          itemTotalDown.innerHTML = `<span class='text-primary' ><small>₹</small>${totalAmount}</span>`;
-          itemTotal.innerHTML = `<span class='price' ><small>₹</small>${totalAmount}</span>`;
+          // Update grand total section per-item total
+          const itemTotalDown = document.getElementById(`item-total-${productId}`);
+          if (itemTotalDown)
+            itemTotalDown.innerHTML = `₹${totalAmount}`;
 
-          window.location.reload();
-        }
-        if (!response.data.success) {
+          // Recalculate grand total
+          recalculateCartTotal(); // Make sure this utility is defined
+
+        } else {
           await Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Failed to decrease the product',
+            text: response.data.message || 'Failed to decrease the product',
             toast: true,
             position: 'top-end',
-
             showConfirmButton: false,
             timer: 1500
-          })
-
+          });
         }
 
-
-
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
         Swal.fire({
           icon: 'error',
-
           text: "Something went wrong",
           toast: true,
           position: 'top-end',
-
           showConfirmButton: false,
           timer: 1500
         });
-
+      } finally {
+        isDecrementing = false; // unlock
       }
-
     }
 
     document.getElementById('proceedBtn')?.addEventListener('click', async () => {
 
       try {
-        const response = await axios.post("/cart/check");
+        const response = await axios.get("/cart/check");
 
         if (response.data.success) {
           await Swal.fire({

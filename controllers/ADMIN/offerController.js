@@ -72,15 +72,18 @@ const editCategoryOffer = async (req, res, next) => {
     try {
         const { offerId, offer, categoryName, validity } = req.body;
 
-        const categoryData = await categorySchema.findOne({ categoryName: categoryName })
-        const offerExist = await categOfferSchema.findOne({categoryId:new mongoose.Types.ObjectId(categoryData._id)});
-        if(offerExist){
-           
-           return res.json({success:false,message:"This category have another offer"});
+        const categoryData = await categorySchema.findOne({ categoryName })
+        if (!categoryData) {
+            return res.status(404).json({ success: false, message: "Category not found" });
+        }
+        const offerExist = await categOfferSchema.findOne({ categoryId: new mongoose.Types.ObjectId(categoryData._id) });
+
+        if (offerExist && offerId !== offerExist._id.toString()) {
+            return res.json({ success: false, message: "This category has another offer" });
         }
         const offerData = await categOfferSchema.findByIdAndUpdate(offerId, { $set: { categoryId: categoryData._id, offer: offer, validity: validity } })
         if (!offerData) {
-            return res.json({ success: false, message: ' Catgory offer edit Failed' })
+            return res.status(404).json({ success: false, message: ' Catgory offer edit Failed' })
         }
         return res.json({ success: true, message: ' Catgory offer edit successfull' })
     } catch (error) {
@@ -89,7 +92,7 @@ const editCategoryOffer = async (req, res, next) => {
     }
 }
 //DELTET OFFER 
-const deleteCategoryOffer = async (req, res,next) => {
+const deleteCategoryOffer = async (req, res, next) => {
     try {
         const { offerId } = req.query;
 
@@ -119,16 +122,13 @@ const deleteCategoryOffer = async (req, res,next) => {
             }
         }
 
-
-
-
         return res.json({ success: true, message: 'offer deleted successfully' })
 
 
 
     } catch (error) {
         console.log(error.message);
-       next(error)
+        next(error)
     }
 }
 
@@ -136,7 +136,7 @@ const deleteCategoryOffer = async (req, res,next) => {
 
 
 //GET PRODUCT OFFER PAGE  
-const getProductOffer = async (req, res,next) => {
+const getProductOffer = async (req, res, next) => {
     try {
 
         //Pagination
@@ -153,13 +153,13 @@ const getProductOffer = async (req, res,next) => {
         return res.render('productOffer', { offerData, currentPage: page, totalPages, productData })
     } catch (error) {
         console.log(error.message);
-       next(error)
+        next(error)
 
     }
 }
 
 //ADD PRODUCT OFFER
-const addProductOffer = async (req, res,next) => {
+const addProductOffer = async (req, res, next) => {
     try {
 
         const { product, offer, validity } = req.body;
@@ -192,32 +192,39 @@ const addProductOffer = async (req, res,next) => {
     }
 }
 //EDIT PRODUCT OFFER
-const editProductOffer = async (req, res,next) => {
+const editProductOffer = async (req, res, next) => {
     try {
         const { offerId, offer, validity, productName } = req.body;
+        if (!offer || !validity || !productName) {
+    return res.json({ success: false, message: 'All fileds required' });
+}
+
 
         const productData = await productSchema.findOne({ name: productName })
-        const productExist = await prodOfferSchema.findOne({productId:productData._id})
-        console.log(productExist,'ithanu existing product')
-        if(productExist){
-            return res.json({success:false,message:'another offer exist with the same product'})
+        if (!productData) {
+            return res.json({ success: false, message: 'product not found' })
         }
-        
+        const offerExist = await prodOfferSchema.findOne({ productId: productData._id })
+       
+        if (offerExist&& offerExist?._id.toString()!==offerId) {
+            return res.json({ success: false, message:'Another offer exists for this product' })
+        }
 
-        const offerData = await prodOfferSchema.findByIdAndUpdate(offerId, { $set: { productId: productData._id, offer: offer, validity: validity } })
+
+        const offerData = await prodOfferSchema.findByIdAndUpdate(offerId, { $set: { productId: productData._id, offer, validity } })
 
         if (!offerData) {
             return res.json({ success: false, message: 'Something went wrong , Try again..' })
         }
-        return res.json({ success: true, message: 'Product offer Edit successfull' })
+        return res.json({ success: true, message: 'Edit successfull' })
     } catch (error) {
         console.log(error.message);
-       next(error)
+        next(error)
     }
 }
 
 //PRODUCT OFFER DELETE;
-const productOfferDelete = async (req, res,next) => {
+const productOfferDelete = async (req, res, next) => {
     try {
         const { offerId } = req.query;
 

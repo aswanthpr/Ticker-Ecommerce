@@ -355,41 +355,9 @@
 
                       </div>
 
-                      <!-- <div class="form-group ml-4">
-                          <i class="fa-solid fa-photo-film fa-2x ms-3"></i>
-                          <label for="image-upload-2" class="custom-file-upload btn btn-success mb-3 mr-3 btn-sm ml-5">Upload Image 2</label>
-                          <img src="" class="image-preview" alt="">
-                          <input type="file" class="form-control col-lg-4 col-md-4 col-sm-4" style="display: none;" id="image-upload-2" name="image1" accept=".jpg, .png, image/jpeg, image/png"
-                            onchange=" previewImage(event)"  required>
-                          <div id="image2Error" class="text-danger"></div>
-                      </div>
-                     
-                      <div class="form-group  ml-4">
-                        
-                          <i class="fa-solid fa-photo-film fa-2x ms-3"></i>
-                          <label for="image-upload-3" class="custom-file-upload btn btn-success mb-3 mr-3 btn-sm ml-5">Upload Image 3</label>
-                          <img src="" class="image-preview" alt="">
-                          <input type="file" class="form-control col-lg-4 col-md-4 col-sm-4 " style="display: none;" id="image-upload-3" name="image2" accept=".jpg, .png, image/jpeg, image/png"
-                           onchange=" previewImage(event)"  required>
-                          <div id="image3Error" class="text-danger"></div>
-                      </div> -->
+                    
                     </div>
-                    <!-- Image preview-->
-                    <!-- <div class="container mt-2 row,  showImage, " id="imageContainer">
-                      <% if (products && products.image && products.image.length> 0) { %>
-                        <% for (let i=0; i < products.image.length; i++) { %>
-
-                          <div class="mt-2 position-relative " id="existingImage<%=i%>">
-                            <img class="preview-image" style="width: 150px; height: 150px;"
-                              src="/uploads/<%= products.image[i] %>">
-                            <button type="button" class="close-button" onclick="deleteImage('<%=products.image[i]%>','<%=i%>')"
-                              style="position:relative; top: 5px; margin-right: 1px; right: 40px;top: 60px; background:red; border: none; outline: none; color: white;">X</button>
-                            
-                          </div>
-                          <% } %>
-                            <% } %>
-                    </div>
-                  </div> -->
+                   
                     <div class="container mt-2 row" id="imageContainer">
                       <% if (products && products.image && products.image.length> 0) { %>
                         <% for (let i=0; i < products.image.length; i++) { %>
@@ -575,13 +543,18 @@
               let isValid = true;
 
               // Name validation
-              if (!/^[A-Za-z][A-Za-z\d ]{4,29}$/.test(nameInput.value.trim()) || nameInput.value.trim().length < 5) {
-                document.getElementById('nameMessage').textContent = 'cannot start with  Numbers, total length of the name is between 5 and 30 characters, special characters not allowded';
-                isValid = false;
+const name = nameInput.value.trim();
+const namePattern = /^[A-Za-z][A-Za-z\d\s']{4,99}$/;
 
-              } else {
-                document.getElementById('nameMessage').textContent = '';
-              }
+if (!namePattern.test(name)) {
+  document.getElementById('nameMessage').textContent =
+    "Watch name must start with a letter, be 5–100 characters long, and can include letters, numbers, spaces, and apostrophes ('). Special characters are not allowed.";
+  isValid = false;
+} else {
+  document.getElementById('nameMessage').textContent = '';
+}
+
+
 
               // Subtitle validation
               if (subtitleInput.value.trim().length < 4 || !/^[a-zA-Z\s]+$/.test(subtitleInput.value.trim())) {
@@ -667,9 +640,6 @@
                   const mrpInput = document.getElementById('mrp')?.value || ""
                   const genderSelect = document.getElementById('gender')?.value || "";
                   const categorySelect = document.getElementById('category')?.value || "";
-
-
-                 
 
                   const editData = {
                     name: nameInput,

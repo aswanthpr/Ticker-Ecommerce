@@ -38,7 +38,7 @@ router.post("/change-pass",UserController?.postChangePass);
 
 router.get('/forgetPass/otp',auth.ifUser,UserController?.getForgetOtp);
 router.post("/forgetPass/otp",UserController?.postForgetOtp);
-router.get("/resend",UserController?.resendOtp);
+router.post("/resend",UserController?.resendOtp);
 //==================verifyOtp================================ 
 
 router.get(`/verify-otp`,auth.ifUser,UserController?.getOtpVerify);
@@ -52,7 +52,7 @@ router.get('/shop',homeControl?.getAllProduct);
 
 //USER PROFILE=====================================================
 router.get("/user/profile",auth.userCheck,profileControll?.userProfile);
-router.put("/user/profile",profileControll?.chngeUserData);
+router.patch("/user/profile",profileControll?.chngeUserData);
  
 router.get('/user/address',auth.userCheck,profileControll?.getAddress);
 router.get('/user/changePass',auth.userCheck,profileControll?.getChangePass); 
@@ -61,7 +61,7 @@ router.get('/user/addAddress',auth.userCheck,profileControll?.getAddAddress);
 router.delete("/user/deleteAddress",auth.userCheck,profileControll?.deleteAddress); 
 router.post('/user/addAddress',auth.userCheck,profileControll?.postAddAddress) ;
 router.get("/user/editAddress",auth.userCheck,profileControll?.getEditAddress);
-router.post('/user/editAddress',auth.userCheck,profileControll?.editAddress); 
+router.patch('/user/editAddress',auth.userCheck,profileControll?.editAddress); 
 
 router.get("/user/order",auth.userCheck,profileControll?.getOrders);
 router.get("/user/order/orderDetails",auth.userCheck,profileControll?.orderDetails);
@@ -74,32 +74,30 @@ router.post('/user/wallet/verify-add-money',auth.userCheck,profileControll?.veri
 
  router.get("/cart",auth.userCheck,cartControl?.getCart);
  router.delete('/cart/remove',auth.userCheck,cartControl?.cartRemove);
- router .post("/cart/increment",auth.userCheck,cartControl?.incrementQty);
- router.post('/cart/decrement',auth.userCheck,cartControl?.decrementQty);
-router.post('/cart/check',auth.userCheck,cartControl?.cartCondition);
+ router .patch("/cart/increment",auth.userCheck,cartControl?.incrementQty);
+ router.patch('/cart/decrement',auth.userCheck,cartControl?.decrementQty);
+router.get('/cart/check',auth.userCheck,cartControl?.cartCondition);
 
  // order controll
  router.get("/checkout",auth.userCheck,checkoutControl?.getCheckout);
  router.post("/checkout/addAddress",auth.userCheck,checkoutControl?.CheckoutAddress);
  router.get("/checkout/editAddress",auth.userCheck,checkoutControl?.editCheckoutAddress);
- router.put("/checkout/editAddress",auth.userCheck,checkoutControl?.saveCheckoutEditedAddress);
+ router.patch("/checkout/editAddress",auth.userCheck,checkoutControl?.saveCheckoutEditedAddress);
  router.post("/checkout/apply-coupon",auth.userCheck,checkoutControl?.applyCoupon);
- router.get("/checkout/remove-Coupon",auth.userCheck,checkoutControl?.deleteCoupon);
+ router.delete("/checkout/remove-Coupon",auth.userCheck,checkoutControl?.deleteCoupon);
 
  router.post("/placeOrder",auth.userCheck,checkoutControl?.placeOrder) ;
  router.post('/verifyPayment',auth.userCheck,checkoutControl?.verifyPayment);
  router.get("/order-success",auth.userCheck,checkoutControl?.orderSuccess);
  router.get("/payment-failed",auth.userCheck,checkoutControl?.paymentFailed);
-router.post('/order/cancel-order',auth.userCheck,profileControll?.cancelOrder);
-router.post("/order/return-order",auth.userCheck,profileControll?.returnOrder);
+router.patch('/order/cancel-order',auth.userCheck,profileControll?.cancelOrder);
+router.patch("/order/return-order",auth.userCheck,profileControll?.returnOrder);
 
 
 router.get("/wishlist",auth.userCheck,wishlistController?.getWishlist);
 router.post("/add-wishlist",auth.userCheck,wishlistController?.addToWishlist);
 router.delete('/wishlist/remove',auth.userCheck,wishlistController?.removeFromWishlist);
-router.put('/wishlist/addCart',auth.userCheck,wishlistController?.wishlitstToCart);
-
-
+router.post('/wishlist/addCart',auth.userCheck,wishlistController?.wishlitstToCart);
 
 module.exports = router ;
         

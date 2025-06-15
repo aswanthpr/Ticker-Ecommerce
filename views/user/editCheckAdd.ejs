@@ -223,7 +223,7 @@
     <footer>
       <div class="container">
         <div class="text-center">
-          <a href="index.html"><img src="/image/logo.png" alt=""></a><br>
+          <a class=" w-25 h-25" href="index.html"><img class=" w-25 h-25"  src="/image/logo.png" alt=""></a><br>
           <img class="margin-t-40" src="/image/hammer.png" alt="">
           <p class="intro-small margin-t-40">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
             nibh
@@ -439,7 +439,7 @@ document.getElementById("form").addEventListener('submit', async (e) => {
 
             try {
         const response = await fetch(`/checkout/editAddress?id=${addressId}`,{
-            method:'PUT',
+            method:'PATCH',
             headers:{
                 'Content-Type':'application/json'
             },

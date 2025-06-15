@@ -396,7 +396,7 @@ const cancelOrder = async (req, res, next) => {
         }
 
         if (updateOrder.paymentMethod == 'Razorpay') {
-            const walletData = await walletSchema.findOne({ userId: userId });
+            const walletData = await walletSchema.findOne({ userId });
 
 
             const productPrice = (cancelledProduct.offerPrice ? cancelledProduct.offerPrice : cancelledProduct.mrp) * cancelledProduct.cartQuantity;

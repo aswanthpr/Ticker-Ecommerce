@@ -2,11 +2,10 @@ const userSchema = require("../../models/userModel");
 const regOtp = require("../../models/userOtpverify");
 const walletSchema = require("../../models/walletModel");
 const { referralGenerator } = require("../../helper/refferelGen");
-const { sendOtpMail } = require('../../helper/sendOtpMail')
-const { generateOtp } = require('../../helper/otpGenerator')
+const { sendOtpMail } = require("../../helper/sendOtpMail");
+const { generateOtp } = require("../../helper/otpGenerator");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-
 
 //GET SIGNUP=============================================================
 
@@ -29,9 +28,15 @@ const postSignup = async (req, res, next) => {
       req.body;
 
     //checking is it existing referral
-    const existingReferral = await userSchema.findOne({ referral: referral });
-    if (!existingReferral) {
-      return res.status(400).json({ message: "referrel code not exist" });
+    let existingReferral = null;
+    if (referral) {
+      console.log(referral,'refferel')
+     existingReferral = await userSchema.findOne({ referral });
+      if (!existingReferral) {
+        return res
+          .status(400)
+          .json({ message: "Referral code does not exist" });
+      }
     }
     //checking user exist or not
 
@@ -41,13 +46,12 @@ const postSignup = async (req, res, next) => {
 
     console.log(existingUser, "exixsting user");
     if (existingUser) {
-      return res.render("signup", {
-        message: "user already exist with this email or phone number",
+      return res.status(400).json({
+        message: "User already exists with this email or phone number",
       });
     }
     if (password !== confirmPassword) {
-
-      return res.json({ message3: "password incorrect" });
+      return res.status(400).json({ message: "Passwords do not match" });
     }
     //password hashing using bcrypt
     const hashPassword = await bcrypt.hash(password, 10);
@@ -56,7 +60,7 @@ const postSignup = async (req, res, next) => {
     req.session.email = email;
     req.session.phone = phone;
     req.session.password = hashPassword;
-    req.session.referredBy = existingReferral?.referral;
+    req.session.referredBy = existingReferral?.referral ?? null;
 
     const randomOtp = generateOtp();
 
@@ -73,9 +77,12 @@ const postSignup = async (req, res, next) => {
       });
       await newOtp.save();
     }
-
-    return res.redirect(`/verify-otp?email=${email}`);
-
+ return res.status(200).json({
+      success: true,
+      message: "Signup successful, OTP sent",
+      redirectUrl: `/verify-otp?email=${email}`,
+    });
+    // return res.redirect(`/verify-otp?email=${email}`);
   } catch (error) {
     next(error);
     console.log(error.message);
@@ -101,84 +108,80 @@ const postOtpVerify = async (req, res, next) => {
     const Phone = req.session?.phone;
     const Password = req.session?.password;
     const Referred = req.session?.referredBy ? req.session?.referredBy : null;
-    console.log(Referred, "thsi is reffereaby");
+  
 
     const otpData = await regOtp.findOne({ email: Email });
-    console.log(otpData, "this is ot");
+    console.log(otpData, "this is otp");
 
     if (!otpData?.otp) {
-      res.json({ message: "otp expired" });
+      return res.json({ message: "otp expired" });
     }
-      if (otpData?.otp !== otp) {
-
-        res.redirect(`/verify-otp?email=${Email}`);
-      }
-      const checkUserExist = userSchema.findOne({
+    if (otpData?.otp !== otp) {
+     return  res.redirect(`/verify-otp?email=${Email}`);
+    }
+    const checkUserExist =await userSchema.findOne({
       $or: [{ Email }, { Phone }],
-    })
-    if(checkUserExist?.email||checkUserExist?.phone){
-      return res.status(400).json({message:'User already Exist'});
+    });
+    if (checkUserExist?.email || checkUserExist?.phone) {
+      return res.status(400).json({ message: "User already Exist" });
     }
-        const referralCode = referralGenerator();
+    const referralCode = referralGenerator();
 
-        const user = new userSchema({
-          name: Name,
-          email: Email,
-          phone: Phone,
-          password: Password,
-          referral: referralCode,
-          referredBy: Referred,
-          isVerified: true,
-        });
+    const user = new userSchema({
+      name: Name,
+      email: Email,
+      phone: Phone,
+      password: Password,
+      referral: referralCode,
+      referredBy: Referred,
+      isVerified: true,
+    });
 
-        const userData = await user.save();
-        const userDB = await userSchema.findOne({ referral: Referred });
+    const userData = await user.save();
+    const userDB = await userSchema.findOne({ referral: Referred });
 
-        if (userDB && userData?.referredBy == Referred) {
-          await walletSchema.findOneAndUpdate(
-            { userId: userDB._id },
-            {
-              $inc: { balance: 100 },
-              $push: {
-                history: {
-                  createTime: new Date(),
-                  amount: 100,
-                  transactionType: "Credit",
-                  discription: `${Name}'s Refrral Bonus`,
-                },
-              },
+    if (userDB && userData?.referredBy == Referred) {
+      await walletSchema.findOneAndUpdate(
+        { userId: userDB._id },
+        {
+          $inc: { balance: 100 },
+          $push: {
+            history: {
+              createTime: new Date(),
+              amount: 100,
+              transactionType: "Credit",
+              discription: `${Name}'s Refrral Bonus`,
             },
-            { upsert: true }
-          );
+          },
+        },
+        { upsert: true }
+      );
 
-          await walletSchema.findOneAndUpdate(
-            { userId: userData._id },
-            {
-              $inc: { balance: 50 },
-              $push: {
-                history: {
-                  createTime: new Date(),
-                  amount: 50,
-                  transactionType: "Credit",
-                  discription: "Referree Bonus",
-                },
-              },
+      await walletSchema.findOneAndUpdate(
+        { userId: userData._id },
+        {
+          $inc: { balance: 50 },
+          $push: {
+            history: {
+              createTime: new Date(),
+              amount: 50,
+              transactionType: "Credit",
+              discription: "Referree Bonus",
             },
-            { upsert: true }
-          );
-        }
+          },
+        },
+        { upsert: true }
+      );
+    }
 
- 
-        req.session.user = userData._id;
-        res.cookie("user", userData._id.toString(), {
-          httpOnly: true,
-          maxAge: 24 * 60 * 60 * 1000, // 1 day
-        });
-        req.session.email = Email;
+    req.session.user = userData?._id;
+    res.cookie("user", userData?._id.toString(), {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+    req.session.email = Email;
 
-        res.redirect("/");
-     
-   
+    return res.redirect("/");
   } catch (error) {
     next(error);
     console.log(error.message);
@@ -189,22 +192,23 @@ const postOtpVerify = async (req, res, next) => {
 
 const resendOtp = async (req, res, next) => {
   try {
-    const email = req.query?.email??req.session?.email
-if (!email) {
-      return res.status(400).json({ success: false, message: "Email is required" });
+    const email = req.query?.email ?? req.session?.email;
+    if (!email) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email is required" });
     }
     const existingOtpRecord = await regOtp.findOne({ email });
     if (existingOtpRecord && existingOtpRecord.otp) {
-      return res.json({ success: false, message: "An OTP already exists. Please wait before retrying." });
+      return res.json({
+        success: false,
+        message: "An OTP already exists. Please wait before retrying.",
+      });
     }
     const randomOtp = generateOtp();
-    await sendOtpMail(
-      " User",
-      email,
-      randomOtp
-    );
+    await sendOtpMail(" User", email, randomOtp);
 
-       if (existingOtpRecord) {
+    if (existingOtpRecord) {
       existingOtpRecord.otp = randomOtp;
       await existingOtpRecord.save();
     } else {
@@ -403,8 +407,8 @@ const postChangePass = async (req, res, next) => {
 //LOGOUT  ============================================================
 const userLogout = async (req, res, next) => {
   try {
-    req.session.destroy()
-    res.clearCookie('user');
+    req.session.destroy();
+    res.clearCookie("user");
     res.redirect("/");
   } catch (error) {
     next(error);
@@ -418,7 +422,6 @@ const googleAuth = async (req, res, next) => {
       const checkUser = await userSchema.findOne({ email: req.user.email });
 
       if (checkUser) {
-
         req.session.user = checkUser._id;
         res.cookie("user", checkUser._id.toString(), {
           httpOnly: true,

@@ -100,41 +100,28 @@
                     }, 1000);
                 }
 
-                //   let timerSeconds = 180; // Timer duration in seconds
-                //   let timerInterval;
-
-                //   function startTimer(remainingTime) {
-                //       let timerDisplay = document.querySelector('.timer .time');
-                //       let resendBtn = document.getElementById('resend');
-                //       timerInterval = setInterval(() => {
-                //           if (timerSeconds > 0) {
-                //               timerDisplay.textContent = `${timerSeconds} sec`;
-                //               resendBtn.disabled = true; // Disable the resend button                                               
-                //               timerSeconds--;
-                //           } else {
-                //               clearInterval(timerInterval);
-                //               timerDisplay.textContent = '';
-                //               resendBtn.disabled = false; // Enable the resend button
-                //           }
-                //       },1000);
-                //   }
                 window.addEventListener('DOMContentLoaded', () => {
-                    const storedRemaining = parseInt(localStorage.getItem('otp_timer_remaining'), 10);
-                    const storedStartTime = parseInt(localStorage.getItem('otp_timer_start_time'), 10);
+                    const storedRemainingRaw = localStorage.getItem('otp_timer_remaining');
+                    const storedStartTimeRaw = localStorage.getItem('otp_timer_start_time');
 
-                    if (!isNaN(storedRemaining) && !isNaN(storedStartTime)) {
+                    if (storedRemainingRaw && storedStartTimeRaw) {
+                        const storedRemaining = parseInt(storedRemainingRaw, 10);
+                        const storedStartTime = parseInt(storedStartTimeRaw, 10);
                         const elapsed = Math.floor((Date.now() - storedStartTime) / 1000);
                         const remainingTime = storedRemaining - elapsed;
 
                         if (remainingTime > 0) {
                             startTimer(remainingTime);
+                            return;
                         } else {
                             localStorage.removeItem('otp_timer_remaining');
                             localStorage.removeItem('otp_timer_start_time');
                         }
-                    } else {
-                        startTimer(timerDuration); // first visit
                     }
+
+                    // Start fresh timer on first load or if stored values are invalid/expired
+                    startTimer(timerDuration);
+
                 });
 
                 // Function to handle resend OTP
@@ -147,10 +134,10 @@
                     startTimer(timerDuration);
                     const urlParams = new URLSearchParams(window.location.search);
                     const email = urlParams.get('email');
-                    
+
                     // AJAX request to resend OTP
                     fetch(`/resend?email=${encodeURIComponent(email)}`, {
-                        method: 'GET',
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         }

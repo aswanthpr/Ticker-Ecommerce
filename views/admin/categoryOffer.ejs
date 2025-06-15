@@ -93,10 +93,10 @@
 
         <li><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
 
-        <li class="active"><a  href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+        <li class="active"><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
               class="icon-windows "></i>Offer</a>
           <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-            <li class="active"> <a  href="/admin/category-offers"> <i class="icon icon-light-bulb active"></i>Category
+            <li class="active"> <a href="/admin/category-offers"> <i class="icon icon-light-bulb active"></i>Category
                 offer</a></li>
             <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb active"></i>Product Offers</a></li>
           </ul>
@@ -233,9 +233,9 @@
                         <td class="">
                           <% if (new Date(offerData[i]?.validity) < new Date()) { %>
                             <span class="text-danger"> Inactive </span>
-                          <% } else { %>
-                            <span class="text-success"> Active </span>
-                          <% } %>
+                            <% } else { %>
+                              <span class="text-success"> Active </span>
+                              <% } %>
                         </td>
                         <th>
                           <div class="block-body text-center d-flex ">
@@ -270,7 +270,7 @@
                 <%if(currentPage>1){%>
                   <li class="page-item ">
                     <a class="page-link " href="?page=<%= currentPage - 1 %>" tabindex="-1">
-                      < </a>
+                    </a>
                   </li>
                   <%}%>
                     <%for (let i=1;i<=totalPages;i++){%>
@@ -323,7 +323,7 @@
 
                     <div class="col-sm-12">
                       <select id="selectCategoryName" name="account" class="form-control mb-3 mb-3">
-                        <option  selected disabled>choose Category Name</option>
+                        <option selected disabled>choose Category Name</option>
                         <% for( let i=0; i < categoryData.length; i++ ) { %>
                           <option value="<%=categoryData[i].categoryName %>">
                             <%=categoryData[i].categoryName %>
@@ -337,7 +337,7 @@
                     <label>Category offer</label>
                     <p id="offerMessage" class="text-danger"></p>
                     <input id="editCategoryOffer" name="offer" type="numbers" min="0" placeholder="Enter Offer offer"
-                      class="form-control" >
+                      class="form-control">
                   </div>
 
                   <div class="form-group">
@@ -346,8 +346,8 @@
                     <input id="editCategoryValidity" name="date" type="date" class="form-control">
                   </div>
 
-                  <input id="offerid" name="offerId" type="text" min="0"  class="form-control"
-                    value="<%=offerData._id%>" hidden>
+                  <input id="offerid" name="offerId" type="text" min="0" class="form-control" value="<%=offerData._id%>"
+                    hidden>
 
                   <div class="modal-footer">
                     <span class="showMessage mr-5 text-danger" id="showMessage"></span>
@@ -368,20 +368,20 @@
     <script>
 
 
-      function editCategoryOffer(offerId,categoryName,offer,validity) {
-       
+      function editCategoryOffer(offerId, categoryName, offer, validity) {
+
         // Set the offer ID and name in the modal inputs
-        document.getElementById('offerid').value =offerId
+        document.getElementById('offerid').value = offerId
         document.getElementById('editCategoryOffer').value = offer;
-       //document.getElementById('editCategoryValidity').value = new Date(validity).toLocaleDateString();
+        //document.getElementById('editCategoryValidity').value = new Date(validity).toLocaleDateString();
         document.getElementById('selectCategoryName').value = categoryName;
-        
+
         if (validity) {
-        const date = new Date(validity);
-        const formattedDate = date.toISOString().split('T')[0]; // Converts to YYYY-MM-DD
-       
-        document.getElementById('editCategoryValidity').value = formattedDate;
-      }
+          const date = new Date(validity);
+          const formattedDate = date.toISOString().split('T')[0]; // Converts to YYYY-MM-DD
+
+          document.getElementById('editCategoryValidity').value = formattedDate;
+        }
         // Show the modal
         $('#editmyModal').modal('show');
       }
@@ -389,7 +389,7 @@
 
 
 
-     
+
       document.getElementById('addCategoryOffer').addEventListener('submit', async function (event) {
         event.preventDefault();
 
@@ -409,7 +409,7 @@
         }
 
         // Validate offer input
-        if  (!numberRegex.test(offerInput.value) || offerInput.value < 5 || offerInput.value > 60) {
+        if (!numberRegex.test(offerInput.value) || offerInput.value < 5 || offerInput.value > 60) {
           document.getElementById('offerMessage').textContent = 'Please enter a valid offer between 5 to 60.';
           isValid = false;
         } else {
@@ -417,7 +417,7 @@
         }
 
         // Validate date input
-        if (dateInput.value === ''||dateInput.value < today) {
+        if (dateInput.value === '' || dateInput.value < today) {
           document.getElementById('validityMessage').textContent = 'Please choose a validity date.';
           isValid = false;
         } else {
@@ -426,65 +426,65 @@
 
         if (isValid) {
           const formData = {
-          category: categorySelect.value,
-          offer: offerInput.value,
-          validity: dateInput.value
-        };
+            category: categorySelect.value,
+            offer: offerInput.value,
+            validity: dateInput.value
+          };
 
-        try {
-          
-          const response = await fetch("/admin/add-category-offers", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-          });
-         
-          const data = await response.json();
-          
-          if (data.success) {
-            Swal.fire({
-              icon: 'success',
-              title: data.message,
-              showConfirmButton: false,
-              timer: 1000,
-              toast: true,
-              position: 'top-end'
-            })
-           .then(() => { window.location.href = '/admin/category-offers' })
-          } else {
+          try {
+
+            const response = await fetch("/admin/add-category-offers", {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              Swal.fire({
+                icon: 'success',
+                title: data.message,
+                showConfirmButton: false,
+                timer: 1000,
+                toast: true,
+                position: 'top-end'
+              })
+                .then(() => { window.location.href = '/admin/category-offers' })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: data.message,
+                showConfirmButton: false,
+                timer: 1000,
+                toast: true,
+                position: 'top-end'
+              })
+            }
+          } catch (error) {
+
             Swal.fire({
               icon: 'error',
-              title: data.message,
+              title: 'something went wrong . Please try again',
               showConfirmButton: false,
               timer: 1000,
               toast: true,
               position: 'top-end'
             })
           }
-        } catch (error) {
-       
-          Swal.fire({
-            icon: 'error',
-            title: 'something went wrong . Please try again',
-            showConfirmButton: false,
-            timer: 1000,
-            toast: true,
-            position: 'top-end'
-          })
-        }
         }
 
-       
+
       });
 
-      
-     
+
+
       document.getElementById('editCagtegoryOffer').addEventListener('submit', async function (event) {
         event.preventDefault();
-        const offerId= document.getElementById('offerid').value
-          const offer=  document.getElementById('editCategoryOffer')
-          const categoryName= document.getElementById('selectCategoryName')
-          const validity=  document.getElementById('editCategoryValidity')
+        const offerId = document.getElementById('offerid').value
+        const offer = document.getElementById('editCategoryOffer')
+        const categoryName = document.getElementById('selectCategoryName')
+        const validity = document.getElementById('editCategoryValidity')
         let isValid = true;
 
         // Validate product selection
@@ -514,26 +514,26 @@
         if (!isValid) {
           return;
         }
-        
 
-          const editformData = {
-            offerId,
-            offer:offer.value,
-            categoryName: categoryName.value,
-            validity: validity.value,
-          }
-        
+
+        const editformData = {
+          offerId,
+          offer: offer.value,
+          categoryName: categoryName.value,
+          validity: validity.value,
+        }
+
 
         try {
-          
+
           const response = await fetch("/admin/edit-category-offer", {
-            method: 'PATCH',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(editformData)
           });
-          
+
           const data = await response.json();
-          
+
           if (data.success) {
             Swal.fire({
               icon: 'success',
@@ -569,7 +569,7 @@
 
 
     </script>
-   
+
     <script>
       // function changeStatus(couponId) {
       //   return Swal.fire({
@@ -624,7 +624,7 @@
       // }
       //delete offer
       function deleteOffer(offerId) {
-       
+
         return Swal.fire({
           title: "Are you sure you want to delete this offer?",
           icon: "question",
@@ -637,16 +637,16 @@
           if (result.isConfirmed) {
             // Make AJAX request to backend
             try {
-             
+
               const response = await fetch(`/admin/delete-category-offer?offerId=${offerId}`, {
-                method: "PUT",
+                method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 // body: JSON.stringify({ categoryId }), 
               })
               const data = await response.json();
-             
+
               if (data.success) {
                 Swal.fire({
                   icon: 'success',
@@ -675,14 +675,6 @@
           }
         });
       }
-
-
-
-
-
-
-
-
     </script>
 
     </script>

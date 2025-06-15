@@ -88,14 +88,16 @@
         <li><a href="/admin/dashboard"> <i class="icon-home"></i>Dashboard </a></li>
         <li><a href="/admin/product"> <i class=" icon icon-pencil-case"></i>Products</a></li>
         <li><a href="/admin/user"><i class="icon icon-user"></i>Users</a></li>
-        <li ><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
+        <li><a href="/admin/category"> <i class="icon-layers"></i>Category</a></li>
         <li><a href="/admin/orderMgt"> <i class="icon-new-file"></i>Orders</a></li>
 
         <li class="active"><a href="/admin/couponMangement"> <i class="icon icon-check"></i>Coupon</a></li>
-        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Offer</a>
+        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+              class="icon-windows"></i>Offer</a>
           <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a></li>
-        <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
+            <li><a class="active" href="/admin/category-offers"> <i class="icon icon-light-bulb"></i>Category offer</a>
+            </li>
+            <li><a href="/admin/product-offers"> <i class="icon icon-light-bulb"></i>Product Offers</a></li>
           </ul>
         </li>
         <li><a href="/admin/sales-report"> <i class="icon-page"></i>Sales Repoart</a></li>
@@ -135,15 +137,15 @@
                       <div class="form-group">
                         <label>offer-%</label>
                         <p id="offerMessage" class="text-danger"></p>
-                        
-                      </div><input id="offer" name="offer" type="numbers" min="5" max="60" placeholder="Enter Coupon offer"
-                          class="form-control">
+
+                      </div><input id="offer" name="offer" type="numbers" min="5" max="60"
+                        placeholder="Enter Coupon offer" class="form-control">
                       <div class="form-group">
                         <label>Minimum Purchas
                           e Amount</label>
                         <p id="minPriceMessage" class="text-danger"></p>
-                        <input id="minPrice" name="minPrice" type="number" min="100" placeholder="Enter minimum Purchase"
-                          class="form-control">
+                        <input id="minPrice" name="minPrice" type="number" min="100"
+                          placeholder="Enter minimum Purchase" class="form-control">
                       </div>
                       <div class="form-group">
                         <label>Max Redeemable amount</label>
@@ -227,10 +229,11 @@
                           <%= couponData[i].status?'Listed':'Unlisted' %>
                         </td>
                         <td>
-                          
-                            <a class="btn <%=(couponData[i].status)?"btn-outline-danger":"btn-outline-success" %> btn-sm"
-                              onclick="return changeStatus('<%=couponData[i]._id %>')"><%=(couponData[i].status)?"Unlist":"List"%></a>
-                            
+
+                          <a class="btn <%=(couponData[i].status)?" btn-outline-danger":"btn-outline-success" %> btn-sm"
+                            onclick="return changeStatus('<%=couponData[i]._id %>')">
+                              <%=(couponData[i].status)?"Unlist":"List"%></a>
+
 
 
                         </td>
@@ -244,7 +247,8 @@
                           </div>
                         </th> -->
                         <th>
-                          <a class="btn btn-outline-danger icon icon-close btn-sm" onclick="deleteCoupon('<%=couponData[i]._id%>')"></a>
+                          <a class="btn btn-outline-danger icon icon-close btn-sm"
+                            onclick="deleteCoupon('<%=couponData[i]._id%>')"></a>
                         </th>
                       </tr>
                       <% } %>
@@ -265,7 +269,7 @@
                 <%if(currentPage>1){%>
                   <li class="page-item ">
                     <a class="page-link " href="?page=<%= currentPage - 1 %>" tabindex="-1">
-                      < </a>
+                    </a>
                   </li>
                   <%}%>
                     <%for (let i=1;i<=totalPages;i++){%>
@@ -356,7 +360,7 @@
         // const formData =document.getElementById('couponForm');
         const couponCode = document.getElementById('couponCode').value;
         const offer = document.getElementById('offer').value;
-      
+
         const minPrice = document.getElementById('minPrice').value;
         const maxRedeem = document.getElementById('maxRedeem').value;
         const date = document.getElementById('date').value;
@@ -381,37 +385,37 @@
         if (!couponCodeRegex.test(couponCode)) {
           couponCodeMessage.textContent = "Coupon Code must be 4-15 characters long, alphanumeric, and contain no spaces or special characters.";
           valid = false;
-        }else{
+        } else {
           couponCodeMessage.textContent = ""
         }
 
-       
-  if (!numberRegex.test(offer) || parseInt(offer) < 5 || parseInt(offer) > 60) {
-    offerMessage.textContent = "Offer must contain only numbers, offer must be between 5 and 60.";
-    valid = false;
-  
-        }else{
+
+        if (!numberRegex.test(offer) || parseInt(offer) < 5 || parseInt(offer) > 60) {
+          offerMessage.textContent = "Offer must contain only numbers, offer must be between 5 and 60.";
+          valid = false;
+
+        } else {
           offerMessage.textContent = ""
         }
 
         if (!numberRegex.test(minPrice) || parseInt(minPrice) < 100 || parseInt(minPrice) > 6000) {
           minPriceMessage.textContent = "Minimum Purchase Amount must contain only numbers.";
           valid = false;
-        }else{
+        } else {
           minPriceMessage.textContent = ""
         }
 
         if (!numberRegex.test(maxRedeem)) {
           maxRedeemMessage.textContent = "Max Redeemable Amount must contain only numbers.";
           valid = false;
-        }else{
+        } else {
           maxRedeemMessage.textContent = ""
         }
 
         if (date < today) {
           validityMessage.textContent = "Validity date must be today or a future date.";
           valid = false;
-        }else{
+        } else {
           validityMessage.textContent = ""
         }
 
@@ -419,58 +423,58 @@
           showMessage.textContent = "";
 
           const formData = {
-          couponCode,
-          offer,
-          minPrice,
-          maxRedeem,
-          date, 
-        }
- 
-       
-        try {
-          const response = await fetch("/admin/add-coupon", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-          });
-        
-          const data = await response.json();
-          if (data.success) {
-            Swal.fire({
-              icon: 'success',
-              title: data.message,
-              showConfirmButton: false,
-              timer: 1000,
-              toast: true,
-              position: 'top-end'
-            }).then(()=>{
-              $('#myModal').modal('hide');
-              window.location.reload()
-            })
-          } else {
+            couponCode,
+            offer,
+            minPrice,
+            maxRedeem,
+            date,
+          }
+
+
+          try {
+            const response = await fetch("/admin/add-coupon", {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            if (data.success) {
+              Swal.fire({
+                icon: 'success',
+                title: data.message,
+                showConfirmButton: false,
+                timer: 1000,
+                toast: true,
+                position: 'top-end'
+              }).then(() => {
+                $('#myModal').modal('hide');
+                window.location.reload()
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: data.message,
+                showConfirmButton: false,
+                timer: 1000,
+                toast: true,
+                position: 'top-end'
+              })
+            }
+          } catch (error) {
+            console.log(error.message);
             Swal.fire({
               icon: 'error',
-              title: data.message,
+              title: 'something went wrong . Please try again',
               showConfirmButton: false,
               timer: 1000,
               toast: true,
               position: 'top-end'
             })
           }
-        } catch (error) {
-          console.log(error.message);
-          Swal.fire({
-            icon: 'error',
-            title: 'something went wrong . Please try again',
-            showConfirmButton: false,
-            timer: 1000,
-            toast: true,
-            position: 'top-end'
-          })
-        }
         }
 
-        
+
 
       }
       document.getElementById('couponForm').addEventListener('submit', validateCouponAdd);
@@ -553,40 +557,40 @@
           confirmButtonText: "Yes, unlist it!",
         }).then(async (result) => {
           if (result.isConfirmed) {
-           
+
             try {
               // Make AJAX request to backend
               const response = await fetch(`/admin/status-coupon`, {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body:JSON.stringify({couponId})
+                body: JSON.stringify({ couponId })
               })
-              
-            const data = await response.json();
-            if (data.success) {
-              Swal.fire({
-                icon: 'success',
-                title: data.message,
-                showConfirmButton: false,
-                timer: 1000,
-                toast: true,
-                position: 'top-end'
-              }).then(()=>{
-                $('#editmyModal').modal('hide');
-                window.location.reload()
-              })
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: data.message,
-                showConfirmButton: false,
-                timer: 1000,
-                toast: true,
-                position: 'top-end'
-              })
-            }
+
+              const data = await response.json();
+              if (data.success) {
+                Swal.fire({
+                  icon: 'success',
+                  title: data.message,
+                  showConfirmButton: false,
+                  timer: 1000,
+                  toast: true,
+                  position: 'top-end'
+                }).then(() => {
+                  $('#editmyModal').modal('hide');
+                  window.location.reload()
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: data.message,
+                  showConfirmButton: false,
+                  timer: 1000,
+                  toast: true,
+                  position: 'top-end'
+                })
+              }
             } catch (error) {
               console.log(error.message);
             }
@@ -607,49 +611,41 @@
             // Make AJAX request to backend
             try {
               const response = await fetch(`/admin/delete-coupon?couponId=${couponId}`, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              // body: JSON.stringify({ categoryId }), 
-            })
-            const data = await response.json();
-            if (data.success) {
-              Swal.fire({
-                icon: 'success',
-                title: data.message,
-                showConfirmButton: false,
-                timer: 1000,
-                toast: true,
-                position: 'top-end'
-              }).then(()=>{
-                window.location.reload()
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                // body: JSON.stringify({ categoryId }), 
               })
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: data.message,
-                showConfirmButton: false,
-                timer: 1000,
-                toast: true,
-                position: 'top-end'
-              })
-            }
+              const data = await response.json();
+              if (data.success) {
+                Swal.fire({
+                  icon: 'success',
+                  title: data.message,
+                  showConfirmButton: false,
+                  timer: 1000,
+                  toast: true,
+                  position: 'top-end'
+                }).then(() => {
+                  window.location.reload()
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: data.message,
+                  showConfirmButton: false,
+                  timer: 1000,
+                  toast: true,
+                  position: 'top-end'
+                })
+              }
             } catch (error) {
               console.log(error.message)
             }
-           
+
           }
         });
       }
-
-
-
-
-
-
-
-
     </script>
 
     </script>

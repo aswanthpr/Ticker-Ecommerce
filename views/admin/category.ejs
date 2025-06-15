@@ -170,7 +170,7 @@
                     <th>Status</th>
                     <th>Action</th>
                     <th>Edit</th>
-                    <th>Delete</th>
+                    <!-- <th>Delete</th> -->
 
                   </tr>
                 </thead>
@@ -214,11 +214,11 @@
 
                           </div>
                         </th>
-                        <th>
+                        <!-- <th>
                           <a class="btn btn-outline-danger icon icon-close btn-sm"
                             onclick="return confirm('Do you want to delete this category')"
                             href="/admin/delete-category/<%= categoryData[i]._id %>"></a>
-                        </th>
+                        </th> -->
 
                       </tr>
                       <% } %>
@@ -234,46 +234,46 @@
             </div>
           </div>
           <% if (totalPages && currentPage) { %>
-             <div class="card-footer py-4 ">
-            <nav aria-label="...">
-              <ul class="pagination justify-content-center mb-0">
-                <%if(currentPage>1){%>
-                  <li class="page-item ">
-                    <a class="page-link " href="?page=<%= currentPage - 1 %>" tabindex="-1">
-                      < </a>
-                  </li>
-                  <%}%>
-                    <%for (let i=1;i<=totalPages;i++){%>
-                      <%if(i==currentPage){%>
-                        <li class="page-item ">
-                          <a class="page-link" href="?page=<%=i%>">
-                            <%=i%>
-                          </a>
-
-
-                        </li>
-                        <% }else{ %>
-
-
+            <div class="card-footer py-4 ">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center mb-0">
+                  <%if(currentPage>1){%>
+                    <li class="page-item ">
+                      <a class="page-link " href="?page=<%= currentPage - 1 %>" tabindex="-1">
+                      </a>
+                    </li>
+                    <%}%>
+                      <%for (let i=1;i<=totalPages;i++){%>
+                        <%if(i==currentPage){%>
                           <li class="page-item ">
-                            <a class="page-link" href="?page=<%=i%>&search=<%=search%>">
+                            <a class="page-link" href="?page=<%=i%>">
                               <%=i%>
                             </a>
+
+
                           </li>
-                          <%}%>
+                          <% }else{ %>
+
+
+                            <li class="page-item ">
+                              <a class="page-link" href="?page=<%=i%>&search=<%=search%>">
+                                <%=i%>
+                              </a>
+                            </li>
                             <%}%>
-                              <% if(currentPage < totalPages){%>
-                                <li class="page-item">
-                                  <a class="page-link" href="?page=<%=totalPages%>&search=<%=search%>">></a>
+                              <%}%>
+                                <% if(currentPage < totalPages){%>
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page=<%=totalPages%>&search=<%=search%>">></a>
 
 
-                                </li>
-                                <%}%>
-              </ul>
-            </nav>
-          </div>
-          <% } %>
-        
+                                  </li>
+                                  <%}%>
+                </ul>
+              </nav>
+            </div>
+            <% } %>
+
         </div>
 
         <!-- edit Modal-->
@@ -293,24 +293,25 @@
                   <input name="editCategoryId" type="hidden" id="CategoryId">
                   <input name="editCategoryName" type="text" placeholder="Category name" id="editCategoryName"
                     maxlength="18">
-
-                  <div class="modal-footer">
-                    <span class="seenMessage mr-5 text-danger" id="seenMessage"></span>
+                    
+                    <div class="modal-footer">
+                      <span class="seenMessage mr-5 text-danger" id="seenMessage"></span>
                     <a type="button" data-dismiss="modal" class="btn btn-outline-secondary">Close</a>
-
+                    
                     <button type="submit" onclick="validateCategoryName(),saveEditCategory()"
-                      class="btn btn-outline-primary" id="submitbtn">Save Changes</button>
+                    class="btn btn-outline-primary" id="submitbtn">Save Changes</button>
                   </div>
                 </div>
               </div>
-
+              
             </div>
           </div>
         </div>
-
-
+        
+        
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
 
@@ -368,7 +369,7 @@
 
           // Make a PUT request to update the category
           fetch('/admin/edit-category', {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -380,6 +381,7 @@
             .then(res => res.json())
             .then(data => {
               if (data.success) {
+                
                 // Close the modal
                 $('#editmyModal').modal('hide');
                 Swal.fire({
@@ -429,12 +431,6 @@
         }
       }
 
-
-
-
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
       function swalConfirmUnlist(categoryId) {
         return Swal.fire({
           title: "Are you sure you want to unlist this category?",
@@ -449,7 +445,7 @@
           if (result.isConfirmed) {
             // Make AJAX request to backend
             fetch("/admin/unlist-category/" + categoryId, {
-              method: "PUT",
+              method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
               },
@@ -498,9 +494,9 @@
           toast: true,
         }).then((result) => {
           if (result.isConfirmed) {
-            // Make AJAX request to backend
+            
             fetch("/admin/list-category/" + categoryId, {
-              method: "PUT",
+              method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
               },
@@ -644,7 +640,7 @@
 
 
       });
-    </script>
+
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

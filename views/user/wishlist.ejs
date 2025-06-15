@@ -34,42 +34,37 @@
   <link
     href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900|Poppins:300,400,500,600,700|Montserrat:300,400,500,600,700,800"
     rel="stylesheet">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
 
   <style>
     .cart-count {
       font-size: 12px;
       position: absolute;
-      top: 5px; /* Adjust as needed */
-      right: -14px; /* Adjust as needed */
+      top: 5px;
+      /* Adjust as needed */
+      right: -14px;
+      /* Adjust as needed */
     }
-  
+
     li {
       position: relative;
     }
-  
+
     a {
       position: relative;
     }
   </style>
-  
+
 </head>
 
 <body>
 
   <!-- LOADER -->
   <div id="loader">
-  <div class="position-center-center">
-    <div class="ldr"></div>
+    <div class="position-center-center">
+      <div class="ldr"></div>
+    </div>
   </div>
-</div>
 
   <!-- Wrap -->
   <div id="wrap">
@@ -90,38 +85,10 @@
                 <li><a href="/user/profile">MY ACCOUNT </a></li>
                 <%} %>
                   <li><a href="/wishlist">WISHLIST</a></li>
-                  <li><a href="/cart">CART<i class="icon-basket-loaded"></i> <span class="c-no badge badge-warning " style="font-size: 12px;"><%=cartCount %></span></a></li>
-
-                  <!-- USER BASKET -->
-                  <!-- <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">CART<i class="icon-basket-loaded"></i> </a>
-            <ul class="dropdown-menu">
-              <li>
-                <div class="media-left">
-                  <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-1.jpg" alt="..."> </a> </div>
-                </div>
-                <div class="media-body">
-                  <h6 class="media-heading">Rise Skinny Jeans</h6>
-                  <span class="price">129.00 USD</span> <span class="qty">QTY: 01</span> </div>
-              </li>
-              <li>
-                <div class="media-left">
-                  <div class="cart-img"> <a href="#"> <img class="media-object img-responsive" src="images/cart-img-2.jpg" alt="..."> </a> </div>
-                </div>
-                <div class="media-body">
-                  <h6 class="media-heading">Mid Rise Skinny Jeans</h6>
-                  <span class="price">129.00 USD</span> <span class="qty">QTY: 01</span> </div>
-              </li>
-              <li>
-                <h5 class="text-left">SUBTOTAL: <small> 258.00 USD </small></h5>
-              </li>
-              <li class="margin-0">
-                <div class="row">
-                  <div class="col-sm-6"> <a href="/cart" class="btn">VIEW CART</a></div>
-                  <div class="col-sm-6 "> <a href="/checkout" class="btn">CHECK OUT</a></div>
-                </div>
-              </li>
-            </ul>
-          </li> -->
+                  <li><a href="/cart">CART<i class="icon-basket-loaded"></i> <span class="c-no badge badge-warning "
+                        style="font-size: 12px;">
+                        <%=cartCount %>
+                      </span></a></li>
           </ul>
         </div>
       </div>
@@ -134,17 +101,19 @@
 
           <!-- Logo -->
           <div class="logo"> <a href="/"><img class="img-responsive w-25" src="/image/download.png" alt=""></a> </div>
-          
+
           <div class="mr-5 pr-5">
             <!-- <form id="searchForm" action=""  class="search-form"> -->
-                       
-              <div class="input-group flex-nowrap">  
-                  <input id="searchInput" class="input-group__field  w-100  border " type="search" name="search" placeholder="Search" aria-label="search">
-                  <button id="searchButton" class="btn rounded-end px-3 text-nowrap " type="submit"><i class="icon-magnifier "></i></button>
-              </div>
-          <!-- </form> -->
+
+            <div class="input-group flex-nowrap">
+              <input id="searchInput" class="input-group__field  w-100  border " type="search" name="search"
+                placeholder="Search" aria-label="search">
+              <button id="searchButton" class="btn rounded-end px-3 text-nowrap " type="submit"><i
+                  class="icon-magnifier "></i></button>
+            </div>
+            <!-- </form> -->
           </div>
-          
+
           <nav class="navbar ownmenu navbar-expand-lg   ml-5 pl-5 ">
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span></span> </button>
@@ -164,14 +133,6 @@
 
             </div>
           </nav>
-
-          <!-- Curency -->
-          <!-- <div class="curency"> <a href="#." class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false"> USD<i class="fa fa-angle-down"></i> </a>
-            <div class="dropdown-menu"> <a class="dropdown-item" href="#">EU</a> <a class="dropdown-item"
-                href="#">USD</a> <a class="dropdown-item" href="#">CA</a> <a class="dropdown-item" href="#">PKR</a>
-            </div>
-          </div> -->
         </div>
       </div>
       <div class="clearfix"></div>
@@ -195,20 +156,20 @@
         </div>
       </section>
 
-     
-          <!-- PAGES INNER -->
-          <section class="padding-top-100 padding-bottom-100 pages-in chart-page">
-            <div class="container">
-              <% if(!wishlistData?.wishlistItem.length){%>
-                <div class="d-flex align-items-center justify-content-center mb-5 mt-5">
-                  <div class="">
-                    <h4 class="fw-bold">WISHLIST IS EMPTY</h4>
-                    <br>
-                    <a href="/shop" class="btn btn-primary border">Continue Shop</a>
-                  </div>
-        
-                </div>
-                <%}else{%>
+
+      <!-- PAGES INNER -->
+      <section class="padding-top-100 padding-bottom-100 pages-in chart-page">
+        <div class="container">
+          <% if(!wishlistData?.wishlistItem.length){%>
+            <div class="d-flex align-items-center justify-content-center mb-5 mt-5">
+              <div class="">
+                <h4 class="fw-bold">WISHLIST IS EMPTY</h4>
+                <br>
+                <a href="/shop" class="btn btn-primary border">Continue Shop</a>
+              </div>
+
+            </div>
+            <%}else{%>
               <!-- Payments Steps -->
               <div class="shopping-cart text-center">
                 <table class="table">
@@ -216,80 +177,78 @@
                     <tr>
                       <th scope="col" class="text-left">Items</th>
                       <th scope="col">Name</th>
-                    
+
                       <th scope="col">Add to Cart</th>
                       <th scope="col">Remove</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <% wishlistData.wishlistItem.forEach(product => { %>
-                        <tr>
-                            <th class="text-left">
-                                <!-- Media Image -->
-                                <a href="#." class="item-img">
-                                    <img class="media-object w-75" src="<%= product.productId.image[0] %>" alt="">
-                                </a>
-                               
-                            </th>
-                            <td>
-                                 <!-- Item Name -->
-                                 <div class="media-body fs-4 mt-4 ">
-                                  <a href="/product?id=<%=product.productId._id%>">
-                                    <strong><%= product.productId.name %></strong>
-                                  </a>
-                                </div>
-                            </td>
-                            <td>
-                               
-                                <% if (product.productId.stock>0) { %>
-                                  <div class="addtocart">
-                                    <button onclick="addToCart('<%= product.productId._id %>')" class="btn  btn-sm rounded-circle"><i class="icon-basket-loaded"></i></button>
-                                </div>
-                                <% } else if  (product.productId.stock === 0){ %>
-                                  <span class="d-block mt-2 text-danger">out of stock</span>
-                                  
-                                <% } %>
-                            </td>
-                            <td>
-                                <i class="icon-close" onclick="remove('<%= product.productId._id %>')"></i>
-                            </td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-                 
+                    <% wishlistData.wishlistItem.forEach(product=> { %>
+                      <tr>
+                        <th class="text-left">
+                          <!-- Media Image -->
+                          <a href="#." class="item-img">
+                            <img class="media-object w-75" src="<%= product.productId.image[0] %>" alt="">
+                          </a>
+
+                        </th>
+                        <td>
+                          <!-- Item Name -->
+                          <div class="media-body fs-4 mt-4 ">
+                            <a href="/product?id=<%=product.productId._id%>">
+                              <strong>
+                                <%= product.productId.name %>
+                              </strong>
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+
+                          <% if (product.productId.stock>0) { %>
+                            <div class="addtocart">
+                              <button onclick="addToCart('<%= product.productId._id %>')"
+                                class="btn  btn-sm rounded-circle"><i class="icon-basket-loaded"></i></button>
+                            </div>
+                            <% } else if (product.productId.stock===0){ %>
+                              <span class="d-block mt-2 text-danger">out of stock</span>
+
+                              <% } %>
+                        </td>
+                        <td>
+                          <i class="icon-close" onclick="remove('<%= product.productId._id %>')"></i>
+                        </td>
+                      </tr>
+                      <% }) %>
+                  </tbody>
+
                 </table>
               </div>
               <%} %>
-            </div>
-          </section>
+        </div>
+      </section>
 
 
-          <!-- PAGES INNER -->
-          <section class="padding-top-100 padding-bottom-100 light-gray-bg shopping-cart small-cart d-flex">
-            <div class="container">
+      <!-- PAGES INNER -->
+      <section class="padding-top-100 padding-bottom-100 light-gray-bg shopping-cart small-cart d-flex">
+        <div class="container">
 
-              <!-- SHOPPING INFORMATION -->
-              <div class="cart-ship-info margin-top-0 ">
-                <div class="row">
+          <!-- SHOPPING INFORMATION -->
+          <div class="cart-ship-info margin-top-0 ">
+            <div class="row">
 
-                  <!-- DISCOUNT CODE -->
-                  <div class="col-sm-7">
-                    <!-- <h6>Discound Code</h6>
-              <form>
-                <input type="text" value="" placeholder="ENTER YOUR CODE IF YOU HAVE ONE">
-                <button type="submit" class="btn btn-small btn-dark">APPLY CODE</button>
-              </form> -->
-                    <div class="coupn-btn"> <a href="/shop" class="btn ">continue shopping</a> </div>
-                  </div>
-                  <!-- <a href="#." class="btn ">Clearcart</a>  -->
-                  <!-- SUB TOTAL -->
-                 
-                </div>
+              <!-- DISCOUNT CODE -->
+              <div class="col-sm-7">
+
+                <div class="coupn-btn"> <a href="/shop" class="btn ">continue shopping</a> </div>
               </div>
-            </div>
-          </section>
 
-         
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
 
 
     </div>
@@ -371,21 +330,21 @@
 
 
   <script>
-//search option
-const fetchFilteredProducts = async () => {
+    //search option
+    const fetchFilteredProducts = async () => {
       try {
 
         const searchQuery = document.getElementById('searchInput').value.trim();
-       
+
 
         const queryParams = new URLSearchParams({
           search: searchQuery,
-          
+
         });
         console.log(queryParams)
         console.log("enetered")
-        
-       window.location.href=`/shop?${queryParams}`;
+
+        window.location.href = `/shop?${queryParams}`;
 
       } catch (error) {
         console.error('Error filtered products:', error);
@@ -393,13 +352,13 @@ const fetchFilteredProducts = async () => {
     };
 
     // Call the fetchFilteredProducts function whenever filter btn clicks 
-    document.getElementById('searchButton').addEventListener('click',fetchFilteredProducts )
+    document.getElementById('searchButton').addEventListener('click', fetchFilteredProducts)
     //remove product form wishlist 
     async function remove(productId) {
-      
+
       try {
         const confirmation = await Swal.fire({
-            toast:true,
+          toast: true,
           title: "Are you sure?",
           text: "You won't be able to revert this!",
           icon: "warning",
@@ -441,32 +400,32 @@ const fetchFilteredProducts = async () => {
 
     //add to cart
     async function addToCart(prodId) {
-     
+
       try {
         const response = await fetch("/wishlist/addCart", {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({ prodId })
         });
         const data = await response.json();
-        
-        
+
+
 
         if (data.success) {
           await Swal.fire({
-            toast:true,
-            position:'top-end',
-            icon:'success',
-            title:"Success",
-            text:data.message,
-            showConfirmButton:false,
-            timer:1000,
-            timerProgressBar:true,
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: "Success",
+            text: data.message,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
 
-          }).then(()=>window.location.href="/cart")
-            
+          }).then(() => window.location.href = "/cart")
+
           // window.location.href=`/product?id=${prodId}`
         } else {
           await Swal.fire({
@@ -485,9 +444,7 @@ const fetchFilteredProducts = async () => {
         console.log("Error occured  " + error)
       }
     }
-
-     
-</script>
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.js"></script>
 </body>
 

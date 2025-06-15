@@ -162,9 +162,6 @@ const addToCart = async (req, res,next) => {
     const { prodId } = req.body;
     const userData = await userSchema.findById(userId);
 
-
-
-
     if (!userData) {
       return res.json({ success: false, message: "User need to Login " })
 
@@ -184,23 +181,23 @@ const addToCart = async (req, res,next) => {
       return res.json({ success: false, message: "product already existing in Cart" })
 
     }
-    const userCart = await cartSchema.findOne({ userId: userId });
+    const userCart = await cartSchema.findOne({ userId});
     const totalAmount = productData.offerPrice ? productData.offerPrice : productData.mrp;
-    if (userCart) {
-
-      const addCart = await cartSchema.updateOne(
-        { userId: userId },
-        { $push: { products: { productId: prodId } }, $inc: { totalCost: totalAmount } },
+    console.log(userCart,totalAmount,productData?.offerPrice,productData?.mrp,'thsi si amounts')
+    if (!userCart) {
+console.log('11111111111111111')
+       await cartSchema.updateOne(
+        { userId },
+        { $push: { products: { productId: prodId } }, $set: { totalCost: totalAmount } },
 
         { upsert: true }
       );
 
     } else {
-      const addCart = await cartSchema.updateOne(
-        { userId: userId },
-        { $push: { products: { productId: prodId } }, $set: { totalCost: totalAmount } },
-
-        { upsert: true }
+      console.log('2222222222222222222')
+      await cartSchema.updateOne(
+        { userId},
+        { $push: { products: { productId: prodId } }, $inc: { totalCost: totalAmount } },
       );
 
     }

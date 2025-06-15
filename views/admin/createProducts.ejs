@@ -22,10 +22,7 @@
   <link rel="stylesheet" href="/admin/css/custom.css">
   <!-- Favicon-->
   <link rel="shortcut icon" href="/image/download.png">
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
-  rel="stylesheet"
-/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet" />
   <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -41,15 +38,15 @@
       height: auto;
       max-height: 400px;
       margin-bottom: 10px;
-       max-height: 400px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1e1e1e;
-    border: 1px solid #444;
-    border-radius: 6px;
-  
+      max-height: 400px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 6px;
+
     }
 
     .modal-content {
@@ -64,40 +61,41 @@
     }
 
     #cropperImage {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-  }
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
 
-  /* Optional button styles */
-  .modal-content button {
-    margin: 5px;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+    /* Optional button styles */
+    .modal-content button {
+      margin: 5px;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-  .modal-content button:last-child {
-    background-color: #6c757d;
-  }
+    .modal-content button:last-child {
+      background-color: #6c757d;
+    }
 
-  .modal-content button:hover {
-    opacity: 0.9;
-  }
-  .image-preview {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-top: 10px;
-}
+    .modal-content button:hover {
+      opacity: 0.9;
+    }
+
+    .image-preview {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -439,9 +437,11 @@
 
       function cropImage() {
         if (cropper) {
+          const scaleFactor = 4;
+          const outputSize = 150;
           cropper.getCroppedCanvas({
-            width: 150, // desired width
-            height: 150, // desired height
+            width: outputSize * scaleFactor,
+            height: outputSize * scaleFactor,
           }).toBlob(function (blob) {
             const croppedImageSrc = URL.createObjectURL(blob);
             const imagePreview = currentInput.previousElementSibling;
@@ -456,7 +456,7 @@
             // Store the cropped file in the Map
             croppedFiles.set(currentInput.name, file);
             closeModal();
-          }, 'image/jpeg',0.95);
+          }, 'image/jpeg', 1.0);
         }
       }
 
@@ -490,13 +490,17 @@
 
 
         // Name validation
-        if (!/^[A-Za-z][A-Za-z\d ]{4,29}$/.test(nameInput.value.trim()) || nameInput.value.trim().length < 5) {
-          document.getElementById('nameMessage').textContent = 'cannot start with  Numbers, total length of the name is between 5 and 30 characters, special characters not allowded';
-          isValid = false;
+       const name = nameInput.value.trim();
+const namePattern = /^[A-Za-z][A-Za-z\d\s']{4,99}$/;
 
-        } else {
-          document.getElementById('nameMessage').textContent = '';
-        }
+if (!namePattern.test(name)) {
+  document.getElementById('nameMessage').textContent =
+    "Watch name must start with a letter, be 5–100 characters long, and can include letters, numbers, spaces, and apostrophes ('). Special characters are not allowed.";
+  isValid = false;
+} else {
+  document.getElementById('nameMessage').textContent = '';
+}
+
 
         // Subtitle validation
         if (subtitleInput.value.trim().length < 4 || !/^[a-zA-Z\s]+$/.test(subtitleInput.value.trim())) {
@@ -641,10 +645,6 @@
 
 
     </script>
-
-
-
-
 
 </body>
 

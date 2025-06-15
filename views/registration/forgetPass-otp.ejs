@@ -64,7 +64,7 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    let timerSeconds = 180; // Timer duration in seconds
+    let timerSeconds = 120; // Timer duration in seconds
     let timerInterval;
 
     function startTimer() {
@@ -89,12 +89,12 @@
     // Function to handle resend OTP
     document.getElementById('resend').addEventListener('click', function (event) {
         event.preventDefault();
-        timerSeconds = 180; // Reset timer
+        timerSeconds = 120; // Reset timer
         startTimer();
 
         // AJAX request to resend OTP
         fetch('/resend', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }

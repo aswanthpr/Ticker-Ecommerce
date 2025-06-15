@@ -24,21 +24,16 @@ const getCart = async (req, res,next) => {
 
                 }
             },
-            { $match: { "productDetails.status": true } },
-
         ]);
-
+ const filteredCart = cartProduct.filter(item => item.productDetails.length && item.productDetails[0].status);
         let totalCost = 0;
 
-        cartProduct.forEach(item => {
-            const total = item.productDetails[0].offerPrice ? item.productDetails[0].offerPrice : item.productDetails[0].mrp;
-
-
-            totalCost += total * item.products.quantity;
-
-        })
-        
-
+        filteredCart.forEach(item => {
+      const product = item.productDetails[0];
+      const price = product.offerPrice ?? product.mrp;
+      totalCost += price * item.products.quantity;
+    });
+console.log(totalCost,cartProduct)
         res.render("cart", { cartProduct, userId, totalCost })
     } catch (error) {
         console.log(error.message);
@@ -163,9 +158,6 @@ const decrementQty = async (req, res,next) => {
             }
         }
 
-
-
-
     } catch (error) {
         console.log(error.message);
         next(error)
@@ -198,22 +190,13 @@ const cartCondition = async (req, res,next) => {
 
         ])
 
-
+console.log(cartProduct,'thsi si the cart',{...cartProduct[0]?.productDetails[0]})
         if (cartProduct.length === 0) {
 
 
             return res.json({ success: false, message: 'cart cannot be empty to go further' })
         }
-
-
-
         for (const item of cartProduct) {
-
-
-
-
-
-
             if (item.productDetails[0].stock == 0) {
 
 

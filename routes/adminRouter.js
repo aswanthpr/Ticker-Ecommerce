@@ -42,36 +42,36 @@ ad_router.get("/admin/productSearch",auth.ifNoAdmin,productControl.productSearch
 //CATEGORY DETAILES==============================================
 ad_router.get("/admin/category",auth.ifNoAdmin,categoryControl.getCategory);
 ad_router.post("/admin/add-category",auth.ifNoAdmin,categoryControl.addCategory);
-ad_router.put('/admin/unlist-category/:id',auth.ifNoAdmin, categoryControl.unlistCategory);
-ad_router.put('/admin/list-category/:id',auth.ifNoAdmin,categoryControl.listCategory);
-ad_router.put("/admin/edit-category",auth.ifNoAdmin,categoryControl.editCategory);
+ad_router.patch('/admin/unlist-category/:id',auth.ifNoAdmin, categoryControl.unlistCategory);
+ad_router.patch('/admin/list-category/:id',auth.ifNoAdmin,categoryControl.listCategory);
+ad_router.patch("/admin/edit-category",auth.ifNoAdmin,categoryControl.editCategory);
 ad_router.get("/admin/delete-category/:id",auth.ifNoAdmin,categoryControl.deleteCategory);
 ad_router.get("/admin/categorySearch",auth.ifNoAdmin,categoryControl.categSearch);
 
-//ADMIN ORDER CONTROLLER 
+//ADMIN ORDER CONTROLLER  
 ad_router.get("/admin/orderMgt",auth.ifNoAdmin,orderControll.getOrders);
 ad_router.get("/admin/orderMgt/orderDetails",auth.ifNoAdmin,orderControll.adminOrderDetails);
-ad_router.put("/admin/order/change-order-status",auth.ifNoAdmin,orderControll.changeOrderStatus);
-ad_router.post("/admin/order/decline-return",auth.ifNoAdmin,orderControll.declineReturn);
+ad_router.patch("/admin/order/change-order-status",auth.ifNoAdmin,orderControll.changeOrderStatus);
+ad_router.patch("/admin/order/decline-return",auth.ifNoAdmin,orderControll.declineReturn);
 ad_router.post("/admin/order/approve-return",auth.ifNoAdmin,orderControll.approveReturn);
 
 //ADMIN COUPONS CONTROLLER
 ad_router.get("/admin/couponMangement",auth.ifNoAdmin,couponControll.getCoupon);
 ad_router.post('/admin/add-coupon',auth.ifNoAdmin,couponControll.addCoupon);
-ad_router.put('/admin/status-coupon',auth.ifNoAdmin,couponControll.couponStatus);
-ad_router.put('/admin/delete-coupon',auth.ifNoAdmin,couponControll.deleteCoupon);
+ad_router.patch('/admin/status-coupon',auth.ifNoAdmin,couponControll.couponStatus);
+ad_router.delete('/admin/delete-coupon',auth.ifNoAdmin,couponControll.deleteCoupon);
 
 
 //ADMIN OFFER ROUTES
 ad_router.get('/admin/category-offers',auth.ifNoAdmin,offerControll.getCategoryOffer);
  ad_router.post('/admin/add-category-offers',auth.ifNoAdmin,offerControll.addcategoryOffer);
- ad_router.put('/admin/delete-category-offer',auth.ifNoAdmin,offerControll.deleteCategoryOffer)
- ad_router.patch('/admin/edit-category-offer',auth.ifNoAdmin,offerControll.editCategoryOffer)
+ ad_router.delete('/admin/delete-category-offer',auth.ifNoAdmin,offerControll.deleteCategoryOffer)
+ ad_router.put('/admin/edit-category-offer',auth.ifNoAdmin,offerControll.editCategoryOffer)
 
 ad_router.get('/admin/product-offers',auth.ifNoAdmin,offerControll.getProductOffer);
 ad_router.post('/admin/add-product-offers',auth.ifNoAdmin,offerControll.addProductOffer);
-ad_router.put('/admin/delete-product-offer',auth.ifNoAdmin,offerControll.productOfferDelete);
-ad_router.patch('/admin/edit-product-offer',auth.ifNoAdmin,offerControll.editProductOffer);
+ad_router.delete('/admin/delete-product-offer',auth.ifNoAdmin,offerControll.productOfferDelete);
+ad_router.put('/admin/edit-product-offer',auth.ifNoAdmin,offerControll.editProductOffer);
 //SALES REPOART
 
 ad_router.get('/admin/sales-report',auth.ifNoAdmin,salesRepoartControl.getSalesPage);

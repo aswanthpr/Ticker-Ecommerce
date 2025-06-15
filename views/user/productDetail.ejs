@@ -57,22 +57,23 @@
       /* Ensures the image covers the container */
     }
 
-   
+
     .cart-count {
       font-size: 12px;
       position: absolute;
-      top: 5px; /* Adjust as needed */
-      right: -14px; /* Adjust as needed */
+      top: 5px;
+      /* Adjust as needed */
+      right: -14px;
+      /* Adjust as needed */
     }
-  
+
     li {
       position: relative;
     }
-  
+
     a {
       position: relative;
     }
- 
   </style>
 </head>
 
@@ -103,10 +104,13 @@
               <% }else{%>
                 <li><a href="/user/profile">MY ACCOUNT </a></li>
                 <%} %>
-            <li><a href="/wishlist">WISH LIST</a></li>
-            <li><a href="/cart">CART<i class="icon-basket-loaded"></i> <span class="cart-count badge badge-danger text-white"><%=cartCount%></span></a></li>
-            <!-- USER BASKET -->
-            <!-- <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                  <li><a href="/wishlist">WISH LIST</a></li>
+                  <li><a href="/cart">CART<i class="icon-basket-loaded"></i> <span
+                        class="cart-count badge badge-danger text-white">
+                        <%=cartCount%>
+                      </span></a></li>
+                  <!-- USER BASKET -->
+                  <!-- <li class="dropdown user-basket"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="true"> CART <i class="icon-basket-loaded"></i> </a>
               <ul class="dropdown-menu">
                 <li>
@@ -168,14 +172,6 @@
 
             </div>
           </nav>
-
-          <!-- Curency -->
-          <!-- <div class="curency"> <a href="#." class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false"> USD<i class="fa fa-angle-down"></i> </a>
-            <div class="dropdown-menu"> <a class="dropdown-item" href="#">EU</a> <a class="dropdown-item"
-                href="#">USD</a> <a class="dropdown-item" href="#">CA</a> <a class="dropdown-item" href="#">PKR</a>
-            </div>
-          </div> -->
         </div>
       </div>
       <div class="clearfix"></div>
@@ -228,10 +224,10 @@
                 </div>
                 <div id="shop-thumb" class="flexslider">
                   <ul class="slides">
-                    <% for( let index = 0; index < 4; index++ ) { %>
+                    <% for( let index=0; index < 4; index++ ) { %>
                       <li> <img class="img-responsive" src="<%=productData?.image[index] %>" alt=""> </li>
-                    
-                    <% } %>
+
+                      <% } %>
                   </ul>
                 </div>
               </div>
@@ -246,50 +242,54 @@
                     <div class="rating-strs"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                         class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></div>
 
-                        <% if (productData?.offerPrice) { %>
-                          <span class="price">
-                            <small>₹</small>
-                            <del class="line-through"><%= productData.mrp %></del>
-                            <small>₹</small>
-                            <%= productData.offerPrice %>
-                            <span class="text-success ml-2"><%= productData.offer %>%</span>
+                    <% if (productData?.offerPrice) { %>
+                      <span class="price">
+                        <small>₹</small>
+                        <del class="line-through">
+                          <%= productData.mrp %>
+                        </del>
+                        <small>₹</small>
+                        <%= productData.offerPrice %>
+                          <span class="text-success ml-2">
+                            <%= productData.offer %>%
                           </span>
-                        <% }else{%>
-                          <span class="price">
-                            <small></small>
-                            <span class="line-through"></span>
-                            <small>₹</small>
-                            <%= productData.mrp %>
-                            
-                          </span>
+                      </span>
+                      <% }else{%>
+                        <span class="price">
+                          <small></small>
+                          <span class="line-through"></span>
+                          <small>₹</small>
+                          <%= productData.mrp %>
+
+                        </span>
                         <%} %>
-                    <ul class="item-owner">
-                      <li>Brand:<span>
-                          <%=productData?.brand %>
-                        </span></li>
-                      <li>Function:<span> <a href="#">
-                            <%=productData?.category.categoryName %>
-                          </a></span></li>
-                    </ul>
+                          <ul class="item-owner">
+                            <li>Brand:<span>
+                                <%=productData?.brand %>
+                              </span></li>
+                            <li>Function:<span> <a href="#">
+                                  <%=productData?.category.categoryName %>
+                                </a></span></li>
+                          </ul>
 
-                    <!-- Item Detail -->
-                    <p>
-                      <%= productData.subtitle%>
-                    </p>
-                    <p>
-                      <% if (productData.stock==0) { %>
-                        <p style="font-size: 15px;" class="text-danger mt-2">out of stock</p>
-                        <% }else if(productData.stock<5){ %>
-                          <p style="font-size: 15px;" class="text-danger mt-2"> few item left</p>
-                          <%}else{%>
-                            <p style="font-size: 15px;" class=" text-success mt-2">in stock</p>
-                            <%}%>
-                    </p>
+                          <!-- Item Detail -->
+                          <p>
+                            <%= productData.subtitle%>
+                          </p>
+                          <p>
+                            <% if (productData.stock==0) { %>
+                              <p style="font-size: 15px;" class="text-danger mt-2">out of stock</p>
+                              <% }else if(productData.stock<5){ %>
+                                <p style="font-size: 15px;" class="text-danger mt-2"> few item left</p>
+                                <%}else{%>
+                                  <p style="font-size: 15px;" class=" text-success mt-2">in stock</p>
+                                  <%}%>
+                          </p>
 
-                    <!-- Short By -->
-                    <div class="some-info">
-                      <ul class="row margin-top-30">
-                        <!-- <li class="col-sm-6"> 
+                          <!-- Short By -->
+                          <div class="some-info">
+                            <ul class="row margin-top-30">
+                              <!-- <li class="col-sm-6"> 
                     
                     
                     <div class="quinty">
@@ -299,19 +299,22 @@
                     </div>
                   </li> -->
 
-                        <!-- ADD TO CART -->
-                        <li class="col-sm-6"> <a href="#." onclick="addToCart('<%=productData._id%>')" class="btn">
-                         <%=(productData.stock==0)?"Currently Unavailable":"Add To Cart" %> </a>
+                              <!-- ADD TO CART -->
+                              <li class="col-sm-6"> <a href="#." onclick="addToCart('<%=productData._id%>')"
+                                  class="btn">
+                                  <%=(productData.stock==0)?"Currently Unavailable":"Add To Cart" %>
+                                </a>
 
-                        </li>
+                              </li>
 
-                        <!-- LIKE -->
-                        <li class="col-sm-12"> <a onclick="addWishlist('<%=productData._id%>')" class="like-us"><i class="icon-heart"></i> ADD TO WISHLIST
-                          </a> </li>
-                      </ul>
+                              <!-- LIKE -->
+                              <li class="col-sm-12"> <a onclick="addWishlist('<%=productData._id%>')" class="like-us"><i
+                                    class="icon-heart"></i> ADD TO WISHLIST
+                                </a> </li>
+                            </ul>
 
 
-                    </div>
+                          </div>
               </div>
             </div>
           </div>
@@ -336,7 +339,7 @@
                 <h6>Product Detailes</h6>
                 <ul>
                   <li>
-                    <p> Brand: <%= productData.brand %> 
+                    <p> Brand: <%= productData.brand %>
                     </p>
                   </li>
                   <li>
@@ -356,42 +359,42 @@
               </div>
 
               <!-- REVIEW -->
-             <!-- <div role="tabpanel" class="tab-pane fade" id="review">
+              <!-- <div role="tabpanel" class="tab-pane fade" id="review">
                 <h6>3 REVIEWS FOR SHIP YOUR IDEA</h6> -->
 
-                <!-- REVIEW PEOPLE 1 -->
-                <!-- <div class="media">
+              <!-- REVIEW PEOPLE 1 -->
+              <!-- <div class="media">
                   <div class="media-left"> -->
-                    <!--  Image -->
-                    <!-- <div class="avatar"> <a href="#"> <img class="media-object" src="" alt=""> </a>
+              <!--  Image -->
+              <!-- <div class="avatar"> <a href="#"> <img class="media-object" src="" alt=""> </a>
                     </div>
                   </div> -->
-                  <!--  Details -->
-                  <!-- <div class="media-body">
+              <!--  Details -->
+              <!-- <div class="media-body">
                     <p>“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                       labore et dolore magna aliqua.”</p>
                     <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
                   </div>
                 </div> -->
 
-                <!-- REVIEW PEOPLE 1 -->
+              <!-- REVIEW PEOPLE 1 -->
 
-                <!-- <div class="media">
+              <!-- <div class="media">
                   <div class="media-left"> -->
-                    <!--  Image -->
-                    <!-- <div class="avatar"> <a href="#"> <img class="media-object" src="" alt=""> </a>
+              <!--  Image -->
+              <!-- <div class="avatar"> <a href="#"> <img class="media-object" src="" alt=""> </a>
                     </div>
                   </div> -->
-                  <!--  Details -->
-                  <!-- <div class="media-body">
+              <!--  Details -->
+              <!-- <div class="media-body">
                     <p>“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                       labore et dolore magna aliqua.”</p>
                     <h6>TYRION LANNISTER <span class="pull-right">MAY 10, 2016</span> </h6>
                   </div>
                 </div> -->
 
-                <!-- ADD REVIEW -->
-                <!-- <h6 class="margin-t-40">ADD YOUR REVIEW</h6>
+              <!-- ADD REVIEW -->
+              <!-- <h6 class="margin-t-40">ADD YOUR REVIEW</h6>
                 <form>
                   <ul class="row">
                     <li class="col-sm-6">
@@ -410,8 +413,8 @@
                       </label>
                     </li>
                     <li class="col-sm-6"> -->
-                      <!-- Rating Stars -->
-                      <!-- <div class="stars"> <span>YOUR RATING</span> <i class="fa fa-star"></i><i
+              <!-- Rating Stars -->
+              <!-- <div class="stars"> <span>YOUR RATING</span> <i class="fa fa-star"></i><i
                           class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                           class="fa fa-star"></i></div>
                     </li>
@@ -444,73 +447,78 @@
 
 
             <%if(!relatedData){%>
-              <h5 class="text-dark">No Data found</h5> 
+              <h5 class="text-dark">No Data found</h5>
               <% }%>
-              <% if(relatedData && relatedData.length>0){ %>
-                
-                  <% for( let i = 0;i<relatedData.length-1; i++ ){ %>
-                  
-                  
-                  <% if (relatedData[i].category._id.toString()===productData.category._id.toString()) { %>
-                   
-                     
+                <% if(relatedData && relatedData.length>0){ %>
+
+                  <% for( let i=0;i<relatedData.length-1; i++ ){ %>
+
+
+                    <% if (relatedData[i].category._id.toString()===productData.category._id.toString()) { %>
+
+
                       <!-- Item -->
                       <div class="item ">
                         <!-- Sale -->
                         <div class="on-sale"> Sale </div>
                         <!-- Item img -->
                         <a href="/product?id=<%=relatedData[i]._id%>">
-                        <div class="item-img">
-                           <img class="img-1" src="<%= relatedData[i].image[0]%>" alt=""> 
-                           <img class="img-2" src="<%= relatedData[i].image[1]%>" alt="">
-                          <!-- Overlay -->
-                          <div class="overlay">
-                            <div class="position-bottom">
-                              <div class="inn">
-                                <a href="#."  onclick="addToCart('<%=relatedData[i]._id%>')" data-toggle="tooltip"
-                                  data-placement="top" title="Add To Cart">
-                                  <i class="icon-basket"></i></a> 
-                                  <a onclick="addWishlist('<%=relatedData[i]._id%>')" data-toggle="tooltip" data-placement="top" title="Add To WishList"><i
-                                    class="icon-heart"></i></a></div>
+                          <div class="item-img">
+                            <img class="img-1" src="<%= relatedData[i].image[0]%>" alt="">
+                            <img class="img-2" src="<%= relatedData[i].image[1]%>" alt="">
+                            <!-- Overlay -->
+                            <div class="overlay">
+                              <div class="position-bottom">
+                                <div class="inn">
+                                  <a href="#." onclick="addToCart('<%=relatedData[i]._id%>')" data-toggle="tooltip"
+                                    data-placement="top" title="Add To Cart">
+                                    <i class="icon-basket"></i></a>
+                                  <a onclick="addWishlist('<%=relatedData[i]._id%>')" data-toggle="tooltip"
+                                    data-placement="top" title="Add To WishList"><i class="icon-heart"></i></a>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <!-- <a href="/product?id=<%=relatedData[i]._id%>" data-lighter><i
+                          <!-- <a href="/product?id=<%=relatedData[i]._id%>" data-lighter><i
                           class="icon-magnifier"></i></a>  -->
-                        <!-- Item Name -->
-                        <div class="item-name"> <a href="/product?id=<%=relatedData[i]._id%>">
-                            <%= relatedData[i].name %>
-                          </a>
-                          <p>
-                            <%=relatedData[i].subtitle%>
-                          </p>
-                        </div>
-                        <!-- Price -->
-                        <% if (relatedData[i]?.offerPrice) { %>
-                          <span class="price">
-                            <small>₹</small>
-                            <span class="line-through"><%= relatedData[i].mrp %></span>
-                            <small>₹</small>
-                            <%= relatedData[i].offerPrice %>
-                            <span class="text-success ml-2"><%= relatedData[i].offer %>%</span>
-                          </span>
-                        <% }else{%>
-                          <span class="price">
-                            <small></small>
-                            <span class="line-through"></span>
-                            <small>₹</small>
-                            <%= relatedData[i].mrp %>
-                            
-                          </span>
-                        <%} %>
+                          <!-- Item Name -->
+                          <div class="item-name"> <a href="/product?id=<%=relatedData[i]._id%>">
+                              <%= relatedData[i].name %>
+                            </a>
+                            <p>
+                              <%=relatedData[i].subtitle%>
+                            </p>
+                          </div>
+                          <!-- Price -->
+                          <% if (relatedData[i]?.offerPrice) { %>
+                            <span class="price">
+                              <small>₹</small>
+                              <span class="line-through">
+                                <%= relatedData[i].mrp %>
+                              </span>
+                              <small>₹</small>
+                              <%= relatedData[i].offerPrice %>
+                                <span class="text-success ml-2">
+                                  <%= relatedData[i].offer %>%
+                                </span>
+                            </span>
+                            <% }else{%>
+                              <span class="price">
+                                <small></small>
+                                <span class="line-through"></span>
+                                <small>₹</small>
+                                <%= relatedData[i].mrp %>
+
+                              </span>
+                              <%} %>
                       </div>
 
-                    </a>
-                    <% } %>
+                      </a>
+                      <% } %>
 
-                      <% }%>
+                        <% }%>
 
-                        <% } %>
+                          <% } %>
 
 
 
@@ -674,7 +682,7 @@
     });
 
     async function addToCart(prodId) {
-      
+
       try {
         const response = await fetch("/addToCart", {
           method: "POST",
@@ -684,7 +692,7 @@
           body: JSON.stringify({ prodId })
         });
         const data = await response.json();
-        
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -699,16 +707,16 @@
 
         if (data.success) {
           await Toast.fire({
-            toast:true,
-            position:'top-end',
-            icon:'success',
-            text:data.message,
-            showConfirmButton:false,
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            text: data.message,
+            showConfirmButton: false,
             timer: 1000,
-            timerProgressBar:true,
+            timerProgressBar: true,
 
-          }).then(()=>window.location.href="/cart")
-            
+          }).then(() => window.location.href = "/cart")
+
           // window.location.href=`/product?id=${prodId}`
         } else {
           await Toast.fire({
@@ -727,58 +735,58 @@
       }
     }
 
-    async function addWishlist(productId){
+    async function addWishlist(productId) {
       try {
-        
-      
+
+
         const response = await fetch('/add-wishlist', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ productId })
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId })
         });
         const contentType = response.headers.get("content-type");
 
-    if (!response.ok) {
-      // Attempt to parse error message if possible
-      let errorMessage = "Something went wrong";
-      if (contentType && contentType.includes("application/json")) {
-        const errorData = await response.json();
-        errorMessage = errorData?.message || errorMessage;
-      } else {
-        // Fallback for non-JSON error (e.g. redirect)
-        errorMessage = `Request failed with status ${response.status}`;
-      }
+        if (!response.ok) {
+          // Attempt to parse error message if possible
+          let errorMessage = "Something went wrong";
+          if (contentType && contentType.includes("application/json")) {
+            const errorData = await response.json();
+            errorMessage = errorData?.message || errorMessage;
+          } else {
+            // Fallback for non-JSON error (e.g. redirect)
+            errorMessage = `Request failed with status ${response.status}`;
+          }
 
-      await Swal.fire({
-        icon: "error",
-        text: errorMessage,
-        toast: true,
-        position: 'top-end',
-        timer: 1000,
-        showConfirmButton: false,
-      });
-      throw new Error(errorMessage);
-    }
+          await Swal.fire({
+            icon: "error",
+            text: errorMessage,
+            toast: true,
+            position: 'top-end',
+            timer: 1000,
+            showConfirmButton: false,
+          });
+          throw new Error(errorMessage);
+        }
         const data = await response.json();
-        if(data.success){
+        if (data.success) {
           await Swal.fire({
             icon: "success",
-          text:data.message,
-          toast: true,
-          position: 'top-end',
-          timer: 1000,
-          showConfirmButton: false,
+            text: data.message,
+            toast: true,
+            position: 'top-end',
+            timer: 1000,
+            showConfirmButton: false,
           })
-        }else{
-        await  Swal.fire({
-            icon: "error",     
-          text: data.message,
-          toast: true,
-          position: 'top-end',
-          timer: 1000,
-          showConfirmButton: false,
+        } else {
+          await Swal.fire({
+            icon: "error",
+            text: data.message,
+            toast: true,
+            position: 'top-end',
+            timer: 1000,
+            showConfirmButton: false,
           })
         }
       } catch (error) {
@@ -789,7 +797,7 @@
           toast: true,
           position: 'top-end',
           timer: 1000,
-          showConfirmButton: false, 
+          showConfirmButton: false,
         })
       }
     }

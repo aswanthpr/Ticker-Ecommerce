@@ -213,7 +213,7 @@
                                                                 <td class="fw-bold ">
                                                                     <span class="fw-bold text-secondary">₹<%=
                                                                             orderData[i]?.orderedItems[j]?.offerPrice %>
-                                                                            </span>
+                                                                    </span>
                                                                     <span class="fw-bold text-success">(<%=
                                                                             orderData[i]?.orderedItems[j]?.offer %>
                                                                             %)</span>
@@ -475,15 +475,7 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-    <!-- Custom JS -->
-
+    <script src="/user/js/toast.js"></script>
     <script>
         //cancel order
         let productId;
@@ -520,7 +512,7 @@
 
             try {
                 const response = await fetch('/order/cancel-order', {
-                    method: "POST",
+                    method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -604,7 +596,7 @@
 
             try {
                 const response = await fetch('/order/return-order', {
-                    method: 'POST',
+                    method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -705,14 +697,14 @@
                         }
                     };
                     var rzp1 = new Razorpay(options);
-                    rzp1.on('payment.failed', function (response) {
-                        alert(response.error.code);
-                        alert(response.error.description);
-                        alert(response.error.source);
-                        alert(response.error.step);
-                        alert(response.error.reason);
-                        alert(response.error.metadata.order_id);
-                        alert(response.error.metadata.payment_id);
+                    rzp1.on('payment.failed', async function (response) {
+                        await showToast({ icon: 'error', title: response.error.code });
+                        await showToast({ icon: 'error', title: response.error.description });
+                        await showToast({ icon: 'error', title: response.error.source });
+                        await showToast({ icon: 'error', title: response.error.step });
+                        await showToast({ icon: 'error', title: response.error.reason });
+                        await showToast({ icon: 'error', title: response.error.metadata.order_id });
+                        await showToast({ icon: 'error', title: response.error.metadata.payment_id });
                     });
                     var paymentGateway = new Razorpay(options);
                     paymentGateway.open();

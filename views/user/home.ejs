@@ -65,14 +65,6 @@
               <img src="/image/logo.png" alt="logo" class="img-fluid" style="max-height: 60px;">
             </a>
           </div>
-          <!-- <div class="">
-            <div class="input-group flex-nowrap">
-              <input id="searchInput" class="input-group__field  w-100  border " type="search" name="search"
-                placeholder="Search" aria-label="search">
-              <button id="searchButton" class="btn rounded-end px-3 text-nowrap " type="submit"><i
-                  class="icon-magnifier "></i></button>
-            </div>
-          </div> -->
           <div class="">
             <div class="input-group flex-nowrap shadow-sm border rounded">
               <input id="searchInput" class="input-group__field w-100 border-0 px-3 py-2 form-control bg-light"
@@ -97,6 +89,12 @@
                 <li class="dropdown"> <a href="/shop" class="dropdown-toggle">Shop</a>
 
                 </li>
+                <% if (!user) { %>
+
+                  <li class="dropdown"> <a href="/login" class="dropdown-toggle">Login</a>
+                    <% } %>
+
+                  </li>
 
               </ul>
             </div>
@@ -108,20 +106,17 @@
 
                 <%if(user){%>
                   <li> <a href="/user/profile"><i class="lnr lnr-user"></i> </a></li>
-                  <%}else{%>
-                    <li> <a href="/login"><i class="lnr lnr-user"></i> </a></li>
-                    <%}%>
-                      <!-- USER BASKET -->
-                      <li> <a href="/wishlist" id="wishlist"><i class="lnr lnr-heart"></i> </a></li>
-                      <li> <a href="/cart" id="menu-trigger"><i class="lnr lnr-cart"></i><span class="c-no">
-                            <%=cartCount %>
-                          </span> </a>
-                      </li>
+                  <%}%>
+                    <!-- USER BASKET -->
+                    <li> <a href="/wishlist" id="wishlist"><i class="lnr lnr-heart"></i> </a></li>
+                    <li> <a href="/cart" id="menu-trigger"><i class="lnr lnr-cart"></i><span class="c-no">
+                          <%=cartCount %>
+                        </span> </a>
+                    </li>
               </ul>
             </div>
           </nav>
         </div>
-        <!-- Logo -->
 
       </div>
       <!-- <div class="clearfix"></div> -->
@@ -183,7 +178,7 @@
           <div class="owl-slide">
             <div class="position-relative text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg">
               <img class="object-fit-cover" src=" /image/dresswatches-lg-master.jpg" alt="Summer Shop"
-                 style="width: 1850px; height: 880px;">
+                style="width: 1850px; height: 880px;">
               <div class="overlay-text"
                 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
                 <!-- <h4>The Huge Summer Shop for 2018</h4> -->
@@ -197,7 +192,7 @@
           <div class="owl-slide">
             <div class="position-relative text-left col-lg-12 no-padding" data-setbg=" /images/WW_D.jpg">
               <img class="object-fit-cover" src=" /image/1920x822_57c8a338-1525-460f-bd12-93d860e25757.jpg"
-                alt="Best Collections"  style="width: 1850px; height: 880px;">
+                alt="Best Collections" style="width: 1850px; height: 880px;">
               <div class="overlay-text"
                 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
                 <!-- <h4>Summer/Winter for 2018</h4> -->
@@ -504,7 +499,9 @@
 
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/user/js/toast.js"></script>
   <script>
+
     async function addToCart(prodId) {
 
       try {
@@ -517,53 +514,16 @@
         });
         const data = await response.json();
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-
         if (data.success) {
-          await Toast.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'success',
-            title: "Success",
-            text: data.message,
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-
-          }).then(() => window.location.href = "/cart")
-
-          // window.location.href=`/product?id=${prodId}`
+          await showToast({ icon: 'success', title: data?.message }).then(() => window.location.href = "/cart")
         } else {
-          await Toast.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: 'Error',
-            text: data.message,
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-          });
-          //window.location.href=`/product?id=${prodId}`
+          await showToast({ icon: 'error', title: data?.message })
+
         }
       } catch (error) {
         console.log("Error occured  " + error)
       }
     }
-
-
-
-
     async function addToWishlist(productId) {
       try {
 
@@ -577,47 +537,17 @@
         });
         const data = await response.json();
         if (data.success) {
-          Swal.fire({
-            icon: "success",
-            text: data.message,
-            toast: true,
-            position: 'top-end',
-            timer: 1000,
-            showConfirmButton: false,
-          })
+          await showToast({ icon: 'success', title: data?.message })
+
         } else {
-          Swal.fire({
-            icon: "error",
-            text: data.message,
-            toast: true,
-            position: 'top-end',
-            timer: 1000,
-            showConfirmButton: false,
-          })
+          await showToast({ icon: 'error', title: data?.message })
+
         }
       } catch (error) {
         console.log(error.message)
-        Swal.fire({
-          icon: "error",
-
-          text: "Something Went Wrong",
-          toast: true,
-          position: 'top-end',
-          timer: 1000,
-          showConfirmButton: false,
-        })
+        await showToast({ icon: 'error', title: "Something Went Wrong" })
       }
     }
-
-
-
-
-
-
-
-
-
-
     //search
 
     const fetchFilteredProducts = async () => {
@@ -653,6 +583,4 @@
   <script src="/user/js/main.js"></script>
 
 </body>
-
-
 </html>

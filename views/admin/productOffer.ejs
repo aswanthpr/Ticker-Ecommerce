@@ -519,7 +519,7 @@
         try {
          
           const response = await fetch("/admin/edit-product-offer", {
-            method: 'PATCH',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
           });
@@ -585,7 +585,7 @@
             try {
               // Make AJAX request to backend
               const response = await fetch(`/admin/status-offer`, {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -635,7 +635,7 @@
             // Make AJAX request to backend
             try {
               const response = await fetch(`/admin/delete-product-offer?offerId=${offerId}`, {
-                method: "PUT",
+                method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
                 },
