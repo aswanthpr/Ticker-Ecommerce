@@ -40,7 +40,7 @@ const getHome = async (req, res,next) => {
 
         if (matchingCategory) {
 
-          const discountRate = matchingCategory.offer / 100;
+          const discountRate = matchingCategory?.offer / 100;
           const discountAmount = discountRate * product.mrp;
           const offerPrice = product.mrp - discountAmount;
 
@@ -78,18 +78,18 @@ const getHome = async (req, res,next) => {
 
         if (productOffer.offer) {
 
-          const discountRate = productOffer.offer / 100;
+          const discountRate = productOffer?.offer / 100;
           const discountAmount = offerPrice * discountRate;
           offerPrice -= discountAmount;
         };
 
 
 
-        let categoryOfferPrice = productOffer.productId.mrp;
+        let categoryOfferPrice = productOffer.productId?.mrp;
 
 
-        if (categoryOfferPrice) {
-          const discountRate = categoryOfferCheck.offer / 100;
+        if (categoryOfferCheck && categoryOfferPrice) {
+          const discountRate = categoryOfferCheck?.offer / 100;
           const discountAmount = discountRate * categoryOfferPrice;
           categoryOfferPrice -= discountAmount;
         }
@@ -185,7 +185,6 @@ const addToCart = async (req, res,next) => {
     const totalAmount = productData.offerPrice ? productData.offerPrice : productData.mrp;
     console.log(userCart,totalAmount,productData?.offerPrice,productData?.mrp,'thsi si amounts')
     if (!userCart) {
-console.log('11111111111111111')
        await cartSchema.updateOne(
         { userId },
         { $push: { products: { productId: prodId } }, $set: { totalCost: totalAmount } },
@@ -194,7 +193,7 @@ console.log('11111111111111111')
       );
 
     } else {
-      console.log('2222222222222222222')
+     
       await cartSchema.updateOne(
         { userId},
         { $push: { products: { productId: prodId } }, $inc: { totalCost: totalAmount } },
