@@ -169,11 +169,13 @@
                                                         </td>
 
                                                         <td>
-                                                            <a href="/user/order/orderDetails?orderId=<%=orderData[i].orderId %>"
-                                                                class="text-decoration-none fw-bold text-dark">View
-                                                                Details</a>
-
+                                                            <a href="/user/order/orderDetails?orderId=<%= orderData[i].orderId %>"
+                                                                class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+                                                                <i class="fas fa-eye"></i> View Details
+                                                            </a>
                                                         </td>
+
+
                                                         <% if (orderData[i].paymentMethod==="Razorpay" &&
                                                             orderData[i].paymentStatus=="Pending" ) { %>
 
@@ -325,21 +327,14 @@
                                                                                                     Return
                                                                                                 </button>
                                                                                                 <%}%>
-
-
-
                                                                                     </div>
                                                                 </td>
-
-
                                                             </tr>
                                                         </tbody>
                                                         <% } %>
                                                             <% } %>
                                     </table>
                                 </div>
-
-
                                 <!-- ========================== -->
 
                                 <div class="card-footer py-4 ">
