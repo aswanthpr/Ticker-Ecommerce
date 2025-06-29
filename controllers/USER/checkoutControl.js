@@ -9,6 +9,8 @@ const mongoose = require("mongoose");
 const orderidGenerate = require("otp-generator");
 const Razorpay = require("razorpay");
 const dotEnv = require("dotenv");
+const crypto = require("crypto");
+
 dotEnv.config();
 
 //RAZORPAY  INSTANCE  =================================================
@@ -291,6 +293,7 @@ const saveCheckoutEditedAddress = async (req, res, next) => {
 const applyCoupon = async (req, res, next) => {
   try {
     const { couponCode, totalPrice } = req.body;
+    console.log(couponCode, "coe");
     const userId = req.session.user ?? req.cookies.user;
     const uId = userId.toString();
 
@@ -318,7 +321,7 @@ const applyCoupon = async (req, res, next) => {
 
     const checkUser = await couponSchema.findOne({
       couponCode: couponCode,
-      usedUser: { $in: [uId] },
+      usedUser: { $in: [String(userId)] },
     });
 
     if (checkUser) {
@@ -374,7 +377,7 @@ const placeOrder = async (req, res, next) => {
         .status(400)
         .json({ success: false, message: "Cart not found." });
     }
-    
+
     const items = [];
     let totalCost = cartData?.totalCost;
     const newOrderId = generateOrderid();
@@ -470,7 +473,6 @@ const placeOrder = async (req, res, next) => {
       }
     }
 
-  
     const totalAmount = endPrice;
     // savedOrder?.totalPrice;
     if (paymentMethod === "Wallet") {
@@ -507,7 +509,7 @@ const placeOrder = async (req, res, next) => {
         req.session.offer
       ) {
         delete req.session.couponDiscount;
-        delete req.session.couponCode;
+
         delete req.session.offerAmount;
         delete req.session.offer;
       }
@@ -526,6 +528,7 @@ const placeOrder = async (req, res, next) => {
         { couponCode: req.session?.couponCode },
         { $push: { usedUser: userId } }
       );
+      delete req.session.couponCode;
       return res.json({ success: true, message: "order successfull" });
     }
     //razorpay
@@ -550,7 +553,7 @@ const placeOrder = async (req, res, next) => {
       });
     }
     if (paymentMethod === "Wallet") {
-      console.log('wallet aaneeeeeeeeeeeeeeeeeeeeeee')
+      console.log("wallet aaneeeeeeeeeeeeeeeeeeeeeee");
       await walletSchema.findOneAndUpdate(
         { userId },
         {
@@ -577,8 +580,9 @@ const placeOrder = async (req, res, next) => {
       });
       await couponSchema.updateOne(
         { couponCode: req.session?.couponCode },
-        { $push: { usedUser: userId } }
+        { $push: { usedUser: String(userId) } }
       );
+      delete req.session.couponCode;
       return res.status(200).json({
         success: true,
         message: "Payment completed using wallet.",
@@ -595,7 +599,20 @@ const verifyPayment = async (req, res, next) => {
   try {
     const { rzy_orderId, rzy_paymentId, orderId, signature } = req.body;
     const userId = req.session.user ?? req.cookies.user;
-   
+
+    // Step 1: Construct expected signature using secret key
+    const generated_signature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(`${rzy_orderId}|${rzy_paymentId}`)
+      .digest("hex");
+
+    // Step 2: Compare signatures
+    if (generated_signature !== signature) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid signature" });
+    }
+
     let orderData = await orderSchema.findOneAndUpdate(
       { _id: orderId },
       { $set: { paymentStatus: "Paid", rpyPaymentId: rzy_paymentId } }
@@ -606,10 +623,13 @@ const verifyPayment = async (req, res, next) => {
         typeof userId == "string" ? userId : String(userId)
       ),
     });
+ 
     await couponSchema.updateOne(
       { couponCode: req.session?.couponCode },
-      { $push: { usedUser: userId } }
+      { $push: { usedUser: String(userId) } }
     );
+    delete req.session.couponCode;
+    
     if (orderData) {
       return res.json({ success: true, message: "order successfull" });
     } else {

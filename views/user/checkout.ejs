@@ -530,9 +530,12 @@
 
       async function verifyPayment(rzy_paymentId, orderId, rzy_orderId, signature) {
         try {
-          console.log(rzy_paymentId, orderId, rzy_orderId, signature, 'verifypayment')
-          const response = await axios.post('/verifyPayment', { rzy_paymentId, orderId, rzy_orderId, signature })
-
+         
+          const response = await axios.post('/verifyPayment', { rzy_paymentId,
+          orderId,
+          rzy_orderId,
+          signature })
+console.log(response.data)
           // const data = response.json();
           if (response.data.success) {
 
@@ -540,28 +543,23 @@
               icon: 'success',
               title: response?.data?.message,
 
-            }).then(() => {
-              window.location.href = '/order-success'
             })
+              window.location.href = '/order-success'
+            
           } else {
 
             await showToast({
               icon: "error",
               title: response.data?.message,
-            }).then(() => {
-              window.location.href = '/user/order'
             })
+              window.location.href = '/user/order'
+          
           }
         } catch (error) {
           console.error('Payment verification error:', error);
-          await Swal.fire({
+          await showToast({
             icon: "error",
-            title: "Verification Error",
-            text: "Payment verification failed. Please contact support.",
-            toast: true,
-            position: 'top-end',
-            timer: 1500,
-            showConfirmButton: false,
+            title: "Payment verification failed",
           });
         }
       }
@@ -677,7 +675,6 @@
 
 
             if (response?.data?.success) {
-              console.log(key_id, 'if response success ', amount, message)
               const options = {
                 "key": key_id,
                 "amount": amount,

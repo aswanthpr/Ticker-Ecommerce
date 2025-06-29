@@ -114,11 +114,11 @@ const postOtpVerify = async (req, res, next) => {
     console.log(otpData, "this is otp");
 
     if (!otpData?.otp) {
-      return res.json({ message: "otp expired" });
-    }
-    if (otpData?.otp !== otp) {
-     return  res.redirect(`/verify-otp?email=${Email}`);
-    }
+  return res.status(400).json({ success: false, message: "OTP expired" });
+}
+if (otpData?.otp !== otp) {
+  return res.status(400).json({ success: false, message: "Incorrect OTP" });
+}
     const checkUserExist =await userSchema.findOne({
       $or: [{ Email }, { Phone }],
     });
@@ -181,7 +181,8 @@ const postOtpVerify = async (req, res, next) => {
     });
     req.session.email = Email;
 
-    return res.redirect("/");
+    return res.status(200).json({ success: true, redirect: '/' });
+
   } catch (error) {
     next(error);
     console.log(error.message);
@@ -295,37 +296,47 @@ const getForgetpass = async (req, res, next) => {
 //POST FORGETPASSWORD======================================================
 const postForgetpass = async (req, res, next) => {
   try {
-    const email = req.body.email;
+    const email = req.body.email?.trim();
+console.log(email,'email aanu')
+    // ✅ Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      return res.status(400).json({ success: false, message: 'Please enter a valid email address' });
+    }
+
+    const userData = await userSchema.findOne({ email });
+
+    if (!userData) {
+      return res.status(404).json({ success: false, message: 'This email does not exist' });
+    }
+
     req.session.email = email;
 
-    const userData = await userSchema.findOne({ email: email });
+    const randomOtp = generateOtp();
+    await sendOtpMail(userData.name, userData.email, randomOtp);
 
-    if (userData) {
-      const randomOtp = generateOtp();
+    const existingOtp = await regOtp.findOne({ email });
 
-      await sendOtpMail(userData.name, userData.email, randomOtp);
-      const existingOtp = await regOtp.findOne({ email: userData.email });
-      if (existingOtp) {
-        existingOtp.otp = randomOtp;
-        await existingOtp.save();
-      } else {
-        const newOtp = new regOtp({
-          email: userData.email,
-          otp: randomOtp,
-        });
-        await newOtp.save();
-      }
-      res.redirect(`/forgetPass/otp?email=${email}`);
-
-      //res.json({ message: "OTP send to your email please check your mail" });
+    if (existingOtp) {
+      existingOtp.otp = randomOtp;
+      await existingOtp.save();
     } else {
-      res.json({ message: "this email not exist" });
+      const newOtp = new regOtp({ email, otp: randomOtp });
+      await newOtp.save();
     }
+
+    return res.status(200).json({
+      success: true,
+      message: 'OTP sent to your email. Please check your inbox.',
+      redirectTo: `/forgetPass/otp?email=${encodeURIComponent(email)}`
+    });
+
   } catch (error) {
-    next(error);
-    console.log(error.message);
+    console.error(error.message);
+    return res.status(500).json({ success: false, message: 'Something went wrong. Please try again later.' });
   }
 };
+
 
 //GET FORGET OTP=======================================================
 const getForgetOtp = async (req, res, next) => {
@@ -338,31 +349,35 @@ const getForgetOtp = async (req, res, next) => {
 };
 
 //POST FORGET OTP===================================================
+
 const postForgetOtp = async (req, res, next) => {
   try {
     const email = req.query.email;
     const { otp } = req.body;
-
-    const userData = await userSchema.findOne({ email: email });
+console.log(email,otp)
+    const userData = await userSchema.findOne({ email });
+    console.log(userData)
 
     if (!userData) {
-      res.json({ message: "record doesn't exist" });
-    } else {
-      const otpData = await regOtp.findOne({ email: email });
-
-      if (otpData) {
-        if (otpData.otp === otp) {
-          return res.redirect(`/change-pass?email=${email}`);
-        } else {
-          res.redirect(`/forgetPass/otp?email=${email}`);
-        }
-      } else {
-        res.json({ message: "otp expired" });
-      }
+      return res.status(404).json({ success: false, message: "User record doesn't exist" });
     }
+
+    const otpData = await regOtp.findOne({ email });
+
+    if (!otpData) {
+      return res.status(410).json({ success: false, message: "OTP expired or not found" });
+    }
+
+    if (otpData.otp !== otp) {
+      return res.status(401).json({ success: false, message: "Incorrect OTP" });
+    }
+
+    // OTP is correct
+    return res.status(200).json({ success: true, message: "OTP verified", redirectUrl: `/change-pass?email=${email}` });
+
   } catch (error) {
-    next(error);
-    console.log(error.message);
+    console.error("Error verifying OTP:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 //GET CHANGE PASSWORD====================================================
@@ -377,33 +392,62 @@ const getChangePass = async (req, res, next) => {
 };
 //CHANGE PASS POST   ============================================================
 
+// const postChangePass = async (req, res, next) => {
+//   try {
+//     const { password, confirmPassword } = req.body;
+
+//     const email = req.query.email;
+
+//     if (password === confirmPassword) {
+//       const hashPassword = await bcrypt.hash(password, 10);
+
+//       const hashConfirmPassword = await bcrypt.hash(confirmPassword, 10);
+
+//       const savePass = await userSchema.updateOne(
+//         { email: email },
+//         { $set: { password: hashPassword } }
+//       );
+//       res.redirect("/login");
+//       //res.flash({message:"password changed success fuly"})
+//     } else {
+//       // res.json({message:"password incorrect"})
+//       res.redirect(`/change-pass?id=${id}`);
+//     }
+//   } catch (error) {
+//     next(error);
+//     console.log(error.message);
+//   }
+// };
 const postChangePass = async (req, res, next) => {
   try {
     const { password, confirmPassword } = req.body;
-
     const email = req.query.email;
 
-    if (password === confirmPassword) {
-      const hashPassword = await bcrypt.hash(password, 10);
-
-      const hashConfirmPassword = await bcrypt.hash(confirmPassword, 10);
-
-      const savePass = await userSchema.updateOne(
-        { email: email },
-        { $set: { password: hashPassword } }
-      );
-      res.redirect("/login");
-      //res.flash({message:"password changed success fuly"})
-    } else {
-      // res.json({message:"password incorrect"})
-      res.redirect(`/change-pass?id=${id}`);
+    if (!email || !password || !confirmPassword) {
+      return res.status(400).json({ message: 'All fields are required.' });
     }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match.' });
+    }
+
+    const user = await userSchema.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ message: 'Password changed successfully.',redirect:"/login" });
   } catch (error) {
-    next(error);
-    console.log(error.message);
+    console.error('Error in password change:', error.message);
+    return res.status(500).json({ message: 'Internal server error.' });
   }
 };
-
 //LOGOUT  ============================================================
 const userLogout = async (req, res, next) => {
   try {
