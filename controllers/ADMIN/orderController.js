@@ -94,7 +94,7 @@ const changeOrderStatus = async (req, res, next) => {
       );
       const cancelledQuantity = parseInt(cancelledProduct.cartQuantity);
 
-      const updateQuantity = await productSchema.updateOne(
+      await productSchema.updateOne(
         {
           _id: productId,
         },
@@ -104,7 +104,7 @@ const changeOrderStatus = async (req, res, next) => {
       );
     }
     if (updateStatus.paymentMethod == "COD" && newStatus == "Delivered") {
-      let updatePaymentMethod = await orderSchema.updateOne(
+      await orderSchema.updateOne(
         {
           orderId: orderId,
           "orderedItems.productId": new mongoose.Types.ObjectId(productId),

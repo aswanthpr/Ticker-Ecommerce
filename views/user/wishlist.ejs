@@ -100,7 +100,7 @@
         <div class="container-full d-flex justify-content-between">
 
           <!-- Logo -->
-          <div class="logo"> <a href="/"><img class="img-responsive w-25" src="/image/download.png" alt=""></a> </div>
+          <div class="logo w-25"> <a href="/"><img class="img-responsive w-25" src="/image/logo.png" alt=""></a> </div>
 
           <div class="mr-5 pr-5">
             <!-- <form id="searchForm" action=""  class="search-form"> -->
@@ -205,7 +205,7 @@
                         <td>
 
                           <% if (product.productId.stock>0) { %>
-                            <div class="addtocart">
+                            <div class="addtocart ">
                               <button onclick="addToCart('<%= product.productId._id %>')"
                                 class="btn  btn-sm rounded-circle"><i class="icon-basket-loaded"></i></button>
                             </div>
@@ -214,9 +214,15 @@
 
                               <% } %>
                         </td>
-                        <td>
-                          <i class="icon-close" onclick="remove('<%= product.productId._id %>')"></i>
+                        
+                        <td >
+                          
+                            <i class="icon-close bg-dark text-white rounded-circle p-2"
+                            onclick="remove('<%= product?.productId?._id %>')" style="cursor: pointer;"></i>
+
+                         
                         </td>
+
                       </tr>
                       <% }) %>
                   </tbody>
